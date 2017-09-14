@@ -1,0 +1,23 @@
+*.py[co]
+
+# Installer logs
+pip-log.txt
+
+# Editors
+.idea/
+.vscode/
+
+# Database files
+*.db
+*.sql
+*.sqlite3
+
+# Caches
+.pipCache
+.aptCache
+
+# Compiled assets
+*.min.css
+
+# Virtual environment
+devenv/
