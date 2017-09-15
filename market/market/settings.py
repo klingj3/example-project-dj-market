@@ -143,15 +143,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-#STATICFILES_DIRS = [
-#    str(APPS_DIR.path('static')),
-#]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # See: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#staticfiles-finders
-#STATICFILES_FINDERS = [
-#    'django.contrib.staticfiles.finders.FileSystemFinder',
-#    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 
 # MEDIA CONFIGURATION
@@ -238,8 +238,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # django-compressor
 # ---
-#INSTALLED_APPS += ['compressor']
-#STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+INSTALLED_APPS += ['compressor']
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'sass --scss'),
+)
+STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'

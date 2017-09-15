@@ -1,3 +1,4 @@
 # Latest release django
 django==1.11.5
+django-compressor==2.2
 
