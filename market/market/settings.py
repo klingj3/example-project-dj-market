@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 ]
 
 LOCAL_APPS = [
+    'market'
 ]
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#installed-apps
@@ -143,9 +144,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# STATICFILES_DIRS = []
 
 # See: https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
@@ -163,7 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-# URL Configuration
+# URL CONFIGURATION
 # ---
 ROOT_URLCONF = 'market.urls'
 
@@ -240,9 +239,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # ---
 INSTALLED_APPS += ['compressor']
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'sass --scss'),
+    ('text/x-scss', 'django_libsass.SassCompiler'),
 )
 STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+
+# django-libsass
+# ---
+# See: https://github.com/torchbox/django-libsass
+LIBSASS_SOURCE_COMMENTS = False
+LIBSASS_OUTPUT_STYLE = 'compressed'
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
