@@ -29,9 +29,9 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	
-	# admin
-	'django.contrib.admin',
+
+    # admin
+    'django.contrib.admin',
 ]
 
 INSTALLED_APPS = [
@@ -112,19 +112,19 @@ TEMPLATES = [
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-debug
             'debug': DEBUG,
-			# See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-loaders
+            # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/1.11/ref/templates/api/#loader-types
             #'loaders': [
             #    'django.template.loaders.filesystem.Loader',
             #    'django.template.loaders.app_directories.Loader',
             #],
-			# See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-context-processors
+            # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-context-processors
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-				'django.template.context_processors.media',
+                'django.template.context_processors.media',
                 'django.template.context_processors.static',
             ],
         },
@@ -247,7 +247,7 @@ STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 # ---
 # See: https://github.com/torchbox/django-libsass
 LIBSASS_SOURCE_COMMENTS = False
-LIBSASS_OUTPUT_STYLE = 'compressed'
+#LIBSASS_OUTPUT_STYLE = 'compressed'
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
