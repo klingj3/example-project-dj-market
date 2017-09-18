@@ -1,7 +1,6 @@
 *.py[co]
 
 # Installer logs
-pip-log.txt
 
 # Editors
 .idea/
@@ -13,11 +12,8 @@ pip-log.txt
 *.sqlite3
 
 # Caches
-.pipCache
-.aptCache
 
 # Compiled assets
-*.min.css
 
 # Virtual environment
 devenv/

@@ -1,0 +1,4 @@
+# This directory temporarily stores processed static files,
+# we don't want to keep anything in here
+*
+!.gitignore

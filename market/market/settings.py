@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nc72fz20)mz!=8z&xq)+f5^v)_2e7fcz@eqi=ncdm$p5xtjm@i'
+SECRET_KEY = 'secret'
 
 ALLOWED_HOSTS = []
 
@@ -138,7 +138,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC FILE CONFIGURATION
 # ---
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#static-root
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'cache')
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#static-url
 STATIC_URL = '/static/'
@@ -238,6 +238,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # django-compressor
 # ---
 INSTALLED_APPS += ['compressor']
+# COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
@@ -247,7 +248,7 @@ STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 # ---
 # See: https://github.com/torchbox/django-libsass
 LIBSASS_SOURCE_COMMENTS = False
-#LIBSASS_OUTPUT_STYLE = 'compressed'
+# LIBSASS_OUTPUT_STYLE = 'compressed'
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
