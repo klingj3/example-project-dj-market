@@ -5,53 +5,75 @@
 <html lang="en">
 
 <head>
-    {% block head %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {% compress css %}
-            <link rel="stylesheet" href="{% static 'scss/bootstrap/bootstrap.scss' %}" type="text/x-scss">
-        {% endcompress %}
+    <title>{% block title %}Farmers &mdash; Title here{% endblock %}</title>
 
-        {% comment %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        {% endcomment %}
-    {% endblock %}
+    {% comment %} Meta tags {% endcomment %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Description goes here TODO">
+
+    {% comment %} Customized Bootstrap build {% endcomment %}
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'scss/bootstrap/bootstrap.scss' %}" type="text/x-scss">
+    {% endcompress %}
+
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Logo</a>
-            <form class="form-inline">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </div>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Test</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Test</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Test</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+
+{% comment %} Top navigation bar {% endcomment %}
+<header class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Hello, world!</h1>
+        <a class="navbar-brand" href="#">Logo</a>
+        <form class="form-inline">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
             </div>
+        </form>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Test</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Test</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Test</a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+{% comment %} Banner messages {% endcomment %}
+{% for message in messages %}
+    <div class="alert alert-warning mb-0 alert-dismissible fade show" role="alert">
+        <div class="container">
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+            This is a warning alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you
+            like.
         </div>
     </div>
+{% endfor %}
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+{% comment %} Page body {% endcomment %}
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-12">
+            <h1>Hello, world!</h1>
+        </div>
+    </div>
+</div>
+
+{% comment %} Scripts {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+{% block extra_scripts %}{% endblock %}
+
 </body>
 
 </html>
