@@ -28,11 +28,12 @@
     <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navItems">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand mr-auto" href="#">Logo</a>
+    <a href="{% url 'index' %}" class="navbar-brand mr-auto"">Logo</a>
 
     <div class="collapse navbar-collapse flex-sm-row-reverse" id="navItems">
       <div class="navbar-nav">
           {% if user.is_authenticated %}
+        <a href="{% url 'registration_create_post' %}" class="nav-item nav-link" href="#">Post</a>
         <a href="{% url 'auth_logout' %}" class="nav-item nav-link" href="#">Logout</a>
           {% else %}
         <a href="{% url 'auth_login' %}" class="nav-item nav-link" href="#">Login</a>
