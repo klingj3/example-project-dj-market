@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^test/', TemplateView.as_view(template_name='example.html')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
-    url(r'^accounts/create_thing/$', views.create_thing, name='registration_create_thing'),
+    url(r'^accounts/create_post/$', views.create_post, name='registration_create_post'),
     url(r'posts/(?P<slug>[-\w]+)/edit/$', views.edit_post, name='edit_post'),
     url(r'posts/(?P<slug>[-\w]+)/$', views.post_detail, name='post_detail'),
 
