@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='example.html')),
     url(r'^index/', views.index, name='index'),
+    url(r'posts/(?P<slug>[-\w]+)/edit/$', views.edit_post, name='edit_post'),
     url(r'posts/(?P<slug>[-\w]+)/$', views.post_detail, name='post_detail'),
 ]

@@ -18,7 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'secret'
 
-ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io']
+ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
+                 '127.0.0.1']
 
 
 # APP CONFIGURATION
