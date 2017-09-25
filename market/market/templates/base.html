@@ -5,9 +5,7 @@
 <html lang="en">
 
 <head>
-  <title>
-       Farmers
-  </title>
+  <title>{% block title %}Farmers &mdash; Title here{% endblock %}</title>
 
   {% comment %} Meta tags {% endcomment %}
   <meta charset="utf-8">
@@ -23,14 +21,6 @@
 </head>
 
 <body>
-{% comment %} Page body {% endcomment %}
-{#<div class="jumbotron jumbotron-fluid">#}
-{#  <div class="container">#}
-{#    <h1 class="display-3">Marketplace</h1>#}
-{#    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>#}
-{#  </div>#}
-{#</div>#}
-{% block body %}
 
 {% comment %} Top navigation bar {% endcomment %}
 <header class="navbar navbar-expand-sm navbar-dark bg-primary">
@@ -61,6 +51,13 @@
   </div>
 {% endfor %}
 
+{% comment %} Page body {% endcomment %}
+{#<div class="jumbotron jumbotron-fluid">#}
+{#  <div class="container">#}
+{#    <h1 class="display-3">Marketplace</h1>#}
+{#    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>#}
+{#  </div>#}
+{#</div>#}
 <div class="container mt-3">
   <div class="row">
     <div class="col-12 col-sm-2">
@@ -84,25 +81,14 @@
         </span>
       </div>
 
-      {% block content %}
       <div class="card-deck mt-3">
-        <div class="card">
-          <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
-          <div class="card-body">
-            <h4 class="card-title">{% block contentTitle %}{% endblock contentTitle %}</h4>
-            <p class="card-text">{% block contentBody %}{% endblock contentBody %}</p>
-          </div>
-          <div class="card-footer">
-            <p class="card-text"><small class="text-muted">{% block timestamp %}{% endblock timestamp %}</small></p>
-          </div>
-        </div>
+        {% block content %}
+        {% endblock content %}
       </div>
-      {% endblock content %}
     </div>
 
   </div>
 </div>
-{% endblock body %}
 
 {% comment %} Scripts {% endcomment %}
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
