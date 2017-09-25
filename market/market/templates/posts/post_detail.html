@@ -16,10 +16,12 @@
           <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
           <div class="card-body">
             <h4 class="card-title">{{ post.title }}</h4>
-            <p class="card-text">{{ post.body }}</p>
+            <h4>${{ post.price }}</h4>
+              <p class="card-text">{{ post.body }}</p>
           </div>
           <div class="card-footer">
             <p class="card-text"><small class="text-muted">
+            {{ post.postDate }} - {{ post.user }}<br>
                 {% if user == post.user %}
                     <a href="{% url 'edit_post' slug=post.slug %}">Edit Post</a>
                 {% endif %}
