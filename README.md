@@ -27,6 +27,11 @@ python manage.py migrate
 python manage.py flush
 ```
 * Create a new app.
+First create the necessary folder inside `apps`.
 ```bash
-python manage.py startapp <app_name>
+mkdir market/apps/<app_name>
+```
+Then create the app.
+```bash
+python manage.py startapp <app_name> ./market/apps/<app_name>
 ```
