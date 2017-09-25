@@ -24,6 +24,7 @@ ALLOWED_HOSTS = []
 # APP CONFIGURATION
 # ---
 DJANGO_APPS = [
+    'market.apps.board',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
