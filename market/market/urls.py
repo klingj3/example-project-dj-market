@@ -12,6 +12,6 @@ import market.apps.board.views as views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='example.html')),
-    url(r'^posts/', views.index, name='index'),
+    url(r'^index/', views.index, name='index'),
     url(r'posts/(?P<slug>[-\w]+)/$', views.post_detail, name='post_detail'),
 ]
