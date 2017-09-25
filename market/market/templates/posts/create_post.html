@@ -2,14 +2,14 @@
 {% load staticfiles %}
 
 {% block title %}
-    All listings
+    Create Post
 {% endblock title %}
 
 {% block searchBar %}
 {% endblock searchBar %}
 
 {% block sectionHeader %}
-Edit Post
+Create Post
 {% endblock sectionHeader %}
 
 {% block body %}
@@ -18,7 +18,7 @@ Edit Post
         <form role="form" action="" method="post">
             {%  csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Submit</button>
+            <input type="submit" value="Submit"/>
         </form>
     {% endblock content %}
 {% endblock body %}

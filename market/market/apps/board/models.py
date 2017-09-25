@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -14,3 +15,4 @@ class Post(models.Model):
     location = models.CharField(max_length=5)
     postDate = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True)
+    user = models.OneToOneField(User, blank=True, null=True)
