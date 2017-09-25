@@ -11,6 +11,7 @@ class Post(models.Model):
                     ('Gallon', 'GALLON'),
                     ('each', 'EACH'),
                     ]
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     unit = models.CharField(max_length=7, choices=UNIT_CHOICES, default='each')
     location = models.CharField(max_length=5)
     postDate = models.DateTimeField(auto_now_add=True)
