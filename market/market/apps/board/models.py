@@ -4,14 +4,13 @@ from django.db import models
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    body = models.CharField(max_length=1023)
+    body = models.TextField(max_length=1023)
     #price = PriceField('Price', currency='USD', max_digits = 5, decimal_places=2)
     UNIT_CHOICES = [('Lb', 'LB'),
                     ('Gallon', 'GALLON'),
                     ('each', 'EACH'),
                     ]
     unit = models.CharField(max_length=7, choices=UNIT_CHOICES, default='each')
-    location = models.TextField(max_length=5)
-    dance=models.CharField(max_length=222)
+    location = models.CharField(max_length=5)
     postDate = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True)

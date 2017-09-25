@@ -1,2 +1,23 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    All listings
+{% endblock title %}
+
+{% block body %}
+    {{ block.super }}
+    {% for post in posts %}
+    {% block content %}
+        {{ block.super }}
+        {% block contentTitle %}
+            {{ post.title }}
+        {% endblock contentTitle %}
+        {% block contentBody %}
+            {{ post.body }}
+        {% endblock contentBody %}
+        {% block timestamp %}
+            {{ post.postDate }}
+        {% endblock timestamp %}
+    {% endblock content %}
+    {% endfor %}
+{% endblock body %}
