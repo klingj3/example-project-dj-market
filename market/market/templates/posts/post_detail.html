@@ -16,7 +16,7 @@
           <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
           <div class="card-body">
             <h4 class="card-title">{{ post.title }}</h4>
-            <h4>${{ post.price }}</h4>
+            <h4>${{ post.price }} per {{ post.unit }}</h4>
               <p class="card-text">{{ post.body }}</p>
           </div>
           <div class="card-footer">

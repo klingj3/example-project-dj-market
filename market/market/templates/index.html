@@ -16,7 +16,7 @@
         <div class="card">
           <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
           <div class="card-body">
-              <h4 class="card-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> - ${{ post.price }}</h4>
+              <h4 class="card-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> - ${{ post.price }} per {{ post.unit }}</h4>
             <p class="card-text">{{ post.body }}</p>
           </div>
           <div class="card-footer">
