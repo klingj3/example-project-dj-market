@@ -1,0 +1,14 @@
+[flake8]
+# Ignore:
+#   E121: Continuation line under-indented for hanging indent
+#   E122: Continuation line missing indentation or outdented
+#   E126: Continuation line over-indented for hanging indent
+#   E128: Continuation line under-indented for visual indent
+#   E131: Continuation line unaligned for hanging indent
+#   E501: Line too long
+ignore = E121,E122,E126,E128,E131,E501
+
+exclude =
+    devenv
+
+import-order-style = appnexus
