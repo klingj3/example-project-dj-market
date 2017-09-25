@@ -5,6 +5,10 @@
     All listings
 {% endblock title %}
 
+{% block searchBar %}
+{{ block.super }}
+{% endblock searchBar %}
+
 {% block body %}
     {{ block.super }}
     {% block content %}

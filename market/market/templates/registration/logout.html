@@ -2,19 +2,19 @@
 {% load staticfiles %}
 
 {% block title %}
-    All listings
+    Logout
 {% endblock title %}
 
 {% block searchBar %}
 {% endblock searchBar %}
 
+{% block sectionHeader %}
+Logout
+{% endblock sectionHeader %}
+
 {% block body %}
     {{ block.super }}
     {% block content %}
-        <form role="form" action="" method="post">
-            {%  csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+        <h1>You have been logged out.</h1>
     {% endblock content %}
 {% endblock body %}

@@ -2,19 +2,20 @@
 {% load staticfiles %}
 
 {% block title %}
-    All listings
+    Registration Complete
 {% endblock title %}
 
 {% block searchBar %}
 {% endblock searchBar %}
 
+{% block sectionHeader %}
+Registration Complete
+{% endblock sectionHeader %}
+
 {% block body %}
     {{ block.super }}
     {% block content %}
-        <form role="form" action="" method="post">
-            {%  csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+        <h1>Registration Complete</h1>
+        <h4> You have been registered!</h4>
     {% endblock content %}
 {% endblock body %}
