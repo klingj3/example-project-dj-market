@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    All listings
+{% endblock title %}
+
+{% block searchBar %}
+{% endblock searchBar %}
+
+{% block body %}
+    {{ block.super }}
+    {% block content %}
+        <form role="form" action="" method="post">
+            {%  csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% endblock content %}
+{% endblock body %}

@@ -18,7 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'secret'
 
-ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io']
+ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
+                 '127.0.0.1']
 
 
 # APP CONFIGURATION
@@ -30,16 +31,16 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # admin
     'django.contrib.admin',
 ]
 
 INSTALLED_APPS = [
+    'registration',
 ]
 
 LOCAL_APPS = [
-    'market'
+    'market',
 ]
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#installed-apps
@@ -253,3 +254,14 @@ LIBSASS_SOURCE_COMMENTS = False
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
+
+# Account registration stuff
+ACCOUNT_ACTIVATION_DAYS = 365
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'blahblah@fakeemail.biz'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 1025
+
+LOGIN_REDIRECT_URL = "index"
