@@ -6,20 +6,16 @@
 {% endblock title %}
 
 {% block body %}
-  {{ block.super }}
-  {% block content %}
-    {% for post in posts %}
-      <div class="card">
-        <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
-        <div class="card-body">
-          <h4 class="card-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> - ${{ post.price }} per {{ post.unit }}</h4>
-          <p class="card-text">{{ post.body }}</p>
-        </div>
-        <div class="card-footer">
-          <p class="card-text"><small class="text-muted">{{ post.postDate }} - {{ post.user }}</small></p>
-        </div>
+  {% for post in posts %}
+    <div class="card">
+      <img class="card-img-top" src="{% static 'img/placeholder.svg' %}" alt="Card image cap">
+      <div class="card-body">
+        <h4 class="card-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> - ${{ post.price }} per {{ post.unit }}</h4>
+        <p class="card-text">{{ post.body }}</p>
       </div>
-    {% endfor %}
-  {% endblock content %}
+      <div class="card-footer">
+        <p class="card-text"><small class="text-muted">{{ post.postDate }} - {{ post.user }}</small></p>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock body %}
-

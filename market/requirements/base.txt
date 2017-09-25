@@ -1,7 +1,12 @@
 # Latest release django
 django==1.11.5
+
+# For processing JS and CSS
 django-compressor==2.2
 django-libsass==0.7
+
+# For nicer forms
+django-crispy-forms==1.6.1
+
 django-prices==0.6.2
 django-registration-redux==1.7
-

@@ -32,12 +32,12 @@
 
     <div class="collapse navbar-collapse flex-sm-row-reverse" id="navItems">
       <div class="navbar-nav">
-          {% if user.is_authenticated %}
-        <a href="{% url 'post_create' %}" class="nav-item nav-link">Post</a>
-        <a href="{% url 'auth_logout' %}" class="nav-item nav-link">Logout</a>
-          {% else %}
-        <a href="{% url 'auth_login' %}" class="nav-item nav-link">Login</a>
-        <a href="{% url 'registration_register' %}" class="nav-item nav-link">Register</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'board:create' %}" class="nav-item nav-link">Post</a>
+          <a href="{% url 'auth_logout' %}" class="nav-item nav-link">Logout</a>
+        {% else %}
+          <a href="{% url 'auth_login' %}" class="nav-item nav-link">Login</a>
+          <a href="{% url 'registration_register' %}" class="nav-item nav-link">Register</a>
         {% endif %}
           <a class="nav-item nav-link" href="#">Test</a>
       </div>
@@ -58,45 +58,9 @@
 {% endfor %}
 
 {% comment %} Page body {% endcomment %}
-{#<div class="jumbotron jumbotron-fluid">#}
-{#  <div class="container">#}
-{#    <h1 class="display-3">Marketplace</h1>#}
-{#    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>#}
-{#  </div>#}
-{#</div>#}
 <div class="container mt-3">
-  <div class="row">
-    <div class="col-12 col-sm-2">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">
-            Filter
-          </h4>
-          <p class="card-text">
-            test
-          </p>
-        </div>
-      </div>
-    </div>
-
-  <div class="col-12 col-sm-10 mb-3">
-      {% block searchBar %}
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button">Go!</button>
-        </span>
-      </div>
-      {% endblock searchBar %}
-
-      <h1>{% block sectionHeader %}{% endblock sectionHeader %}</h1>
-      <div class="card-deck mt-3">
-        {% block content %}
-        {% endblock content %}
-      </div>
-    </div>
-
-  </div>
+  {% block body %}
+  {% endblock %}
 </div>
 
 {% comment %} Scripts {% endcomment %}

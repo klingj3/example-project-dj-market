@@ -11,24 +11,31 @@ from django.views.generic import (CreateView,
                                   TemplateView,
                                   UpdateView)
 
-from market.apps.board.models import Post
 from market.apps.board.forms import PostForm
+from market.apps.board.models import Post
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
+    form_class = PostForm
+    template_name = 'board/post_form.html'
+
+    # Implicitly uses template 'board/post_form.html'
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
+    template_name = 'board/post_delete.html'
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
+    template_name = 'board/post_detail.html'
 
 
 class PostListView(ListView):
     model = Post
+    template_name = 'board/post_list.html'
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
