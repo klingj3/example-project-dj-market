@@ -8,8 +8,9 @@ python3 -m venv devenv
 source devenv/bin/activate
 ```
 
-2. Install the development requirements.
+2. Make sure pip is up to date, install the development requirements.
 ```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
