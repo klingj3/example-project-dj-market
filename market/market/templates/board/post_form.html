@@ -2,11 +2,9 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block title %}
-  All listings
-{% endblock title %}
+{% block title %}All listings{% endblock title %}
 
-{% block body %}
+{% block content %}
   <div class="row">
     <div class="col-12">
       <form action="{{ action }}" method="post">
@@ -16,4 +14,4 @@
       </form>
     </div>
   </div>
-{% endblock body %}
+{% endblock content %}

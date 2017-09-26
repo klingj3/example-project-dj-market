@@ -229,6 +229,9 @@ AUTH_PASSWORD_VALIDATORS = [
 #LOGIN_REDIRECT_URL = 'users:redirect'
 #LOGIN_URL = 'account_login'
 
+# SLUGLIFIER
+# AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
+
 ########## CELERY
 #INSTALLED_APPS += ['market.taskapp.celery.CeleryConfig']
 #CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')

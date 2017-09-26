@@ -7,7 +7,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 
-from market.apps.board.backends import MyRegistrationView
+from market.apps.core.views import MarketRegistrationView
 
 
 urlpatterns = [
@@ -15,8 +15,8 @@ urlpatterns = [
     # url(r'^$', ),
     url(r'^test/', TemplateView.as_view(template_name='example.html')),
 
+    url(r'^accounts/register/', MarketRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    # url(r'^accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
 
     # Board app
     url(r'^posts/', include('market.apps.board.urls')),
