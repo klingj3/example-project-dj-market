@@ -1,4 +1,0 @@
-# This file is here to point to the real requirements
-
--r requirements/development.txt
-

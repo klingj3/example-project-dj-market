@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    404
-{% endblock title %}
+{% block title %}404{% endblock title %}
 
-{% block searchBar %}
-{% endblock searchBar %}
-
-{% block sectionHeader %}
-404 Error - This page doesn't exist
-{% endblock sectionHeader %}
-
-{% block body %}
-    {{ block.super }}
-
-{% endblock body %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      404 Error - This page doesn't exist
+    </div>
+  </div>
+{% endblock content %}

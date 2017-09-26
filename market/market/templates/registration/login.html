@@ -1,24 +1,17 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block title %}
-   Login
-{% endblock title %}
+{% block title %}Login{% endblock title %}
 
-{% block searchBar %}
-{% endblock searchBar %}
-
-{% block sectionHeader %}
-Login
-{% endblock sectionHeader %}
-
-{% block body %}
-    {{ block.super }}
-    {% block content %}
-        <form role="form" action="" method="post">
-            {%  csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
-    {% endblock content %}
-{% endblock body %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <form role="form" action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from autoslug import AutoSlugField
-from django_measurement.models import MeasurementField
-from django_prices.models import PriceField
+# from django_measurement.models import MeasurementField
+# from django_prices.models import PriceField
+# from location_field.models.plain import PlainLocationField
 
 
 class Post(models.Model):
@@ -26,3 +27,4 @@ class Post(models.Model):
     unit = models.CharField(max_length=80, choices=UNIT_CHOICES, default='each')
 
     location = models.CharField(max_length=5)
+    # location = PlainLocationField(based_fields=['city'], zoom=7)

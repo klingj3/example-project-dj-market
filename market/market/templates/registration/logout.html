@@ -1,20 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    Logout
-{% endblock title %}
+{% block title %}Logout{% endblock title %}
 
-{% block searchBar %}
-{% endblock searchBar %}
-
-{% block sectionHeader %}
-Logout
-{% endblock sectionHeader %}
-
-{% block body %}
-    {{ block.super }}
-    {% block content %}
-        <h1>You have been logged out.</h1>
-    {% endblock content %}
-{% endblock body %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h1>You have been logged out.</h1>
+    </div>
+  </div>
+{% endblock content %}
