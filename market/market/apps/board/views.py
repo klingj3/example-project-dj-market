@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import (CreateView,
@@ -18,6 +19,7 @@ class PostCreateView(CreateByUserMixin, CreateView):
     template_name = 'board/post_form.html'
 
     def get_success_url(self):
+        messages.success(self.request, 'Posting successfully created!', extra_tags='fa fa-check')
         return reverse('board:list')
 
 
@@ -26,7 +28,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'board/post_delete.html'
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'board/post_detail.html'
 

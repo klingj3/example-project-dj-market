@@ -16,7 +16,7 @@ class Post(models.Model):
 
     user = models.ForeignKey(User, editable=False)
     slug = AutoSlugField(unique=True)
-    post_date = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now_add=True)
 
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)
