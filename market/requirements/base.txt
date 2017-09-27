@@ -11,8 +11,8 @@ django-crispy-forms==1.6.1
 # For better slugs
 django-autoslug==1.9.3
 
+django-geoposition==0.3.0
 django-prices==0.6.2
 django-measurement==2.4.0
-# django-location-field==2.0.3
 
 django-registration-redux==1.7

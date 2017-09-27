@@ -28,13 +28,11 @@ ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
 # APP CONFIGURATION
 # ---
 DJANGO_APPS = [
-    'market.apps.board',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # admin
     'django.contrib.admin',
 ]
 
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
 
 LOCAL_APPS = [
     'market',
+    'market.apps.board',
 ]
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#installed-apps
@@ -192,18 +191,18 @@ WSGI_APPLICATION = 'market.wsgi.application'
 # ---
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -259,6 +258,10 @@ LIBSASS_SOURCE_COMMENTS = False
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
+
+# Geoposition settings
+INSTALLED_APPS += ['geoposition']
+GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ['GEOPOSITION_GOOGLE_MAPS_API_KEY']
 
 # Account registration stuff
 ACCOUNT_ACTIVATION_DAYS = 365
