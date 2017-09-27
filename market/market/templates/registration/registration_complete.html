@@ -1,21 +1,13 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    Registration Complete
-{% endblock title %}
+{% block title %}Registration Complete{% endblock title %}
 
-{% block searchBar %}
-{% endblock searchBar %}
-
-{% block sectionHeader %}
-Registration Complete
-{% endblock sectionHeader %}
-
-{% block body %}
-    {{ block.super }}
-    {% block content %}
-        <h1>Registration Complete</h1>
-        <h4> You have been registered!</h4>
-    {% endblock content %}
-{% endblock body %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h1>Registration Complete</h1>
+      <h4> You have been registered!</h4>
+    </div>
+  </div>
+{% endblock content %}

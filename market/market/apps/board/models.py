@@ -1,19 +1,30 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+from autoslug import AutoSlugField
+# from django_measurement.models import MeasurementField
+# from django_prices.models import PriceField
+from geoposition.fields import GeopositionField
+
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
-    body = models.TextField(max_length=1023)
-    #price = PriceField('Price', currency='USD', max_digits = 5, decimal_places=2)
-    UNIT_CHOICES = [('Lb', 'LB'),
-                    ('Gallon', 'GALLON'),
-                    ('each', 'EACH'),
-                    ]
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    unit = models.CharField(max_length=7, choices=UNIT_CHOICES, default='each')
-    location = models.CharField(max_length=5)
-    postDate = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True)
+    UNIT_CHOICES = (
+        ('pound', 'POUND'),
+        ('gallon', 'GALLON'),
+        ('each', 'EACH'),
+    )
+
     user = models.ForeignKey(User, editable=False)
+    slug = AutoSlugField(unique=True)
+    modified = models.DateTimeField(auto_now_add=True)
+
+    title = models.CharField(max_length=300)
+    body = models.TextField(max_length=5000)
+
+    # price = PriceField(currency='USD', max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    # unit = MeasurementField()
+    unit = models.CharField(max_length=80, choices=UNIT_CHOICES, default='each')
+
+    # location = models.CharField(max_length=5)
+    location = GeopositionField()

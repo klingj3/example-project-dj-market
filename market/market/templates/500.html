@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    500
-{% endblock title %}
+{% block title %}500{% endblock title %}
 
-{% block searchBar %}
-{% endblock searchBar %}
-
-{% block sectionHeader %}
-500 Error
-{% endblock sectionHeader %}
-
-{% block body %}
-    {{ block.super }}
-
-{% endblock body %}
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      500 Error
+    </div>
+  </div>
+{% endblock content %}

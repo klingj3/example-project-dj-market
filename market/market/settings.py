@@ -18,29 +18,32 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'secret'
 
+# See: https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
-                 '127.0.0.1']
+                 'localhost',
+                 '127.0.0.1',
+                 '[::1]']
 
 
 # APP CONFIGURATION
 # ---
 DJANGO_APPS = [
-    'market.apps.board',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # admin
     'django.contrib.admin',
 ]
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'registration',
 ]
 
 LOCAL_APPS = [
     'market',
+    'market.apps.board',
 ]
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#installed-apps
@@ -188,18 +191,18 @@ WSGI_APPLICATION = 'market.wsgi.application'
 # ---
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -226,7 +229,8 @@ AUTH_PASSWORD_VALIDATORS = [
 #LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
-#AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
+# AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
+
 ########## CELERY
 #INSTALLED_APPS += ['market.taskapp.celery.CeleryConfig']
 #CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
@@ -254,6 +258,10 @@ LIBSASS_SOURCE_COMMENTS = False
 
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
+
+# Geoposition settings
+INSTALLED_APPS += ['geoposition']
+GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ['GEOPOSITION_GOOGLE_MAPS_API_KEY']
 
 # Account registration stuff
 ACCOUNT_ACTIVATION_DAYS = 365
