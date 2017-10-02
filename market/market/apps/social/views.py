@@ -16,7 +16,7 @@ from django.views.generic import (
                                   UpdateView,
                                 )
 
-class PostListView(ListView):
+class ProfileBrowseView(ListView):
     model = UserProfile
     template_name = 'social/browse.html'
     paginate_by = 8
