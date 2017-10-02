@@ -25,7 +25,7 @@
               <div class="card-body">
                 <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=user_profile.slug %}">{{ user_profile.name|truncatechars:60 }}</a></h5>
                 <h6 class="text-muted mb-3"><small>by <a href="#" class="text-muted">{{ user_profile.location }}</a></small></h6>
-                <h5 class="">${{ user_profile.bio|truncatedchars:100}}</h5>
+                <h5 class="">${{ user_profile.bio|truncatechars:100}}</h5>
               </div>
             </div>
           {% endfor %}
