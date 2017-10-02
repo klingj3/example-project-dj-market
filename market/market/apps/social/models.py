@@ -10,12 +10,11 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=31, default = '')
-    last_name = models.CharField(max_length=31, default = '')
-    organization_name = models.CharField(max_length=127, default = '')
-    bio = models.CharField(max_length=1023, blank=True)
+    name = models.CharField(max_length=63, default = '')
+    organization_name = models.CharField(max_length=127)
+    bio = models.TextField(blank=True)
     # Location to be changed here, same as in posts.
-    location = models.CharField(max_length=5, default='12180')
+    location = models.CharField(max_length=5)
     public_email = models.EmailField()
     slug = AutoSlugField(unique=True)
 

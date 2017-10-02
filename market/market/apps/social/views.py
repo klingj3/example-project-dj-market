@@ -12,7 +12,14 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import (
                                   DetailView,
                                   FormView,
-                                  UpdateView)
+                                  ListView,
+                                  UpdateView,
+                                )
+
+class PostListView(ListView):
+    model = UserProfile
+    template_name = 'social/browse.html'
+    paginate_by = 8
 
 class ProfileDetailView(DetailView):
     model = UserProfile
