@@ -15,7 +15,8 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True)
     # Location to be changed here, same as in posts.
     location = models.CharField(max_length=5)
-    public_email = models.EmailField()
+    public_email = models.EmailField(max_length=31, blank=True)
+    public_website = models.CharField(max_length=31, blank=True)
     slug = AutoSlugField(unique=True)
 
     def __unicode__(self):
