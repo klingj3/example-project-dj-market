@@ -15,4 +15,4 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=1023, blank=True)
     # Location to be changed here, same as in posts.
     location = models.CharField(max_length=5, default='12180')
-    public_email = models.CharField(max_length=48)
+    public_email = models.EmailField()
