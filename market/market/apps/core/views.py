@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from registration.backends.simple.views import RegistrationView
 
+
 class MarketRegistrationView(RegistrationView):
     template_name = 'core/registration_form.html'
 

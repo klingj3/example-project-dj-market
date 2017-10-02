@@ -11,6 +11,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Description goes here TODO">
+  {% block meta %}{% endblock %}
 
   {% comment %} Customized Bootstrap build {% endcomment %}
   {% compress css %}
@@ -41,7 +42,7 @@
     <div class="collapse navbar-collapse flex-sm-row-reverse" id="navItems">
       <div class="navbar-nav">
         {% if user.is_authenticated %}
-          <a href="{% url 'board:create' %}" class="btn btn-outline-secondary mr-4"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Post</a>
+          <a href="{% url 'board:create' %}" class="btn btn-outline-light mr-4"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Post</a>
           <a href="#" class="nav-item nav-link font-weight-bold active"><i class="fa fa-user-circle mr-1" aria-hidden="true"></i>{{ user.username }}</a>
           <a href="{% url 'auth_logout' %}" class="nav-item nav-link">Logout</a>
         {% else %}
