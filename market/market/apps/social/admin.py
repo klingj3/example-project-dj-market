@@ -7,7 +7,8 @@ from market.apps.social.models import UserProfile
 
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
-    list_display = ('user')
+    list_display = ('user', 'last_name',)
+    prepopulated_fields = {'slug': ('user',)}
 
 # Register your models here.
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileAdmin)

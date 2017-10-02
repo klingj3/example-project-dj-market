@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -16,3 +17,7 @@ class UserProfile(models.Model):
     # Location to be changed here, same as in posts.
     location = models.CharField(max_length=5, default='12180')
     public_email = models.EmailField()
+    slug = AutoSlugField(unique=True)
+
+    def __unicode__(self):
+        return u"%s" % self.user
