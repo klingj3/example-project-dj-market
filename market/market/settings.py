@@ -38,7 +38,6 @@ DJANGO_APPS = [
 
 INSTALLED_APPS = [
     'crispy_forms',
-    'registration',
 ]
 
 LOCAL_APPS = [
@@ -263,7 +262,8 @@ ADMIN_URL = r'^admin/'
 INSTALLED_APPS += ['geoposition']
 GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ['GEOPOSITION_GOOGLE_MAPS_API_KEY']
 
-# Account registration stuff
+# django-registration settings
+INSTALLED_APPS += ['registration']  # Note that this has to come after our local apps to avoid template issues
 ACCOUNT_ACTIVATION_DAYS = 365
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'blahblah@fakeemail.biz'
@@ -272,4 +272,4 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 EMAIL_PORT = 1025
 
-LOGIN_REDIRECT_URL = "index"
+LOGIN_REDIRECT_URL = 'board:list'
