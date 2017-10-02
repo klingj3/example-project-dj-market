@@ -17,6 +17,9 @@ urlpatterns = [
     # Account management
     url(r'^accounts/', include('registration.backends.simple.urls')),
 
+    # Social management, could be merged under the accounts label later.
+    url(r'^social/', include('market.apps.social.urls')),
+
     # Board app
     url(r'^', include('market.apps.board.urls')),
 ]
