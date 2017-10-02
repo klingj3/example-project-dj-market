@@ -11,7 +11,7 @@
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}
-        <input type="submit" value="Submit" />
+        <button type="submit" class="btn btn-primary">Create Post</button>
       </form>
     </div>
   </div>

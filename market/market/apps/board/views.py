@@ -36,6 +36,7 @@ class PostDetailView(DetailView):
 class PostListView(ListView):
     model = Post
     template_name = 'board/post_list.html'
+    paginate_by = 8
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):

@@ -14,10 +14,10 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/', TemplateView.as_view(template_name='example.html')),
 
-    url(r'^accounts/register/', MarketRegistrationView.as_view(), name='registration_register'),
+    # Account management
+    url(r'^accounts/register/$', MarketRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 
     # Board app
     url(r'^', include('market.apps.board.urls')),
-    url(r'^posts/', include('market.apps.board.urls')),
 ]
