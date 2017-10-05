@@ -2,8 +2,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
 from django.utils.translation import ugettext_lazy as _
+from django.utils.safestring import mark_safe
 from market.apps.social.models import UserProfile
-
+from crispy_forms.helper import FormHelper
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -39,9 +40,9 @@ class UserProfileForm(forms.ModelForm):
                     'GIF or PNG image.')
 
             #validate file size
-            if len(avatar) > (20 * 1024):
+            if len(avatar) > (3000 * 1024):
                 raise forms.ValidationError(
-                    u'Avatar file size may not exceed 20k.')
+                    u'Avatar file size may not exceed 3 Mb.')
 
         except AttributeError:
             """

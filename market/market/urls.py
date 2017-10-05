@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^test/', TemplateView.as_view(template_name='example.html')),
 
     # Account management
+    url(r'^accounts/register/$', MarketRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 
     # Social management, could be merged under the accounts label later.

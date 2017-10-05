@@ -14,6 +14,7 @@ from django.views.generic import (
                                   DetailView,
                                   FormView,
                                   ListView,
+                                  RedirectView,
                                   UpdateView,
                                 )
 
