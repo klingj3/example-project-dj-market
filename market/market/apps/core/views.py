@@ -9,4 +9,4 @@ class MarketRegistrationView(RegistrationView):
 
     def get_success_url(self):
         messages.success(self.request, 'Account created!', extra_tags='fa fa-check')
-        return reverse('board:list')
+        return reverse('social:new')

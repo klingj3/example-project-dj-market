@@ -11,6 +11,7 @@ from django.utils.text import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField() 
     name = models.CharField(max_length=63)
     organization_name = models.CharField(max_length=127, blank=True)
     bio = models.TextField(blank=True)
