@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}All Sellers{% endblock title %}
+
+{% block content %}
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Go!</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      {% if object_list %}
+        <div class="card-columns">
+          {% for user_profile in object_list %}
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
+              <div class="card-body">
+                <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=user_profile.slug %}">{{ user_profile.name|truncatechars:60 }}</a></h5>
+                <h6 class="text-muted mb-3"><small>by <a href="#" class="text-muted">{{ user_profile.location }}</a></small></h6>
+                <h5 class="">${{ user_profile.bio|truncatechars:100}}</h5>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <h2 class="text-muted text-center my-5">
+          No user profiles here! :(
+        </h2>
+      {% endif %}
+    </div>
+  </div>
+
+  {% comment %} Pagination navigation {% endcomment %}
+  {% if is_paginated %}
+    <div class="row">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+              {% if  i == page_obj.number %}
+                <li class="page-item active">
+                  <span class="page-link">{{ i }}</span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Next</span>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+{% endblock content %}
