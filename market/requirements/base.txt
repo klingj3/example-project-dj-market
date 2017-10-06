@@ -1,6 +1,9 @@
 # Latest release django
 django==1.11.5
 
+# For configuration handling
+python-decouple==3.1
+
 # For processing JS and CSS
 django-compressor==2.2
 django-libsass==0.7
@@ -10,6 +13,12 @@ django-crispy-forms==1.6.1
 
 # For better slugs
 django-autoslug==1.9.3
+
+# For image handling
+Pillow==4.3.0
+
+# Tagulous only supports Django 1.11 on this branch
+git+git://github.com/radiac/django-tagulous.git@django-1_11#egg=django-tagulous
 
 django-geoposition==0.3.0
 django-prices==0.6.2

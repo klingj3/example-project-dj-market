@@ -10,13 +10,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 For deployment see https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 """
 
+from decouple import config
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'secret'
+SECRET_KEY = config('SECRET_KEY')
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
@@ -116,7 +117,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-debug
-            'debug': DEBUG,
+            'debug': config('DEBUG', cast=bool),
             # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/1.11/ref/templates/api/#loader-types
             #'loaders': [
@@ -261,15 +262,15 @@ ADMIN_URL = r'^admin/'
 
 # Geoposition settings
 INSTALLED_APPS += ['geoposition']
-GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ['GEOPOSITION_GOOGLE_MAPS_API_KEY']
+GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
 # django-registration settings
 INSTALLED_APPS += ['registration']  # Note that this has to come after our local apps to avoid template issues
 ACCOUNT_ACTIVATION_DAYS = 365
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'blahblah@fakeemail.biz'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_PORT = 1025
 

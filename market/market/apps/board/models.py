@@ -5,6 +5,7 @@ from autoslug import AutoSlugField
 # from django_measurement.models import MeasurementField
 # from django_prices.models import PriceField
 from geoposition.fields import GeopositionField
+from tagulous.models import TagField
 
 
 class Post(models.Model):
@@ -20,6 +21,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)
+    tags = TagField()
 
     # price = PriceField(currency='USD', max_digits=5, decimal_places=2)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
