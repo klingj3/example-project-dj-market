@@ -6,7 +6,7 @@ from market.apps.board.models import Post
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'body', 'price', 'unit', 'location',]
+        fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location',]
 
     def form_valid(self, form):
         # Set with current user. TODO: Create a mixin for this

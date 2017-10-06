@@ -23,4 +23,4 @@ class UserProfile(models.Model):
     social_url = models.CharField(max_length=300, unique=True)
 
     def __unicode__(self):
-        return u"%s" % self.user
+        return "%s".format(self.user)

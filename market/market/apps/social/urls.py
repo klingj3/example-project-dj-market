@@ -1,11 +1,9 @@
 from django.conf.urls import url
 
-from market.apps.social.views import (
-                                    ProfileDetailView,
-                                    UserProfileCreateView,
-                                    UserProfileUpdateView,
-                                    ProfileBrowseView,
-                                    )
+from market.apps.social.views import (ProfileDetailView,
+                                      UserProfileCreateView,
+                                      UserProfileUpdateView,
+                                      ProfileBrowseView)
 
 
 app_name = 'social'

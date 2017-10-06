@@ -39,6 +39,7 @@ DJANGO_APPS = [
 
 INSTALLED_APPS = [
     'crispy_forms',
+    'django_extensions',
 ]
 
 LOCAL_APPS = [

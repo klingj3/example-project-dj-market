@@ -11,8 +11,7 @@ django-libsass==0.7
 # For nicer forms
 django-crispy-forms==1.6.1
 
-# For better slugs
-django-autoslug==1.9.3
+django-extensions==1.9.1
 
 # For image handling
 Pillow==4.3.0

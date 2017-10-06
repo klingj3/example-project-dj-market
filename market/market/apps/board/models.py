@@ -1,23 +1,23 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from autoslug import AutoSlugField
+from django_extensions.db.models import (ActivatorModel,
+                                         TimeStampedModel)
 # from django_measurement.models import MeasurementField
 # from django_prices.models import PriceField
 from geoposition.fields import GeopositionField
 from tagulous.models import TagField
 
 
-class Post(models.Model):
+class Post(ActivatorModel, TimeStampedModel):
     UNIT_CHOICES = (
         ('pound', 'POUND'),
         ('gallon', 'GALLON'),
         ('each', 'EACH'),
     )
 
-    user = models.ForeignKey(User, editable=False)
-    slug = AutoSlugField(unique=True, unique_with=['user'])
-    modified = models.DateTimeField(auto_now_add=True)
+
+    # todo: published field
 
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)
