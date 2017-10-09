@@ -142,6 +142,26 @@ TEMPLATES = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+# django-tagulous settings
+INSTALLED_APPS += ['tagulous']
+# TODO: use django-compressor to optimize these,
+# TAGULOUS_AUTOCOMPLETE_JS = (
+#     'tagulous/lib/jquery.js',
+#     'tagulous/lib/select2-3/select2.min.js',
+#     'tagulous/tagulous.js',
+#     'tagulous/adaptor/select2.js',
+# )
+
+# TODO: load CSS with support for Bootstrap 4
+# TAGULOUS_AUTOCOMPLETE_CSS = {
+#     'all': ['tagulous/lib/select2-3/select2.css']
+# }
+
+
+# django-prices settings
+INSTALLED_APPS += ['django_prices']
+
+
 # STATIC FILE CONFIGURATION
 # ---
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#static-root

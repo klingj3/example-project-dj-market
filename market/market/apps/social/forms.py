@@ -1,12 +1,13 @@
 from django import forms
 
+from market.apps.core.mixins import CreateWithOwnerMixin
 from market.apps.social.models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'avatar', 'organization_name', 'bio', 'location', 'public_email', 'public_website', 'social_url')
+        fields = ['name', 'avatar', 'organization_name', 'bio', 'location', 'public_email', 'public_website', 'social_url']
         # labels ={
         #     'name':"Your Name",
         #     'organization_name':"Your Organization's Name",
@@ -49,16 +50,9 @@ class UserProfileForm(forms.ModelForm):
     #         pass
     #
     #     return avatar
-    #
-    # def save(self, user=None):
-    #     user_profile = super(UserProfileForm, self).save(commit=False)
-    #     if user:
-    #         user_profile.user = user
-    #     user_profile.save()
-    #     return user_profile
 
 
-class UserProfileEditForm(forms.ModelForm):
+class UserProfileEditForm(CreateWithOwnerMixin, forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['name', 'organization_name', 'bio', 'location', 'public_email', 'public_website']
@@ -69,10 +63,3 @@ class UserProfileEditForm(forms.ModelForm):
         #     'public_email':_("Public Email"),
         #     'public_website':_("External Website"),
         # }
-
-    # def save(self, user=None):
-    #     user_profile = super(UserProfileForm, self).save(commit=False)
-    #     if user:
-    #         user_profile.user = user
-    #     user_profile.save()
-    #     return user_profile
