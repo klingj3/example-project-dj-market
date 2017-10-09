@@ -8,16 +8,20 @@ from django_extensions.db.models import (ActivatorModel,
 from geoposition.fields import GeopositionField
 from tagulous.models import TagField
 
+from market.apps.core.models import RandomSlugModel
 
-class Post(ActivatorModel, TimeStampedModel):
+
+class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
     UNIT_CHOICES = (
         ('pound', 'POUND'),
         ('gallon', 'GALLON'),
         ('each', 'EACH'),
     )
 
+    owner = models.ForeignKey(User)
 
     # todo: published field
+    # todo: Remove activatormodel?
 
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)

@@ -10,7 +10,8 @@ from django.views.generic import (DetailView,
                                   RedirectView,
                                   UpdateView)
 
-from market.apps.core.mixins import UserIsOwnerMixin
+from market.apps.core.mixins import (CreateWithOwnerMixin,
+                                     OwnerRequiredMixin)
 from market.apps.social.forms import (UserProfileForm,
                                       UserProfileEditForm)
 from market.apps.social.models import UserProfile
@@ -28,20 +29,16 @@ class UserProfileDetailView(DetailView):
 
 
 # TODO: Profile automatically created based on seller status
-class UserProfileCreateView(FormView):
+class UserProfileCreateView(CreateWithOwnerMixin, FormView):
     form_class = UserProfileForm
     template_name = 'social/profile_form.html'
-
-    def form_valid(self, form):
-        form.save(self.request.user)
-        return super(UserProfileCreateView, self).form_valid(form)
 
     def get_success_url(self):
         messages.success(self.request, 'Account detail successfully updated!', extra_tags='fa fa-check')
         return reverse('board:list')
 
 
-class UserProfileUpdateView(UserIsOwnerMixin, UpdateView):
+class UserProfileUpdateView(OwnerRequiredMixin, UpdateView):
     model = UserProfile
     form_class = UserProfileEditForm
     template_name = 'social/profile_form.html'

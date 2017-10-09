@@ -1,18 +1,10 @@
 from django.forms import ModelForm
 
 from market.apps.board.models import Post
+from market.apps.core.mixins import CreateWithOwnerMixin
 
 
-class PostForm(ModelForm):
+class PostForm(CreateWithOwnerMixin, ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location',]
-
-    def form_valid(self, form):
-        # Set with current user. TODO: Create a mixin for this
-        self.object = form.save(commit=False)
-        if self.request.user.is_authenticated():
-            self.object.user = self.request.user
-        self.object.save()
-        
-        return super(PostForm, self).form_valid(form)

@@ -9,10 +9,3 @@ class RandomSlugModel(models.Model):
 
     class Meta:
         abstract = True
-
-
-class SingleOwnerModel(models.Model):
-    user = models.ForeignKey(User)
-
-    class Meta:
-        abstract = True

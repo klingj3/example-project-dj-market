@@ -10,10 +10,11 @@ from django.views.generic import (CreateView,
 
 from market.apps.board.forms import PostForm
 from market.apps.board.models import Post
-from market.apps.core.mixins import CreateByUserMixin
+from market.apps.core.mixins import (CreateWithOwnerMixin,
+                                     OwnerRequiredMixin)
 
 
-class PostCreateView(CreateByUserMixin, CreateView):
+class PostCreateView(CreateWithOwnerMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'board/post_form.html'
@@ -23,7 +24,7 @@ class PostCreateView(CreateByUserMixin, CreateView):
         return reverse('board:list')
 
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(OwnerRequiredMixin, DeleteView):
     model = Post
     template_name = 'board/post_delete.html'
 
@@ -39,7 +40,7 @@ class PostListView(ListView):
     paginate_by = 8
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(OwnerRequiredMixin, UpdateView):
     model = Post
 
 

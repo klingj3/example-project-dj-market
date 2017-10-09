@@ -17,7 +17,7 @@ django-extensions==1.9.1
 Pillow==4.3.0
 
 # Tagulous only supports Django 1.11 on this branch
-git+git://github.com/radiac/django-tagulous.git@django-1_11#egg=django-tagulous
+git+git://github.com/radiac/django-tagulous.git@feature/django-1_11#egg=django-tagulous
 
 django-geoposition==0.3.0
 django-prices==0.6.2
