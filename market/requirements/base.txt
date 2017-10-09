@@ -12,6 +12,7 @@ django-libsass==0.7
 django-crispy-forms==1.6.1
 
 django-extensions==1.9.1
+django-extra-views==0.9.0
 
 # For image handling
 Pillow==4.3.0
@@ -20,7 +21,5 @@ Pillow==4.3.0
 git+git://github.com/radiac/django-tagulous.git@feature/django-1_11#egg=django-tagulous
 
 django-geoposition==0.3.0
-django-prices==0.6.2
-django-measurement==2.4.0
 
 django-registration-redux==1.7
