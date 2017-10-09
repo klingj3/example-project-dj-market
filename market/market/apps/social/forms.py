@@ -1,9 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.core.files.images import get_image_dimensions
-from django.utils.safestring import mark_safe
-
-from crispy_forms.helper import FormHelper
 
 from market.apps.social.models import UserProfile
 
@@ -20,7 +15,7 @@ class UserProfileForm(forms.ModelForm):
         #     'public_website':"Website",
         #     'social_url':"Customize your url! [websiteurl]/sellers/...",
         # }
-    
+
     # Avatar cleaning code taken from here https://stackoverflow.com/questions/6396442/add-image-avatar-field-to-users-in-django
     # def clean_avatar(self):
     #     avatar = self.cleaned_data['avatar']

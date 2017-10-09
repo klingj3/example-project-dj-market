@@ -1,7 +1,5 @@
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
-from django.db import models
-from django.urls import reverse
 
 
 class CreateWithOwnerMixin(LoginRequiredMixin):

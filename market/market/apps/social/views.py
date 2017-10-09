@@ -1,19 +1,14 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden
-from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import (DetailView,
                                   FormView,
                                   ListView,
-                                  RedirectView,
                                   UpdateView)
 
 from market.apps.core.mixins import (CreateWithOwnerMixin,
                                      OwnerRequiredMixin)
-from market.apps.social.forms import (UserProfileForm,
-                                      UserProfileEditForm)
+from market.apps.social.forms import (UserProfileEditForm,
+                                      UserProfileForm)
 from market.apps.social.models import UserProfile
 
 
