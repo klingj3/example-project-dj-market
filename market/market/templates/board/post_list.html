@@ -24,7 +24,7 @@
               <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
               <div class="card-body">
                 <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                <h6 class="text-muted mb-3"><small>by <a href="#" class="text-muted">{{ post.user }}</a></small></h6>
+                <h6 class="text-muted mb-3"><small>by <a href="#" class="text-muted">{{ post.user.name }}</a></small></h6>
                 <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
               </div>
             </div>

@@ -1,29 +1,40 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
-from django.views.generic import (CreateView,
-                                  DeleteView,
+from django.views.generic import (DeleteView,
                                   DetailView,
                                   ListView,
-                                  TemplateView,
-                                  UpdateView)
+                                  TemplateView)
 
-from market.apps.board.forms import PostForm
-from market.apps.board.models import Post
-from market.apps.core.mixins import CreateByUserMixin
+from extra_views import (CreateWithInlinesView,
+                         InlineFormSet,
+                         UpdateWithInlinesView)
+
+from market.apps.board.forms import (PostForm,
+                                     PostUpdateForm)
+from market.apps.board.models import (Post,
+                                      PostImage)
+from market.apps.core.mixins import (CreateWithOwnerMixin,
+                                     OwnerRequiredMixin)
 
 
-class PostCreateView(CreateByUserMixin, CreateView):
+class ImagesInline(InlineFormSet):
+    model = PostImage
+    fields = ['image']
+    max_num = 5
+    # can_delete = False
+
+
+class PostCreateView(CreateWithOwnerMixin, CreateWithInlinesView):
     model = Post
+    inlines = [ImagesInline]
     form_class = PostForm
     template_name = 'board/post_form.html'
 
     def get_success_url(self):
         messages.success(self.request, 'Posting successfully created!', extra_tags='fa fa-check')
-        return reverse('board:list')
+        return self.object.get_absolute_url()
 
 
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(OwnerRequiredMixin, DeleteView):
     model = Post
     template_name = 'board/post_delete.html'
 
@@ -39,8 +50,14 @@ class PostListView(ListView):
     paginate_by = 8
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     model = Post
+    inlines = [ImagesInline]
+    form_class = PostUpdateForm
+
+    def get_success_url(self):
+        messages.success(self.request, 'Posting successfully updated!', extra_tags='fa fa-check')
+        return self.object.get_absolute_url()
 
 
 class TestView(TemplateView):

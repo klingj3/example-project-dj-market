@@ -1,30 +1,45 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
-from autoslug import AutoSlugField
-# from django_measurement.models import MeasurementField
-# from django_prices.models import PriceField
+from django_extensions.db.models import (ActivatorModel,
+                                         TimeStampedModel)
 from geoposition.fields import GeopositionField
+from tagulous.models import TagField
+
+from market.apps.core.models import RandomSlugModel
 
 
-class Post(models.Model):
+class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
     UNIT_CHOICES = (
         ('pound', 'POUND'),
         ('gallon', 'GALLON'),
         ('each', 'EACH'),
     )
 
-    user = models.ForeignKey(User, editable=False)
-    slug = AutoSlugField(unique=True, unique_with=['user'])
-    modified = models.DateTimeField(auto_now_add=True)
+    # todo: custom queryset to get active posts
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # todo: published field
+    # todo: Remove activatormodel?
 
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)
 
-    # price = PriceField(currency='USD', max_digits=5, decimal_places=2)
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    # unit = MeasurementField()
+    # TODO: Use autocomplete_initial=True and specify preset tags?
+    tags = TagField(max_count=10, force_lowercase=True, space_delimiter=False, blank=True)
+
+    price = models.DecimalField(max_digits=7, decimal_places=2)
     unit = models.CharField(max_length=80, choices=UNIT_CHOICES, default='each')
 
     # location = models.CharField(max_length=5)
     location = GeopositionField()
+
+    def get_absolute_url(self):
+        return reverse('board:detail', kwargs={'slug': self.slug})
+
+
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(blank=True)

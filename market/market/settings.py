@@ -10,13 +10,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 For deployment see https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 """
 
+from decouple import config
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'secret'
+SECRET_KEY = config('SECRET_KEY')
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
@@ -38,6 +39,7 @@ DJANGO_APPS = [
 
 INSTALLED_APPS = [
     'crispy_forms',
+    'django_extensions',
 ]
 
 LOCAL_APPS = [
@@ -116,7 +118,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-debug
-            'debug': DEBUG,
+            'debug': config('DEBUG', cast=bool),
             # See: https://docs.djangoproject.com/en/1.11/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/1.11/ref/templates/api/#loader-types
             #'loaders': [
@@ -138,6 +140,26 @@ TEMPLATES = [
 
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# django-tagulous settings
+INSTALLED_APPS += ['tagulous']
+# TODO: use django-compressor to optimize these,
+# TAGULOUS_AUTOCOMPLETE_JS = (
+#     'tagulous/lib/jquery.js',
+#     'tagulous/lib/select2-3/select2.min.js',
+#     'tagulous/tagulous.js',
+#     'tagulous/adaptor/select2.js',
+# )
+
+# TODO: load CSS with support for Bootstrap 4
+# TAGULOUS_AUTOCOMPLETE_CSS = {
+#     'all': ['tagulous/lib/select2-3/select2.css']
+# }
+
+
+# django-prices settings
+INSTALLED_APPS += ['django_prices']
 
 
 # STATIC FILE CONFIGURATION
@@ -261,15 +283,15 @@ ADMIN_URL = r'^admin/'
 
 # Geoposition settings
 INSTALLED_APPS += ['geoposition']
-GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ['GEOPOSITION_GOOGLE_MAPS_API_KEY']
+GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
 # django-registration settings
 INSTALLED_APPS += ['registration']  # Note that this has to come after our local apps to avoid template issues
 ACCOUNT_ACTIVATION_DAYS = 365
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'blahblah@fakeemail.biz'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_PORT = 1025
 

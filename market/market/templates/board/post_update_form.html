@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block title %}User Account Details{% endblock title %}
+{% block title %}All listings{% endblock title %}
 
 {% block content %}
   <div class="row">
@@ -11,7 +11,10 @@
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Create Profile</button>
+        {% for inline in inlines %}
+          {{ inline|crispy }}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Update Post</button>
       </form>
     </div>
   </div>

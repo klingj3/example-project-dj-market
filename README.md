@@ -14,11 +14,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-3. Set the environment variable for your Google Maps API key.
-```bash
-export GOOGLE_MAPS_API_KEY=<your api key>
-```
-
 ## Useful Commands
 * Run the server!
 ```bash
