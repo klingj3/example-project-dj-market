@@ -17,6 +17,8 @@ class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
         ('each', 'EACH'),
     )
 
+    # todo: custom queryset to get active posts
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # todo: published field
@@ -25,7 +27,7 @@ class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
     title = models.CharField(max_length=300)
     body = models.TextField(max_length=5000)
 
-    # TODO: Use autocomplete_initial=True and specify preset tags
+    # TODO: Use autocomplete_initial=True and specify preset tags?
     tags = TagField(max_count=10, force_lowercase=True, space_delimiter=False, blank=True)
 
     price = models.DecimalField(max_digits=7, decimal_places=2)
