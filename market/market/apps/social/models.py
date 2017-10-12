@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 from market.apps.core.models import RandomSlugModel
 
@@ -17,3 +18,6 @@ class UserProfile(RandomSlugModel):
     public_email = models.EmailField(max_length=300, blank=True)
     public_website = models.URLField(max_length=300, blank=True)
     social_url = models.CharField(max_length=300, unique=True)
+
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'slug': self.social_url})

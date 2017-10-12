@@ -1,8 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import (DetailView,
                                   FormView,
                                   ListView,
+                                  RedirectView,
                                   UpdateView)
 
 from market.apps.core.mixins import (CreateWithOwnerMixin,
@@ -11,6 +15,16 @@ from market.apps.social.forms import (UserProfileEditForm,
                                       UserProfileForm)
 from market.apps.social.models import UserProfile
 
+class SelfRedirectView(LoginRequiredMixin, RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self):
+        profile = UserProfile.objects.get(owner=User)
+        if profile:
+            return redirect(profile)
+        else:
+            return redirect(UserProfileCreateView)
 
 class UserProfileListView(ListView):
     model = UserProfile
