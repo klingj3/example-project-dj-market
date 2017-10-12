@@ -8,7 +8,7 @@ from market.apps.core.models import RandomSlugModel
 class UserProfile(RandomSlugModel):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    avatar = models.ImageField(null=True)
+    #avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)
     organization_name = models.CharField(max_length=300, blank=True)
     bio = models.TextField(blank=True)

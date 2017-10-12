@@ -7,7 +7,7 @@ from market.apps.social.models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'avatar', 'organization_name', 'bio', 'location', 'public_email', 'public_website', 'social_url']
+        fields = ['name', 'organization_name', 'bio', 'location', 'public_email', 'public_website', 'social_url']
         # labels ={
         #     'name':"Your Name",
         #     'organization_name':"Your Organization's Name",
