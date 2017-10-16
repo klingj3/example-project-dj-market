@@ -7,15 +7,7 @@
 {% block content %}
   <div class="row">
     <div class="col-12">
-      <form action="{{ action }}" method="post">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form|crispy }}
-        {% for inline in inlines %}
-          {{ inline|crispy }}
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Create Post</button>
-      </form>
+      {% crispy form %}
     </div>
   </div>
 {% endblock content %}

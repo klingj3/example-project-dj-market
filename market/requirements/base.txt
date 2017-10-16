@@ -22,4 +22,6 @@ git+git://github.com/radiac/django-tagulous.git@feature/django-1_11#egg=django-t
 
 django-geoposition==0.3.0
 
-django-registration-redux==1.7
+
+django-allauth==0.33.0
+# django-registration-redux==1.7

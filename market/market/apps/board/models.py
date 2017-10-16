@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -19,7 +20,7 @@ class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
 
     # todo: custom queryset to get active posts
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     # todo: published field
     # todo: Remove activatormodel?

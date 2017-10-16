@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -5,9 +6,9 @@ from django.urls import reverse
 from autoslug import AutoSlugField
 
 
-class UserProfile(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
-    slug = AutoSlugField(populate_from='social_url')
+class UserProfile(RandomSlugModel):
+    owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)
     organization_name = models.CharField(max_length=300, blank=True)
