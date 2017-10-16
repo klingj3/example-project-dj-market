@@ -47,8 +47,8 @@ class UserProfileCreateView(FormView):
         return super(UserProfileCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Account detail successfully updated!', extra_tags='fa fa-check')
-        return reverse('board:list')
+        messages.success(self.request, 'Profile successfully created!', extra_tags='fa fa-check')
+        return reverse('social:me')
 
 
 class UserProfileUpdateView(OwnerRequiredMixin, UpdateView):
@@ -57,5 +57,5 @@ class UserProfileUpdateView(OwnerRequiredMixin, UpdateView):
     template_name = 'social/profile_form.html'
 
     def get_success_url(self):
-        messages.success(self.request, 'Account detail successfully updated!', extra_tags='fa fa-check')
-        return reverse('board:list')
+        messages.success(self.request, 'Profile successfully updated!', extra_tags='fa fa-check')
+        return reverse('social:me')

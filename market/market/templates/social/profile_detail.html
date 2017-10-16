@@ -9,9 +9,11 @@
       {% if userprofile %}
                 <div class="h-card col-3 float-left pr-3">
 		        <img class="centerImage" src="{% static 'img/placeholder.svg' %}" style="width:304px;height:304px" align="middle">
-		        <h1><a>{{ userprofile.name}}</a></h1>
-                <h2>{{ userprofile.organization }}</h2>
-		        <p>{{ userprofile.bio }}</p>
+		        <h2><a>{{ userprofile.name}}</a></h2>
+                <h4>{{ userprofile.organization_name }}</h4>
+		        <p>{{ userprofile.bio }}
+                    <br> <b>{{ userprofile.location }} </b>
+                </p>
                 <br><a href="{{ userprofile.public_website }}">{{ userprofile.public_website }}</a>
                 <br> {{ userprofile.public_email }}
 		        {% if user.is_authenticated %}
