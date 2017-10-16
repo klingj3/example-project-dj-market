@@ -20,11 +20,11 @@ class SelfRedirectView(LoginRequiredMixin, RedirectView):
     query_string = True
 
     def get_redirect_url(self):
-        profile = UserProfile.objects.get(owner=User)
+        profile = UserProfile.objects.get(owner=self.request.user)
         if profile:
-            return redirect(profile)
+            return reverse('social:detail', kwargs={'slug': profile.social_url})
         else:
-            return redirect(UserProfileCreateView)
+            return reverse('social:create')
 
 class UserProfileListView(ListView):
     model = UserProfile
@@ -38,9 +38,13 @@ class UserProfileDetailView(DetailView):
 
 
 # TODO: Profile automatically created based on seller status
-class UserProfileCreateView(CreateWithOwnerMixin, FormView):
+class UserProfileCreateView(FormView):
     form_class = UserProfileForm
     template_name = 'social/profile_form.html'
+
+    def form_valid(self, form):
+        form.save(self.request.user)
+        return super(UserProfileCreateView, self).form_valid(form)
 
     def get_success_url(self):
         messages.success(self.request, 'Account detail successfully updated!', extra_tags='fa fa-check')

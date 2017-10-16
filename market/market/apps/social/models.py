@@ -2,13 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
-from market.apps.core.models import RandomSlugModel
+from autoslug import AutoSlugField
 
 
-class UserProfile(RandomSlugModel):
+class UserProfile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    #avatar = models.ImageField(null=True)
+    slug = AutoSlugField(populate_from='social_url')
+    avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)
     organization_name = models.CharField(max_length=300, blank=True)
     bio = models.TextField(blank=True)
@@ -20,4 +20,4 @@ class UserProfile(RandomSlugModel):
     social_url = models.CharField(max_length=300, unique=True)
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'slug': self.social_url})
+        return reverse('social:detail', kwargs={'slug': self.social_url})

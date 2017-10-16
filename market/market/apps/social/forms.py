@@ -8,17 +8,25 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['name', 'organization_name', 'bio', 'location', 'public_email', 'public_website', 'social_url']
-        # labels ={
-        #     'name':"Your Name",
-        #     'organization_name':"Your Organization's Name",
-        #     'bio':"Bio - What should your buyers know?",
-        #     'public_email':"Public Email",
-        #     'public_website':"Website",
-        #     'social_url':"Customize your url! [websiteurl]/sellers/...",
-        # }
+
+    def save(self, user=None):
+        user_profile = super(UserProfileForm, self).save(commit=False)
+        if user:
+                user_profile.owner = user
+                user_profile.save()
+        return user_profile
+
+    # labels ={
+    #     'name':"Your Name",
+    #     'organization_name':"Your Organization's Name",
+    #     'bio':"Bio - What should your buyers know?",
+    #     'public_email':"Public Email",
+    #     'public_website':"Website",
+    #     'social_url':"Customize your url! [websiteurl]/sellers/...",
+    # }
 
     # Avatar cleaning code taken from here https://stackoverflow.com/questions/6396442/add-image-avatar-field-to-users-in-django
-    # def clean_avatar(self):
+    #def clean_avatar(self):
     #     avatar = self.cleaned_data['avatar']
     #
     #     try:
