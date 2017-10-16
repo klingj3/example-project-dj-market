@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}Detail{% endblock title %}
+{% block title %}{{ userprofile.name }}{% endblock title %}
+
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-    </div>
-  </div>
+
+      {% if userprofile %}
+                <div class="h-card col-3 float-left pr-3">
+		        <img class="centerImage" src="{% static 'img/placeholder.svg' %}" style="width:304px;height:304px" align="middle">
+		        <h2><a>{{ userprofile.name}}</a></h2>
+                <h4>{{ userprofile.organization_name }}</h4>
+		        <p>{{ userprofile.bio }}
+                    <br> <b>{{ userprofile.location }} </b>
+                </p>
+                <br><a href="{{ userprofile.public_website }}">{{ userprofile.public_website }}</a>
+                <br> {{ userprofile.public_email }}
+		        {% if user.is_authenticated %}
+                    <br><a class="btn btn-success" href="{% url 'social:update' userprofile.slug %}">Edit Profile</a>
+		        {% endif %}
+                </div>
+
+
+      {% else %}
+            <h2 class="text-muted text-center my-5">
+                No profile yet created
+            </h2>
+      {% endif %}
+
 {% endblock content %}
