@@ -6,6 +6,23 @@
 {% block content %}
   <div class="row">
     <div class="col-12">
+      <h1><a>{{ post.title}}</a></h1>
+      </br>
+      <p>
+        Sold by {{ post.user }}
+        </br>
+        ${{ post.price }} per {{ post.unit }}
+      </p>
+      <img src="{% static 'img/placeholder.svg' %}">
+      </br>
+      {% if request.user == post.user %}
+        <form action={% url 'board:delete' slug=post.slug %} method="delete">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">
+            Delete My Post
+          </button>
+        </form>
+      {% endif %}
     </div>
   </div>
 {% endblock content %}
