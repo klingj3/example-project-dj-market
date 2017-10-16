@@ -226,8 +226,8 @@ AUTHENTICATION_BACKENDS = [
 
 # Select the correct user model
 AUTH_USER_MODEL = 'core.User'
-#LOGIN_REDIRECT_URL = 'users:redirect'
-#LOGIN_URL = 'account_login'
+# Logged in users redirected here if they view login/signup pages
+LOGIN_REDIRECT_URL = 'board:list'
 
 
 # DJANGO-ALLAUTH CONFIGURATION
@@ -239,22 +239,11 @@ INSTALLED_APPS += ['allauth',
                    ]
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_FORMS = {
+#     'signup': 'market.apps.core.forms.SignupForm'
+# }
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-
-
-# DJANGO-REGISTRATION CONFIGURATION
-# ---
-# INSTALLED_APPS += ['registration']  # Note that this has to come after our local apps to avoid template issues
-# ACCOUNT_ACTIVATION_DAYS = 365
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_TLS = False
-# EMAIL_PORT = 1025
-#
-# LOGIN_REDIRECT_URL = 'board:list'
 
 
 # PASSWORD STORAGE SETTINGS
@@ -307,7 +296,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DJANGO-COMPRESSOR CONFIGURATION
 # ---
 INSTALLED_APPS += ['compressor']
-# COMPRESS_ENABLED = True
+# Enable compress when not debug
+COMPRESS_ENABLED = not DEBUG
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
@@ -318,7 +308,9 @@ STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 # ---
 # See: https://github.com/torchbox/django-libsass
 LIBSASS_SOURCE_COMMENTS = False
-# LIBSASS_OUTPUT_STYLE = 'compressed'
+# Use compressed output style when not debug
+if not DEBUG:
+    LIBSASS_OUTPUT_STYLE = 'compressed'
 
 
 # DJANGO-ADMIN CONFIGURATION

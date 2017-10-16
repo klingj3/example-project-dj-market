@@ -5,17 +5,14 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic.base import TemplateView
-
-from market.apps.core.views import MarketRegistrationView
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    # Account management
-    # url(r'^accounts/register/$', MarketRegistrationView.as_view(), name='registration_register'),
-    # url(r'^accounts/', include('registration.backends.simple.urls')),
+    # Remove logout confirmation
+    # Note: Needs to be changed to redirect to ACCOUNT_LOGOUT_REDIRECT_URL
+    # url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
 
 

@@ -1,17 +1,21 @@
 {% load compress %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <title>Farmers &mdash; {% block title %}Title here{% endblock title %}</title>
+  <title>Harvest Here &mdash; {% block title %}Title here{% endblock title %}</title>
 
   {% comment %} Meta tags {% endcomment %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Description goes here TODO">
   {% block meta %}{% endblock %}
+
+  {% comment %}
+    TODO: Favicons
+  {% endcomment %}
 
   {% comment %} Customized Bootstrap build {% endcomment %}
   {% compress css %}
@@ -37,18 +41,21 @@
     <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navItems">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a href="{% url 'board:list' %}" class="navbar-brand mr-auto">Logo</a>
+    <a href="{% url 'board:list' %}" class="navbar-brand mr-auto"><img src="{% static 'img/logo.svg' %}" height="30"></a>
 
     <div class="collapse navbar-collapse flex-sm-row-reverse" id="navItems">
       <div class="navbar-nav">
-        {% if user.is_authenticated %}
-          <a href="{% url 'board:create' %}" class="btn btn-outline-light mr-4"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Post</a>
-          <a href="#" class="nav-item nav-link font-weight-bold active"><i class="fa fa-user-circle mr-1" aria-hidden="true"></i>{{ user.username }}</a>
-          <a href="{% url 'account_logout' %}" class="nav-item nav-link">Logout</a>
-        {% else %}
-          <a href="{% url 'account_login' %}" class="nav-item nav-link">Login</a>
-          <a href="{% url 'account_signup' %}" class="nav-item nav-link">Register</a>
-        {% endif %}
+        {# url_name is the named url e.g., 'account_login' #}
+        {% with url_name=request.resolver_match.url_name %}
+          {% if user.is_authenticated %}
+            <a href="{% url 'board:create' %}" class="btn btn-outline-light mr-4"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Post</a>
+            <a href="#" class="nav-item nav-link font-weight-bold active"><i class="fa fa-user-circle mr-1" aria-hidden="true"></i>{{ user.username }}</a>
+            <a href="{% url 'account_logout' %}" class="nav-item nav-link">Logout</a>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="nav-item nav-link {% if url_name == 'account_login' %}active{% endif %}">Login</a>
+            <a href="{% url 'account_signup' %}" class="nav-item nav-link {% if url_name == 'account_signup' %}active{% endif %}">Register</a>
+          {% endif %}
+        {% endwith %}
       </div>
     </div>
   </div>
