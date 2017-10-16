@@ -9,6 +9,7 @@ from django.views.generic import (DetailView,
                                   RedirectView,
                                   UpdateView)
 
+from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithOwnerMixin,
                                      OwnerRequiredMixin)
 from market.apps.social.forms import (UserProfileEditForm,
@@ -35,6 +36,10 @@ class UserProfileListView(ListView):
 class UserProfileDetailView(DetailView):
     model = UserProfile
     template_name = 'social/profile_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileDetailView, self).get_context_data(**kwargs)
+        context['Posts'] = Post.objects.filter(owner=self.request.user)
+        return context
 
 
 # TODO: Profile automatically created based on seller status
