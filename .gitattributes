@@ -1,2 +1,2 @@
 # All text files will have LF line endings
-* text eol=lf
+* text=auto eol=lf

@@ -52,8 +52,8 @@
             <a href="#" class="nav-item nav-link font-weight-bold active"><i class="fa fa-user-circle mr-1" aria-hidden="true"></i>{{ user.username }}</a>
             <a href="{% url 'account_logout' %}" class="nav-item nav-link">Logout</a>
           {% else %}
-            <a href="{% url 'account_login' %}" class="nav-item nav-link {% if url_name == 'account_login' %}active{% endif %}">Login</a>
-            <a href="{% url 'account_signup' %}" class="nav-item nav-link {% if url_name == 'account_signup' %}active{% endif %}">Register</a>
+            <a href="{% url 'account_login' %}" class="nav-item nav-link{% if url_name == 'account_login' %} active{% endif %}">Login</a>
+            <a href="{% url 'account_signup' %}" class="nav-item nav-link{% if url_name == 'account_signup' %} active{% endif %}">Register</a>
           {% endif %}
         {% endwith %}
       </div>
