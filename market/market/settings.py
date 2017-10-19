@@ -225,7 +225,8 @@ AUTHENTICATION_BACKENDS = [
 #SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
 
 # Select the correct user model
-AUTH_USER_MODEL = 'core.User'
+# AUTH_USER_MODEL = 'core.User'
+ACCOUNT_PASSWORD_MIN_LENGTH = 8
 # Logged in users redirected here if they view login/signup pages
 LOGIN_REDIRECT_URL = 'board:list'
 
@@ -239,12 +240,13 @@ INSTALLED_APPS += ['allauth',
                    ]
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_FORMS = {
-#     'signup': 'market.apps.core.forms.SignupForm'
-# }
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_FORMS = {
+    'signup': 'market.apps.core.forms.SignupForm'
+}
+# User display value is name from the associated profile
+ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
 
 # PASSWORD STORAGE SETTINGS
 # ---
