@@ -224,9 +224,7 @@ AUTHENTICATION_BACKENDS = [
 #ACCOUNT_ADAPTER = 'market.users.adapters.AccountAdapter'
 #SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
 
-# Select the correct user model
-# AUTH_USER_MODEL = 'core.User'
-ACCOUNT_PASSWORD_MIN_LENGTH = 8
+ACCOUNT_PASSWORD_MIN_LENGTH = 7
 # Logged in users redirected here if they view login/signup pages
 LOGIN_REDIRECT_URL = 'board:list'
 
@@ -243,9 +241,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 ACCOUNT_FORMS = {
-    'signup': 'market.apps.core.forms.SignupForm'
+    'login': 'market.apps.core.forms.MarketLoginForm',
+    'signup': 'market.apps.core.forms.MarketSignupForm',
 }
+# We use a custom signup form but this is an integrated way to customize the behavior afterward
+ACCOUNT_SIGNUP_FORM_CLASS = 'market.apps.social.forms.UserProfileForm'
 # User display value is name from the associated profile
+# TODO: Put this on the UserProfile model
 ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
 
 # PASSWORD STORAGE SETTINGS

@@ -14,12 +14,30 @@ from crispy_forms.layout import (Div,
 from market.apps.core.models import UserProfile
 
 
-class SignupForm(SignupForm):
+class MarketLoginForm(LoginForm):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                'login',
+                'password'
+            ),
+            FormActions(
+                Submit('submit', 'Log in', css_class='btn btn-success'),
+            ),
+        )
+
+
+class MarketSignupForm(SignupForm):
     type = forms.ChoiceField(choices=UserProfile.ACCOUNT_TYPE_CHOICES)
     name = forms.CharField(max_length=200)
 
     def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
@@ -35,11 +53,3 @@ class SignupForm(SignupForm):
                 Submit('submit', 'Create an account', css_class='btn btn-success'),
             ),
         )
-
-    # TODO: Use post_save to create profile
-    def save(self, request):
-        super(SignupForm, self).save(request)
-
-        # Automatically create user profile
-        profile = UserProfile.objects.create(user=user, type=self.cleaned_data['type'], name=self.cleaned_data['name'])
-        profile.save()

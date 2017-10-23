@@ -6,8 +6,8 @@ from django.urls import reverse
 from autoslug import AutoSlugField
 
 
-class UserProfile(RandomSlugModel):
-    owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+class SocialProfile(RandomSlugModel):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)

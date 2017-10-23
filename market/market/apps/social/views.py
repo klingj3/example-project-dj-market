@@ -12,9 +12,8 @@ from django.views.generic import (DetailView,
 from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithOwnerMixin,
                                      OwnerRequiredMixin)
-from market.apps.social.forms import (UserProfileEditForm,
-                                      UserProfileForm)
-from market.apps.social.models import UserProfile
+# from market.apps.social.forms import SocialProfileEditForm
+from market.apps.social.models import SocialProfile
 
 class SelfRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
@@ -27,14 +26,14 @@ class SelfRedirectView(LoginRequiredMixin, RedirectView):
         else:
             return reverse('social:create')
 
-class UserProfileListView(ListView):
-    model = UserProfile
+class SocialProfileListView(ListView):
+    model = SocialProfile
     template_name = 'social/browse.html'
     paginate_by = 8
 
 
-class UserProfileDetailView(DetailView):
-    model = UserProfile
+class SocialProfileDetailView(DetailView):
+    model = SocialProfile
     template_name = 'social/profile_detail.html'
     def get_context_data(self, **kwargs):
         context = super(UserProfileDetailView, self).get_context_data(**kwargs)
@@ -42,25 +41,12 @@ class UserProfileDetailView(DetailView):
         return context
 
 
-# TODO: Profile automatically created based on seller status
-class UserProfileCreateView(FormView):
-    form_class = UserProfileForm
-    template_name = 'social/profile_form.html'
-
-    def form_valid(self, form):
-        form.save(self.request.user)
-        return super(UserProfileCreateView, self).form_valid(form)
-
-    def get_success_url(self):
-        messages.success(self.request, 'Profile successfully created!', extra_tags='fa fa-check')
-        return reverse('social:me')
-
-
-class UserProfileUpdateView(OwnerRequiredMixin, UpdateView):
-    model = UserProfile
-    form_class = UserProfileEditForm
-    template_name = 'social/profile_form.html'
-
-    def get_success_url(self):
-        messages.success(self.request, 'Profile successfully updated!', extra_tags='fa fa-check')
-        return reverse('social:me')
+# class SocialProfileUpdateView(OwnerRequiredMixin, UpdateView):
+#     model = SocialProfile
+#     form_class = SocialProfileEditForm
+#     template_name = 'social/profile_form.html'
+#
+#     def get_success_url(self):
+#         messages.success(self.request, 'Account detail successfully updated!', extra_tags='fa fa-check')
+#         # TODO: Reverse to own detail view
+#         return reverse('board:list')

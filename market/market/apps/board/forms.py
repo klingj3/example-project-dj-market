@@ -18,7 +18,7 @@ class PostForm(CreateWithOwnerMixin, forms.ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
