@@ -15,7 +15,6 @@ from market.apps.core.models import UserProfile
 
 
 class MarketLoginForm(LoginForm):
-    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

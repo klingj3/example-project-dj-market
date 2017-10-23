@@ -1,15 +1,26 @@
 from django import forms
 
+from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import (Div,
-                                 Field,
+from crispy_forms.layout import (Field,
                                  Fieldset,
+                                 HTML,
                                  Layout,
-                                 MultiField,
                                  Submit)
 
 from market.apps.board.models import Post
 from market.apps.core.mixins import CreateWithOwnerMixin
+
+
+class ImageHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.layout = Layout(
+            'image'
+        )
+        # TODO: Template for image view
+        self.template = 'bootstrap/table_inline_formset.html'
+        self.form_tag = False
 
 
 class PostForm(CreateWithOwnerMixin, forms.ModelForm):
@@ -23,7 +34,7 @@ class PostForm(CreateWithOwnerMixin, forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             Fieldset(
-                'test',
+                '',
                 Field('title', placeholder='A snappy title'),
                 'body',
                 'tags',
@@ -31,7 +42,11 @@ class PostForm(CreateWithOwnerMixin, forms.ModelForm):
                 'unit',
                 'location'
             ),
+            FormActions(
+                Submit('submit', 'Create Post', css_class='btn btn-success'),
+            )
         )
+        self.helper.form_tag = False
 
 
 class PostUpdateForm(forms.ModelForm):
