@@ -6,7 +6,7 @@ from market.apps.social.models import SocialProfile
 
 class UserProfileForm(forms.Form):
     # This form is used in registration to automatically create both UserProfile and SocialProfile objects
-    # Note that this is NOT the actual form seen by the user
+    # Note that this is NOT the form actually seen by the user
 
     def signup(self, request, user):
         # Automatically create user profile for every user

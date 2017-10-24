@@ -31,9 +31,13 @@ class SocialProfileDetailView(DetailView):
     template_name = 'social/profile_detail.html'
 
     def get_object(self, *args, **kwargs):
-        # TODO: If no slug given, show Social Profile of logged in user
+        try:
+            obj = super().get_object(*args, **kwargs)
+        except AttributeError:
+            # If we don't get an object (e.g., no slug given), display user's own profile
+            obj = get_object_or_404(SocialProfile, owner=self.request.user.profile)
 
-        return super().get_object(*args, **kwargs)
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
