@@ -15,9 +15,8 @@ urlpatterns = [
     # url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
 
-
-    # Social management, could be merged under the accounts label later.
-    url(r'^social/', include('market.apps.social.urls')),
+    # Social app
+    url(r'^', include('market.apps.social.urls')),
 
     # Board app
     url(r'^', include('market.apps.board.urls')),

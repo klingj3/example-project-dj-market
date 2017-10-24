@@ -38,4 +38,4 @@ class OwnerRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         # Assumes this has a get_object attribute
         # Could test with hasattr()?
-        return self.request.user == self.get_object().owner
+        return self.request.user.profile == self.get_object().owner

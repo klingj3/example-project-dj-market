@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Settings{% endblock title %}
+
+{% block content %}
+  {% comment %}Side bar containing all settings{% endcomment %}
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Account Settings
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">A</li>
+          <li class="list-group-item">B</li>
+          <li class="list-group-item">C</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-8">
+      <h2>Title</h2>
+      {% block page_content %}
+      {% endblock page_content %}
+    </div>
+  </div>
+{% endblock content %}

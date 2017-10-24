@@ -12,6 +12,11 @@ class RandomSlugModel(models.Model):
 
 
 class UserProfile(models.Model):
+    """
+    This is an extension to the default User model, created on
+    registration for each user. All relations to a User are through
+    this model to maintain separation from the authentication backend.
+    """
     ACCOUNT_TYPE_CHOICES = (
         ('0', "I'm a buyer"),
         ('1', "I'm a seller"),

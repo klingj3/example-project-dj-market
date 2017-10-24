@@ -11,8 +11,13 @@ class UserProfileForm(forms.Form):
     def signup(self, request, user):
         # Automatically create user profile for every user
         profile = UserProfile.objects.create(user=user, type=self.cleaned_data['type'], name=self.cleaned_data['name'])
-        profile.save()
 
         # Create an empty SocialProfile if the user is a seller
-        if profile.type == UserProfile.ACCOUNT_TYPE_CHOICES[1]:
-            social_profile = SocialProfile.objects.create(user=user)
+        if profile.type == UserProfile.ACCOUNT_TYPE_CHOICES[1][0]:
+            SocialProfile.objects.create(owner=profile)
+
+
+class SocialProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = SocialProfile
+        fields = '__all__'

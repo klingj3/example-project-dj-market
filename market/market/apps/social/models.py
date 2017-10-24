@@ -6,7 +6,7 @@ from market.apps.core.models import (RandomSlugModel,
 
 
 class SocialProfile(RandomSlugModel):
-    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    owner = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
 
     avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)
@@ -17,7 +17,7 @@ class SocialProfile(RandomSlugModel):
     location = models.CharField(max_length=5)
     public_email = models.EmailField(max_length=300, blank=True)
     public_website = models.URLField(max_length=300, blank=True)
-    social_url = models.CharField(max_length=300, unique=True)
+    # social_url = models.CharField(max_length=300, unique=True)
 
     def get_absolute_url(self):
         return reverse('social:detail', kwargs={'slug': self.social_url})
