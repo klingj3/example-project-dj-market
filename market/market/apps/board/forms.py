@@ -9,24 +9,24 @@ from crispy_forms.layout import (Field,
                                  Submit)
 
 from market.apps.board.models import Post
-from market.apps.core.mixins import CreateWithOwnerMixin
 
 
 class ImageHelper(FormHelper):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.layout = Layout(
-            'image'
-        )
+        # self.layout = Layout(
+        #     'image'
+        # )
         # TODO: Template for image view
         self.template = 'bootstrap/table_inline_formset.html'
         self.form_tag = False
+        self.disable_csrf = True
 
 
-class PostForm(CreateWithOwnerMixin, forms.ModelForm):
+class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['title', 'body', 'tags', 'price', 'unit', 'location']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -52,5 +52,6 @@ class PostForm(CreateWithOwnerMixin, forms.ModelForm):
 class PostUpdateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location']
+        fields = '__all__'
+        # fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location']
 

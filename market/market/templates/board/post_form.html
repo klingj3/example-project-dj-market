@@ -9,7 +9,6 @@
     <div class="col-12">
       <form method="post">
         {% for image in inlines %}
-          {{ image.management_form|crispy }}
           {% crispy image image_helper %}
         {% endfor %}
         {% crispy form %}

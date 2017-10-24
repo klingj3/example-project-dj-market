@@ -1,12 +1,12 @@
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
-from autoslug import AutoSlugField
+from market.apps.core.models import (RandomSlugModel,
+                                     UserProfile)
 
 
 class SocialProfile(RandomSlugModel):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
 
     avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)

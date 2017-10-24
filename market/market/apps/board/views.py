@@ -20,6 +20,7 @@ from market.apps.core.mixins import (CreateWithOwnerMixin,
 class ImagesInline(InlineFormSet):
     model = PostImage
     fields = ['image']
+    extra = 5
     max_num = 5
     # can_delete = False
 

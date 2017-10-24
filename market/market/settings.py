@@ -224,7 +224,6 @@ AUTHENTICATION_BACKENDS = [
 #ACCOUNT_ADAPTER = 'market.users.adapters.AccountAdapter'
 #SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
 
-ACCOUNT_PASSWORD_MIN_LENGTH = 7
 # Logged in users redirected here if they view login/signup pages
 LOGIN_REDIRECT_URL = 'board:list'
 
@@ -271,6 +270,9 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 7,
+        },
     },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
