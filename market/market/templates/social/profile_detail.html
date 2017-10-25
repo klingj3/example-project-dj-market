@@ -1,50 +1,51 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}{{ userprofile.name }}{% endblock title %}
-
+{% block title %}{{ object.owner }}{% endblock title %}
 
 {% block content %}
-  <div>
-    {% if object %}
-      <div class="col-3 float-left pr-3">
-        <img class="centerImage" src="{% static 'img/placeholder.svg' %}" style="width:304px;height:304px"
-             align="middle">
-        <h2><a>{{ userprofile.name }}</a></h2>
-        <h4>{{ userprofile.organization_name }}</h4>
-        <p>{{ userprofile.bio }}
-          <br> <b>{{ userprofile.location }} </b>
-        </p>
-        <br><a href="{{ userprofile.public_website }}">{{ userprofile.public_website }}</a>
-        <br> {{ userprofile.public_email }}
-        {% if user.is_authenticated %}
-          <br><a class="btn btn-success" href="{% url 'social:update' %}">Edit Profile</a>
-        {% endif %}
-      </div>
-      <div class="col-6 float-right">
-        <h4 class="center">Posts by {{ userprofile.name }}</h4>
-        {% for post in Posts %}
+  <div class="row">
+    <div class="col-4">
+      {# TODO: Display at proper size #}
+      <img class="img-fluid" src="{% static 'img/placeholder.svg' %}">
+    </div>
+    <div class="col-8">
+      <h2>{{ object.owner }}</h2>
+      <p>TODO: Description here</p>
+      <p class="text-muted">
+        <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Location&emsp;|&emsp;Other information
+        <br>
+        <span class="text-warning">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star-half-o" aria-hidden="true"></i>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        </span>
+        (1234)
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      {# TODO: Use grid columns #}
+      <h5>Posts by {{ object.owner }}</h5>
+      {% if posts_list %}
+        {% for post in posts_list %}
           <div class="card">
             <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
             <div class="card-body">
-              <h5 class="card-title mb-1"><a
-                  href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-              <h6 class="text-muted mb-3">
-                <small>by <a href="#" class="text-muted">{{ post.user.name }}</a></small>
-              </h6>
+              <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
+              <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
               <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
             </div>
           </div>
         {% endfor %}
-      </div>
-
-
-    {% else %}
-      <h2 class="text-muted text-center my-5">
-        No profile yet created
-      </h2>
-    {% endif %}
+      {% else %}
+        <h2 class="text-muted text-center my-5">
+          No posts yet!
+        </h2>
+      {% endif %}
+    </div>
   </div>
 {% endblock content %}
-
-{% block footer %} {% endblock footer %}

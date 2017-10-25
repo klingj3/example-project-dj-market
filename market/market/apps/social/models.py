@@ -6,7 +6,7 @@ from market.apps.core.models import (RandomSlugModel,
 
 
 class SocialProfile(RandomSlugModel):
-    owner = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    owner = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='social')
 
     avatar = models.ImageField(null=True)
     name = models.CharField(max_length=200)

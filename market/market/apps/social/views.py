@@ -41,7 +41,7 @@ class SocialProfileDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['Posts'] = Post.objects.filter(owner=self.request.user.profile)
+        context['posts_list'] = Post.objects.filter(owner=self.request.user.profile)
         return context
 
 

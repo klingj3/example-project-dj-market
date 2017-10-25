@@ -26,3 +26,6 @@ class UserProfile(models.Model):
 
     type = models.CharField(max_length=1, choices=ACCOUNT_TYPE_CHOICES, default='0')
     name = models.CharField('name', max_length=200)
+
+    def __str__(self):
+        return self.name
