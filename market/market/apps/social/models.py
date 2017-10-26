@@ -13,7 +13,7 @@ class SocialProfile(RandomSlugModel):
     bio = models.TextField(max_length=2000, blank=True)
 
     # Location to be changed here, same as in posts.
-    location = models.CharField(max_length=5, blank=True)
+    location = models.CharField(max_length=5, blank=True, help_text='This will also be used as the default location for your posts.')
     #
     # def get_absolute_url(self):
     #     return reverse('social:detail', kwargs={'slug': self.social_url})

@@ -6,7 +6,7 @@
 {% block content %}
   {% comment %}Side bar containing all settings{% endcomment %}
   <div class="row">
-    <div class="col-3">
+    <div class="col-12 col-sm-3">
       <div class="card mb-3">
         <div class="card-header">Seller Settings</div>
         <div class="list-group list-group-flush">
@@ -15,7 +15,7 @@
           {% endwith %}
         </div>
       </div>
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-header">Account Settings</div>
         <div class="list-group list-group-flush">
           {% with url_name=request.resolver_match.view_name %}
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-12 col-sm-9">
       <h3>{% block page_title %}{% endblock page_title %}</h3>
       <hr>
       {% block page_content %}
