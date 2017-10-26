@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -7,10 +7,12 @@ from django_extensions.db.models import (ActivatorModel,
 from geoposition.fields import GeopositionField
 from tagulous.models import TagField
 
-from market.apps.core.models import RandomSlugModel
+from market.apps.core.models import (RandomSlugModel,
+                                     UserProfile)
 
 
-class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
+# TODO: ActivatorModel
+class Post(RandomSlugModel, TimeStampedModel):
     UNIT_CHOICES = (
         ('pound', 'POUND'),
         ('gallon', 'GALLON'),
@@ -19,7 +21,7 @@ class Post(RandomSlugModel, ActivatorModel, TimeStampedModel):
 
     # todo: custom queryset to get active posts
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     # todo: published field
     # todo: Remove activatormodel?

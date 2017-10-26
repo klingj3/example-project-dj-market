@@ -7,14 +7,11 @@
 {% block content %}
   <div class="row">
     <div class="col-12">
-      <form action="{{ action }}" method="post">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form|crispy }}
-        {% for inline in inlines %}
-          {{ inline|crispy }}
+      <form method="post">
+        {% for image in inlines %}
+          {% crispy image image_helper %}
         {% endfor %}
-        <button type="submit" class="btn btn-primary">Create Post</button>
+        {% crispy form %}
       </form>
     </div>
   </div>

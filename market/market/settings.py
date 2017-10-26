@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
+# Site ID for allauth
+SITE_ID = 1
+
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
                  'localhost',
@@ -29,7 +32,10 @@ ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
 # APP CONFIGURATION
 # ---
 DJANGO_APPS = [
+    # For authorization and registration
     'django.contrib.auth',
+    'django.contrib.sites',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'market',
     'market.apps.board',
+    'market.apps.core',
     'market.apps.social',
 ]
 
@@ -142,7 +149,8 @@ TEMPLATES = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-# django-tagulous settings
+# DJANGO-TAGULOUS CONFIGURATION
+# ---
 INSTALLED_APPS += ['tagulous']
 # TODO: use django-compressor to optimize these,
 # TAGULOUS_AUTOCOMPLETE_JS = (
@@ -158,7 +166,8 @@ INSTALLED_APPS += ['tagulous']
 # }
 
 
-# django-prices settings
+# DJANGO-PRICES CONFIGURATION
+# ---
 INSTALLED_APPS += ['django_prices']
 
 
@@ -197,6 +206,50 @@ ROOT_URLCONF = 'market.urls'
 WSGI_APPLICATION = 'market.wsgi.application'
 
 
+# AUTHENTICATION CONFIGURATION
+# ---
+AUTHENTICATION_BACKENDS = [
+    # allauth authentication
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # Still needed for Django Admin
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Some really nice defaults
+#ACCOUNT_AUTHENTICATION_METHOD = 'username'
+#ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+#ACCOUNT_ALLOW_REGISTRATION = True
+#ACCOUNT_ADAPTER = 'market.users.adapters.AccountAdapter'
+#SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
+
+# Logged in users redirected here if they view login/signup pages
+LOGIN_REDIRECT_URL = 'board:list'
+
+
+# DJANGO-ALLAUTH CONFIGURATION
+# ---
+INSTALLED_APPS += ['allauth',
+                   'allauth.account',
+                   'allauth.socialaccount'
+                   # 'allauth.socialaccount.providers.google'
+                   ]
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_FORMS = {
+    'login': 'market.apps.core.forms.MarketLoginForm',
+    'signup': 'market.apps.core.forms.MarketSignupForm',
+}
+# We use a custom signup form but this is an integrated way to customize the behavior afterward
+ACCOUNT_SIGNUP_FORM_CLASS = 'market.apps.social.forms.UserProfileForm'
+# Don't display the logout confirmation
+ACCOUNT_LOGOUT_ON_GET = True
+# User display value is name from the associated profile
+ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
+
 # PASSWORD STORAGE SETTINGS
 # ---
 # See https://docs.djangoproject.com/en/1.11/topics/auth/passwords/#using-argon2-with-django
@@ -218,6 +271,9 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 7,
+        },
     },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -228,30 +284,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# AUTHENTICATION CONFIGURATION
+# EMAIL CONFIGURATION
 # ---
-#AUTHENTICATION_BACKENDS = [
-#    'django.contrib.auth.backends.ModelBackend',
-#    'allauth.account.auth_backends.AuthenticationBackend',
-#]
+# For development, send all emails to the console instead of sending them
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Some really nice defaults
-#ACCOUNT_AUTHENTICATION_METHOD = 'username'
-#ACCOUNT_EMAIL_REQUIRED = True
-#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
-#ACCOUNT_ALLOW_REGISTRATION = True
-#ACCOUNT_ADAPTER = 'market.users.adapters.AccountAdapter'
-#SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
-
-# Custom user app defaults
-# Select the correct user model
-#AUTH_USER_MODEL = 'users.User'
-#LOGIN_REDIRECT_URL = 'users:redirect'
-#LOGIN_URL = 'account_login'
-
-# SLUGLIFIER
-# AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
 #INSTALLED_APPS += ['market.taskapp.celery.CeleryConfig']
@@ -263,36 +300,34 @@ AUTH_PASSWORD_VALIDATORS = [
 ########## END CELERY
 
 
-# django-compressor
+# DJANGO-COMPRESSOR CONFIGURATION
 # ---
 INSTALLED_APPS += ['compressor']
-# COMPRESS_ENABLED = True
+# Enable compress when not debug
+COMPRESS_ENABLED = not DEBUG
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
 STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 
-# django-libsass
+
+# DJANGO-LIBSASS CONFIGURATION
 # ---
 # See: https://github.com/torchbox/django-libsass
 LIBSASS_SOURCE_COMMENTS = False
-# LIBSASS_OUTPUT_STYLE = 'compressed'
+# Use compressed output style when not debug
+if not DEBUG:
+    LIBSASS_OUTPUT_STYLE = 'compressed'
 
+
+# DJANGO-ADMIN CONFIGURATION
 # Location of root django.contrib.admin URL
 ADMIN_URL = r'^admin/'
 
-# Geoposition settings
+
+# GEOPOSITION CONFIGURATION
+# ---
 INSTALLED_APPS += ['geoposition']
 GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
-# django-registration settings
-INSTALLED_APPS += ['registration']  # Note that this has to come after our local apps to avoid template issues
-ACCOUNT_ACTIVATION_DAYS = 365
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = False
-EMAIL_PORT = 1025
 
-LOGIN_REDIRECT_URL = 'board:list'

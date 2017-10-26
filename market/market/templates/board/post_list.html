@@ -24,7 +24,7 @@
               <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
               <div class="card-body">
                 <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                <h6 class="text-muted mb-3"><small>by <a href="#" class="text-muted">{{ post.user.name }}</a></small></h6>
+                <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
                 <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
               </div>
             </div>
@@ -58,7 +58,7 @@
             {% endif %}
 
             {% for i in paginator.page_range %}
-              {% if  i == page_obj.number %}
+              {% if i == page_obj.number %}
                 <li class="page-item active">
                   <span class="page-link">{{ i }}</span>
                 </li>

@@ -1,0 +1,20 @@
+/* This is Bootstrap with our customizations.
+   Custom styles should appear here, avoid modifying Bootstrap source.*/
+
+/* Customizations */
+
+// Modify the default Theme Colors
+// TODO: Customize all colors
+$theme-colors: (
+        primary: #20c997,
+        secondary: #868e96,
+        success: #31ad62,
+        info: #17a2b8,
+        warning: #ffc107,
+        danger: #dc3545,
+        light: #f8f9fa,
+        dark: #343a40
+);
+
+/* Include unchanged Bootstrap source */
+@import "bootstrap4_2/bootstrap";
