@@ -5,11 +5,10 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-4">
-      {# TODO: Display at proper size #}
-      <img class="img-fluid" src="{% static 'img/placeholder.svg' %}">
+    <div class="col-2">
+      <img class="h-100" src="{% static 'img/placeholder.svg' %}">
     </div>
-    <div class="col-8">
+    <div class="col-10">
       <h2>{{ object.owner }}</h2>
       <p>TODO: Description here</p>
       <p class="text-muted">
@@ -22,30 +21,54 @@
           <i class="fa fa-star-half-o" aria-hidden="true"></i>
           <i class="fa fa-star-o" aria-hidden="true"></i>
         </span>
-        (1234)
+        <span class="ml-1">(1234)</span>
       </p>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-12">
-      {# TODO: Use grid columns #}
-      <h5>Posts by {{ object.owner }}</h5>
-      {% if posts_list %}
-        {% for post in posts_list %}
-          <div class="card">
-            <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
-            <div class="card-body">
-              <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-              <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-              <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
-            </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <h2 class="text-muted text-center my-5">
-          No posts yet!
-        </h2>
-      {% endif %}
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#sellerPosts" role="tab">Posts (123)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#sellerReviews" role="tab">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#sellerAbout" role="tab">About</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="sellerTabs">
+        <div class="tab-pane fade show active" id="sellerPosts" role="tabpanel">
+          {# TODO: Use grid columns #}
+          {% if posts_list %}
+            {% for post in posts_list %}
+              <div class="card">
+                <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
+                <div class="card-body">
+                  <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
+                  <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
+                  <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <h2 class="text-muted text-center my-5">
+              No posts yet!
+            </h2>
+          {% endif %}
+        </div>
+        <div class="tab-pane fade" id="sellerReviews" role="tabpanel">
+          reviews
+        </div>
+        <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
+          about
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12">
     </div>
   </div>
 {% endblock content %}

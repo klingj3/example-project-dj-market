@@ -54,4 +54,3 @@ class PostUpdateForm(forms.ModelForm):
         model = Post
         fields = '__all__'
         # fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location']
-

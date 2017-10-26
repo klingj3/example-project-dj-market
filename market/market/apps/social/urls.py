@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from market.apps.social.views import (SocialProfileDetailView,
+                                      SocialProfileSelfDetailView,
                                       # SocialProfileListView,
                                       SocialProfileUpdateView)
 
@@ -8,7 +9,7 @@ from market.apps.social.views import (SocialProfileDetailView,
 app_name = 'social'
 urlpatterns = [
     # url(r'^$', SocialProfileListView.as_view(), name='list'),
-    url(r'^profile/$', SocialProfileDetailView.as_view(), name='detail'),
+    url(r'^profile/$', SocialProfileSelfDetailView.as_view(), name='detail'),
     url(r'^profile/(?P<slug>[-\w]+)/$', SocialProfileDetailView.as_view(), name='detail'),
 
     # Profile is updated in settings

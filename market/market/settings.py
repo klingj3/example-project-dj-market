@@ -245,8 +245,9 @@ ACCOUNT_FORMS = {
 }
 # We use a custom signup form but this is an integrated way to customize the behavior afterward
 ACCOUNT_SIGNUP_FORM_CLASS = 'market.apps.social.forms.UserProfileForm'
+# Don't display the logout confirmation
+ACCOUNT_LOGOUT_ON_GET = True
 # User display value is name from the associated profile
-# TODO: Put this on the UserProfile model
 ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
 
 # PASSWORD STORAGE SETTINGS

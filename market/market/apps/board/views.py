@@ -14,7 +14,8 @@ from market.apps.board.forms import (ImageHelper,
 from market.apps.board.models import (Post,
                                       PostImage)
 from market.apps.core.mixins import (CreateWithOwnerMixin,
-                                     OwnerRequiredMixin)
+                                     OwnerRequiredMixin,
+                                     SellerRequiredMixin)
 
 
 class ImagesInline(InlineFormSet):
@@ -25,7 +26,7 @@ class ImagesInline(InlineFormSet):
     # can_delete = False
 
 
-class PostCreateView(CreateWithOwnerMixin, CreateWithInlinesView):
+class PostCreateView(CreateWithOwnerMixin, SellerRequiredMixin, CreateWithInlinesView):
     model = Post
     inlines = [ImagesInline]
     form_class = PostForm
@@ -65,7 +66,3 @@ class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     def get_success_url(self):
         messages.success(self.request, 'Posting successfully updated!', extra_tags='fa fa-check')
         return self.object.get_absolute_url()
-
-
-class TestView(TemplateView):
-    template_name = 'base.html'
