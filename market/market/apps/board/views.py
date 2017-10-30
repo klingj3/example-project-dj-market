@@ -33,9 +33,9 @@ class PostCreateView(CreateWithOwnerMixin, SellerRequiredMixin, CreateWithInline
     template_name = 'board/post_form.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['image_helper'] = ImageHelper()
-        return ctx
+        context = super().get_context_data(**kwargs)
+        context['image_helper'] = ImageHelper()
+        return context
 
     def get_success_url(self):
         messages.success(self.request, 'Post created!', extra_tags='fa fa-check')
@@ -44,7 +44,8 @@ class PostCreateView(CreateWithOwnerMixin, SellerRequiredMixin, CreateWithInline
 
 class PostDeleteView(OwnerRequiredMixin, DeleteView):
     model = Post
-    template_name = 'board/post_delete.html'
+    # TODO: Can this use a form?
+    template_name = 'board/post_confirm_delete.html'
 
     def get_success_url(self):
         messages.success(self.request, 'Post deleted!', extra_tags='fa fa-check')
@@ -122,9 +123,9 @@ class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     template_name = 'board/post_update_form.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['image_helper'] = ImageHelper()
-        return ctx
+        context = super().get_context_data(**kwargs)
+        context['image_helper'] = ImageHelper()
+        return context
 
     def get_success_url(self):
         messages.success(self.request, 'Post updated!', extra_tags='fa fa-check')

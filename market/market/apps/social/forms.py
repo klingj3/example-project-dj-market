@@ -1,12 +1,8 @@
 from django import forms
 
-from crispy_forms.bootstrap import FormActions
+from crispy_forms import bootstrap
+from crispy_forms import layout
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import (Field,
-                                 Fieldset,
-                                 HTML,
-                                 Layout,
-                                 Submit)
 
 from market.apps.core.models import UserProfile
 from market.apps.social.models import SocialProfile
@@ -21,7 +17,7 @@ class UserProfileForm(forms.Form):
         profile = UserProfile.objects.create(user=user, type=self.cleaned_data['type'], name=self.cleaned_data['name'])
 
         # Create an empty SocialProfile if the user is a seller
-        if profile.is_seller():
+        if profile.is_seller:
             SocialProfile.objects.create(owner=profile)
 
 
@@ -34,15 +30,15 @@ class SocialProfileUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            Fieldset(
+        self.helper.layout = layout.Layout(
+            layout.Fieldset(
                 '',
                 'avatar',
                 'tagline',
                 'bio',
                 'location'
             ),
-            FormActions(
-                Submit('submit', 'Update Profile', css_class='btn btn-success'),
+            bootstrap.FormActions(
+                layout.Submit('submit', 'Update profile', css_class='btn btn-success'),
             )
         )

@@ -42,7 +42,7 @@
       {% else %}
         <h2 class="text-muted text-center my-5">
           No posts here :(
-          {% if user.is_authenticated %}
+          {% if profile.is_seller %}
             <br>Why not <a href="{% url 'board:create' %}">make one?</a>
           {% endif %}
         </h2>

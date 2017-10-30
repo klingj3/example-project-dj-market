@@ -20,11 +20,11 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
     template_name = 'social/profile_detail.html'
 
     def get_object(self, *args, **kwargs):
-        return SocialProfile.objects.get(owner=self.request.user.profile)
+        return SocialProfile.objects.get(owner=self.request.profile)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts_list'] = Post.objects.filter(owner=self.request.user.profile)
+        context['posts_list'] = Post.objects.filter(owner=self.request.profile)
         return context
 
 
@@ -50,7 +50,7 @@ class SocialProfileUpdateView(SellerRequiredMixin, OwnerRequiredMixin, UpdateVie
     template_name = 'social/profile_update_form.html'
 
     def get_object(self, *args, **kwargs):
-        return SocialProfile.objects.get(owner=self.request.user.profile)
+        return SocialProfile.objects.get(owner=self.request.profile)
 
     def get_success_url(self):
         messages.success(self.request, 'Seller profile updated!', extra_tags='fa fa-check')

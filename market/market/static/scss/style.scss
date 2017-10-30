@@ -16,5 +16,14 @@ $theme-colors: (
         dark: #343a40
 );
 
+// Make sure the page is at least as tall as the window
+html, body {
+  height: 100%;
+}
+
+#container {
+  min-height: 100%;
+}
+
 /* Include unchanged Bootstrap source */
 @import "bootstrap4_2/bootstrap";
