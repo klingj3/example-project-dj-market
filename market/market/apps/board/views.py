@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.urls import reverse
 from django.views.generic import (DeleteView,
                                   DetailView,
                                   ListView,
@@ -38,13 +39,17 @@ class PostCreateView(CreateWithOwnerMixin, SellerRequiredMixin, CreateWithInline
         return ctx
 
     def get_success_url(self):
-        messages.success(self.request, 'Posting successfully created!', extra_tags='fa fa-check')
+        messages.success(self.request, 'Post created!', extra_tags='fa fa-check')
         return self.object.get_absolute_url()
 
 
 class PostDeleteView(OwnerRequiredMixin, DeleteView):
     model = Post
     template_name = 'board/post_delete.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Post deleted!', extra_tags='fa fa-check')
+        return reverse('board:list')
 
 
 class PostDetailView(DetailView):
@@ -62,7 +67,13 @@ class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     model = Post
     inlines = [ImagesInline]
     form_class = PostUpdateForm
+    template_name = 'board/post_update_form.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['image_helper'] = ImageHelper()
+        return ctx
 
     def get_success_url(self):
-        messages.success(self.request, 'Posting successfully updated!', extra_tags='fa fa-check')
+        messages.success(self.request, 'Post updated!', extra_tags='fa fa-check')
         return self.object.get_absolute_url()

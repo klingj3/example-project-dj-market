@@ -52,5 +52,24 @@ class PostForm(forms.ModelForm):
 class PostUpdateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
-        # fields = ['title', 'body', 'tags', 'activate_date', 'deactivate_date', 'price', 'unit', 'location']
+        fields = ['title', 'body', 'tags', 'price', 'unit', 'location']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                '',
+                Field('title', placeholder='A snappy title'),
+                'body',
+                'tags',
+                'price',
+                'unit',
+                'location'
+            ),
+            FormActions(
+                Submit('submit', 'Update Post', css_class='btn btn-success'),
+            )
+        )
+        self.helper.form_tag = False

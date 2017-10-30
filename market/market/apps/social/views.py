@@ -53,5 +53,5 @@ class SocialProfileUpdateView(SellerRequiredMixin, OwnerRequiredMixin, UpdateVie
         return SocialProfile.objects.get(owner=self.request.user.profile)
 
     def get_success_url(self):
-        messages.success(self.request, 'Seller profile updated successfully!', extra_tags='fa fa-check')
+        messages.success(self.request, 'Seller profile updated!', extra_tags='fa fa-check')
         return reverse('social:update')
