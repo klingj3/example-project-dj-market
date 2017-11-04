@@ -8,7 +8,7 @@ from django.views.generic import (DeleteView,
 from extra_views import (CreateWithInlinesView,
                          InlineFormSet,
                          UpdateWithInlinesView)
-
+from itertools import chain
 from market.apps.board.forms import (ImageHelper,
                                      PostForm,
                                      PostUpdateForm)
@@ -17,7 +17,6 @@ from market.apps.board.models import (Post,
 from market.apps.core.mixins import (CreateWithOwnerMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
-
 
 class ImagesInline(InlineFormSet):
     model = PostImage
@@ -63,6 +62,34 @@ class PostListView(ListView):
     paginate_by = 8
 
 
+class PostSearchView(ListView):
+    model = Post
+    template_name = 'board/post_list.html'
+    paginate_by = 8
+
+    def get_queryset(self):
+        try:
+            search_term = self.request.GET['q']
+            search_term = search_term.replace('+', ' ')
+            search_terms = search_term.split()
+        except:
+            search_term = ''
+        if (search_term != ''):
+            # First look for posts that matches exactly.
+            a = self.model.objects.filter(title__icontains=search_term)
+            b = self.model.objects.filter(tags=search_term)
+            object_list_explicit = list(set(chain(a, b)))
+
+            # Then look for posts that contain one of the search words
+            object_list_general = []
+            for term in search_terms:
+                a = self.model.objects.filter(title__icontains=term)
+                b = self.model.objects.filter(tags=term)
+                object_list_general = list(set(chain(a, b, object_list_general)))
+        else:
+            object_list_general = self.model.objects.all()
+        return object_list_general
+
 class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     model = Post
     inlines = [ImagesInline]
@@ -77,3 +104,5 @@ class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     def get_success_url(self):
         messages.success(self.request, 'Post updated!', extra_tags='fa fa-check')
         return self.object.get_absolute_url()
+
+

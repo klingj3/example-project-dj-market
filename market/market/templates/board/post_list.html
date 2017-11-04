@@ -4,16 +4,18 @@
 {% block title %}All Listings{% endblock title %}
 
 {% block content %}
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button">Go!</button>
-        </span>
-      </div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <form id="searchform" class="input-group" action="{% url 'board:search'%}" method="get" accept-charset="utf-8">
+              <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for..." aria-label="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </form>
+        </div>
     </div>
-  </div>
 
   <div class="row">
     <div class="col-12">
