@@ -7,7 +7,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <form id="searchform" class="input-group" action="{% url 'board:search'%}" method="get" accept-charset="utf-8">
-              <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for..." aria-label="Search for...">
+              <input class="form-control" id="searchbox" name="q" type="text" aria-label="Search for...">
                 <select class="form-control" id="sort" name="sort" type="text">
                     <option value = "" disabled selected hidden>Sort by...</option>
                     <option value="modified">Date (newest)</option>
@@ -40,12 +40,27 @@
           {% endfor %}
         </div>
       {% else %}
-        <h2 class="text-muted text-center my-5">
-          No posts here :(
-          {% if user.is_authenticated %}
-            <br>Why not <a href="{% url 'board:create' %}">make one?</a>
+          {% if object_list_general %}
+              <h2 class="text-muted text-center my-5">
+                  No posts match this description exactly. <br> Here are some related posts. </h2>
+              {% for post in object_list_general %}
+                <div class="card">
+                  <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
+                  <div class="card-body">
+                    <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
+                    <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
+                    <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
+                  </div>
+                </div>
+              {% endfor %}
+          {% else %}
+            <h2 class="text-muted text-center my-5">
+              No posts match this description :(
+              {% if user.is_authenticated %}
+                <br>Why not <a href="{% url 'board:create' %}">make one?</a>
+              {% endif %}
+            </h2>
           {% endif %}
-        </h2>
       {% endif %}
     </div>
   </div>
