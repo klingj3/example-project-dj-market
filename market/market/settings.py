@@ -53,6 +53,7 @@ LOCAL_APPS = [
     'market',
     'market.apps.board',
     'market.apps.core',
+    'market.apps.messaging',
     'market.apps.social',
 ]
 

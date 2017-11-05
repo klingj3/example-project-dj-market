@@ -1,0 +1,22 @@
+from django.conf import settings
+from django.db import models
+from django.urls import reverse
+
+from django_extensions.db.models import (ActivatorModel,
+                                         TimeStampedModel)
+from geoposition.fields import GeopositionField
+from tagulous.models import TagField
+
+from market.apps.core.models import (RandomSlugModel,
+                                     UserProfile)
+from market.apps.board.models import Post
+
+class Message(RandomSlugModel, TimeStampedModel):
+    sender = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='+')
+    subject = models.CharField(max_length=128)
+    referenced_post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.TextField(max_length=5000)
+    def get_absolute_url(self):
+        return reverse('messaging:detail', kwargs={'slug': self.slug})
+    
