@@ -1,48 +1,51 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load staticfiles %}
 
 {% block title %}All Listings{% endblock title %}
 
 {% block content %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <form id="searchform" class="input-group" action="{% url 'board:search'%}" method="get" accept-charset="utf-8">
-              <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for..." aria-label="Search for...">
-                <select class="form-control" id="sort" name="sort" type="text">
-                    <option value = "" disabled selected hidden>Sort by...</option>
-                    <option value="modified">Date (newest)</option>
-                    <option value="-modified">Date (oldest)</option>
-                    <option value="price">Price (lowest first)</option>
-                    <option value="-price">Price (highest first)</option>
-                  </select>
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </form>
-        </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <form class="input-group" action="{% url 'board:list' %}" method="get" accept-charset="utf-8">
+        <input class="form-control" name="q" type="text" placeholder="Search for...">
+        <select class="form-control" name="sort" type="text">
+          <option value="date-newest">Date (newest first)</option>
+          <option value="date-oldest">Date (oldest first)</option>
+          <option value="price-lowest">Price (lowest first)</option>
+          <option value="price-highest">Price (highest first)</option>
+        </select>
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </span>
+      </form>
     </div>
+  </div>
 
   <div class="row">
     <div class="col-12">
       {% if object_list %}
-        <div class="card-columns">
+        <div class="card-deck">
           {% for post in object_list %}
-            <div class="card">
+            {# TODO: Formatting is bad with only one post #}
+            <div class="card mb-4">
               <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
               <div class="card-body">
                 <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
                 <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-                <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
+                <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
               </div>
             </div>
+            {# Span required here for responsive card-deck hack #}
+            <span></span>
           {% endfor %}
         </div>
       {% else %}
         <h2 class="text-muted text-center my-5">
           No posts here :(
-          {% if user.is_authenticated %}
+          {% if profile.is_seller %}
             <br>Why not <a href="{% url 'board:create' %}">make one?</a>
           {% endif %}
         </h2>

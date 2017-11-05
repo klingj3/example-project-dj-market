@@ -39,7 +39,7 @@ class OwnerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         # Assumes this has a get_object attribute
         # Could test with hasattr()?
-        return self.request.user.profile == self.get_object().owner
+        return self.request.profile == self.get_object().owner
 
 
 class SellerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -52,4 +52,4 @@ class SellerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         # TODO: Use user groups instead
         # return self.request.user.groups.filter(name='Seller').exists()
-        return self.request.user.profile.is_seller()
+        return self.request.profile.is_seller

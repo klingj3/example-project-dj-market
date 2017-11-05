@@ -1,12 +1,8 @@
 from django import forms
 
-from crispy_forms.bootstrap import FormActions
+from crispy_forms import bootstrap
+from crispy_forms import layout
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import (Field,
-                                 Fieldset,
-                                 HTML,
-                                 Layout,
-                                 Submit)
 
 from market.apps.board.models import Post
 
@@ -32,18 +28,18 @@ class PostForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            Fieldset(
+        self.helper.layout = layout.Layout(
+            layout.Fieldset(
                 '',
-                Field('title', placeholder='A snappy title'),
+                layout.Field('title', placeholder='A snappy title'),
                 'body',
                 'tags',
-                'price',
+                bootstrap.PrependedAppendedText('price', '$', 'USD'),
                 'unit',
                 'location'
             ),
-            FormActions(
-                Submit('submit', 'Create Post', css_class='btn btn-success'),
+            bootstrap.FormActions(
+                layout.Submit('submit', 'Create post', css_class='btn btn-success'),
             )
         )
         self.helper.form_tag = False
@@ -57,19 +53,21 @@ class PostUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # TODO: Don't repeat from the PostForm
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            Fieldset(
+        self.helper.layout = layout.Layout(
+            layout.Fieldset(
                 '',
-                Field('title', placeholder='A snappy title'),
+                layout.Field('title', placeholder='A snappy title'),
                 'body',
                 'tags',
-                'price',
+                bootstrap.PrependedText('price', '$'),
                 'unit',
                 'location'
             ),
-            FormActions(
-                Submit('submit', 'Update Post', css_class='btn btn-success'),
+            bootstrap.FormActions(
+                layout.Submit('submit', 'Update post', css_class='btn btn-success'),
+                layout.HTML('<a class="btn btn-outline-secondary" href="{% url "board:detail" slug=object.slug %}">Cancel</a>'),
             )
         )
         self.helper.form_tag = False

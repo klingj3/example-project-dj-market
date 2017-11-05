@@ -70,6 +70,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom middleware
+    'market.apps.core.middleware.UserProfileMiddleware',
 ]
 
 
@@ -141,6 +144,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
+
+                # Custom context processors
+                'market.apps.core.context_processors.user_profile',
+
             ],
         },
     },
