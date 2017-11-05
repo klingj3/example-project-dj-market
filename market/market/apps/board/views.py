@@ -76,19 +76,21 @@ class PostSearchView(ListView):
             search_term = ''
         if (search_term != ''):
             # First look for posts that matches exactly.
-            a = self.model.objects.filter(title__icontains=search_term)
-            b = self.model.objects.filter(tags=search_term)
-            object_list_explicit = list(set(chain(a, b)))
+            # a = self.model.objects.filter(title__icontains=search_term)
+            # b = self.model.objects.filter(tags=search_term)
+            #object_list_explicit = list(set(chain(a, b)))
 
             # Then look for posts that contain one of the search words
             object_list_general = []
+            object_list_intersection = self.model.objects.all()
             for term in search_terms:
                 a = self.model.objects.filter(title__icontains=term)
                 b = self.model.objects.filter(tags=term)
+                object_list_intersection = list(set(object_list_intersection).intersection(set(chain(a, b))))
                 object_list_general = list(set(chain(a, b, object_list_general)))
         else:
-            object_list_general = self.model.objects.all()
-        return object_list_general
+            object_list_intersection = self.model.objects.all()
+        return object_list_intersection
 
 class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):
     model = Post
