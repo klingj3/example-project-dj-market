@@ -11,6 +11,20 @@ from market.apps.core.models import (RandomSlugModel,
                                      UserProfile)
 
 
+class PostManager(models.Manager):
+    def search(self, **kwargs):
+        qs = super().get_queryset()
+
+        # Split query into words, case insensitive search each field:
+        # owner name, title, body, tags, location
+
+        # Note: If no query is specified,
+        if kwargs.get('q', ''):
+            qs = qs.filter(name__icontains=kwargs['q'])
+
+        return qs
+
+
 # TODO: ActivatorModel
 class Post(RandomSlugModel, TimeStampedModel):
     UNIT_CHOICES = (
@@ -20,6 +34,7 @@ class Post(RandomSlugModel, TimeStampedModel):
     )
 
     # todo: custom queryset to get active posts
+    objects = PostManager()
 
     owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 

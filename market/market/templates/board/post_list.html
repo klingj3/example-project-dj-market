@@ -4,25 +4,31 @@
 {% block title %}All Listings{% endblock title %}
 
 {% block content %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <form id="searchform" class="input-group" action="{% url 'board:search'%}" method="get" accept-charset="utf-8">
-              <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search for..." aria-label="Search for...">
-                <select class="form-control" id="sort" name="sort" type="text">
-                    <option value = "" disabled selected hidden>Sort by...</option>
-                    <option value="modified">Date (newest)</option>
-                    <option value="-modified">Date (oldest)</option>
-                    <option value="price">Price (lowest first)</option>
-                    <option value="-price">Price (highest first)</option>
-                  </select>
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </form>
-        </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <form action="" method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    {% for obj in filter.qs %}
+        {{ obj.name }} - ${{ obj.price }}<br />
+    {% endfor %}
+{#      <form class="input-group" action="{% url 'board:list' %}" method="get" accept-charset="utf-8">#}
+{#        <input class="form-control" name="q" type="text" placeholder="Search for...">#}
+{#        <select class="form-control" name="sort" type="text">#}
+{#          <option value="date-newest">Date (newest first)</option>#}
+{#          <option value="date-oldest">Date (oldest first)</option>#}
+{#          <option value="price-lowest">Price (lowest first)</option>#}
+{#          <option value="price-highest">Price (highest first)</option>#}
+{#        </select>#}
+{#        <span class="input-group-btn">#}
+{#          <button class="btn btn-secondary" type="submit">#}
+{#            <i class="fa fa-search" aria-hidden="true"></i>#}
+{#          </button>#}
+{#        </span>#}
+{#      </form>#}
     </div>
+  </div>
 
   <div class="row">
     <div class="col-12">
