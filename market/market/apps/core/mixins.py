@@ -3,6 +3,17 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
 
 from market.apps.core.models import UserProfile
 
+class CreateWithSenderMixin(LoginRequiredMixin):
+    """
+    Injects the currently logged in user to the 'sender' field
+     of the form in this view.
+    """
+    # TODO: Determine best implementation of this
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+
+        form.instance.sender = UserProfile.objects.get(user=self.request.user)
+        return form
 
 class CreateWithOwnerMixin(LoginRequiredMixin):
     """

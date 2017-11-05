@@ -8,10 +8,10 @@
         <div class="col-12">
             <form id="searchform" class="input-group" action="{% url 'board:search'%}" method="get" accept-charset="utf-8">
               <input class="form-control" id="searchbox" name="q" type="text" aria-label="Search for...">
-                <select class="form-control" id="sort" name="sort" type="text">
+                <select class="col-xs-2" id="sort" name="sort" type="text">
                     <option value = "" disabled selected hidden>Sort by...</option>
-                    <option value="modified">Date (newest)</option>
-                    <option value="-modified">Date (oldest)</option>
+                    <option value="-modified">Date (newest)</option>
+                    <option value="modified">Date (oldest)</option>
                     <option value="price">Price (lowest first)</option>
                     <option value="-price">Price (highest first)</option>
                   </select>

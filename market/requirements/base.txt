@@ -24,7 +24,3 @@ Pillow==4.3.0
 git+git://github.com/radiac/django-tagulous.git@feature/django-1_11#egg=django-tagulous
 
 django-geoposition==0.3.0
-
-# For searching
-django-search-listview
-
