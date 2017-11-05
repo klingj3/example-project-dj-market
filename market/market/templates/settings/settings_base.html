@@ -19,8 +19,8 @@
         <div class="card-header">Account Settings</div>
         <div class="list-group list-group-flush">
           {% with url_name=request.resolver_match.view_name %}
-            <a href="#" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Emails</a>
-            <a href="#" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Password</a>
+            <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Emails</a>
+            <a href="{% url 'account_change_password' %}" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Password</a>
           {% endwith %}
         </div>
       </div>

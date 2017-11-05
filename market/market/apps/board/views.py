@@ -56,6 +56,15 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'board/post_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get most similar posts by tags
+        # TODO: Also weight by distance
+        # TODO: Search for posts with query based on this one
+        context['similar_posts'] = Post.objects.all()[:4]
+        return context
+
 
 class PostListView(ListView):
     model = Post

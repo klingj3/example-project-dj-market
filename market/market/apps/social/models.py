@@ -14,6 +14,6 @@ class SocialProfile(RandomSlugModel):
 
     # Location to be changed here, same as in posts.
     location = models.CharField(max_length=5, blank=True)
-    #
-    # def get_absolute_url(self):
-    #     return reverse('social:detail', kwargs={'slug': self.social_url})
+
+    def get_absolute_url(self):
+        return reverse('social:detail', kwargs={'slug': self.slug})
