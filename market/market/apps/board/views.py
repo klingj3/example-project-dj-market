@@ -62,93 +62,36 @@ class PostDetailView(DetailView):
         # Get most similar posts by tags
         # TODO: Also weight by distance
         # TODO: Search for posts with query based on this one
-        context['similar_posts'] = Post.objects.all()[:4]
+        context['similar_posts'] = self.model.objects.search(tags=self.object.tags.get_tag_list()).exclude(id=self.object.id)[:4]
         return context
-
-
-class PostListView(ListView):
-    model = Post
-    template_name = 'board/post_list.html'
-    paginate_by = 8
 
 
 class PostSearchView(ListView):
     model = Post
     template_name = 'board/post_list.html'
+
+    # No pagination for now, breaks searches
     # paginate_by = 8
 
-    # def get_queryset(self):
-    #     # TODO: Pre-process search query to
-    #     qs = self.model.objects.search()
-    #
-    #     # Sort by specified rule
-    #     sort_rule = self.request.GET.get('sort')
-    #     if sort_rule:
-    #         if sort_rule == 'date-newest':
-    #             qs = qs.order_by('modified')
-    #         elif sort_rule == 'date-oldest':
-    #             qs = qs.order_by('-modified')
-    #         elif sort_rule == 'price-lowest':
-    #             qs = qs.order_by('price')
-    #         elif sort_rule == 'price-highest':
-    #             qs = qs.order_by('-price')
-    #
-    #     return qs
+    def get_queryset(self):
+        # TODO: Pre-process search query for better usability
 
+        query = self.request.GET.get('q', '')
+        qs = self.model.objects.search(query=query)
 
-# TODO: No listview, only search. Show all if no query
-# class PostSearchView(ListView):
-#     model = Post
-#     template_name = 'board/post_search.html'
-#     paginate_by = 8
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         try:
-#             search_term = self.request.GET['q']
-#             search_term = search_term.replace('+', ' ')
-#             search_terms = search_term.split()
-#         except:
-#             search_term = ''
-#         context['past_query'] = search_term
-#
-#         try:
-#             sort_type = self.request.GET['sort']
-#         except:
-#             sort_type = 'modified'
-#
-#         if (search_term != ''):
-#             object_list_general = []
-#             for term in search_terms:
-#                 a = self.model.objects.filter(title__icontains=term)
-#                 b = self.model.objects.filter(tags=term)
-#                 object_list_general = list(set(chain(a, b, object_list_general)))
-#         else:
-#             object_list_general = self.model.objects.order_by(sort_type)
-#         context['object_list_general'] = object_list_general
-#
-#         return context
-#
-#     def get_queryset(self):
-#         try:
-#             sort_type = self.request.GET['sort']
-#         except:
-#             sort_type = 'modified'
-#         try:
-#             search_term = self.request.GET['q']
-#             search_term = search_term.replace('+', ' ')
-#             search_terms = search_term.split()
-#         except:
-#             search_term = ''
-#         if (search_term != ''):
-#             object_list_intersection = self.model.objects.order_by(sort_type)
-#             for term in search_terms:
-#                 a = self.model.objects.filter(title__icontains=term)
-#                 b = self.model.objects.filter(tags=term)
-#                 object_list_intersection = list(set(object_list_intersection).intersection(set(chain(a, b))))
-#         else:
-#             object_list_intersection = self.model.objects.order_by(sort_type)
-#         return object_list_intersection
+        # Sort by specified rule, then title
+        sort_rule = self.request.GET.get('sort')
+        if sort_rule:
+            if sort_rule == 'date-newest':
+                qs = qs.order_by('modified', 'title')
+            elif sort_rule == 'date-oldest':
+                qs = qs.order_by('-modified', 'title')
+            elif sort_rule == 'price-lowest':
+                qs = qs.order_by('price', 'title')
+            elif sort_rule == 'price-highest':
+                qs = qs.order_by('-price', 'title')
+
+        return qs
 
 
 class PostUpdateView(OwnerRequiredMixin, UpdateWithInlinesView):

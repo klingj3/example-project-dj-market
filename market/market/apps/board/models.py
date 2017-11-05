@@ -1,5 +1,5 @@
-from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 from django_extensions.db.models import (ActivatorModel,
@@ -15,12 +15,18 @@ class PostManager(models.Manager):
     def search(self, **kwargs):
         qs = super().get_queryset()
 
+        # TODO:
         # Split query into words, case insensitive search each field:
         # owner name, title, body, tags, location
 
-        # Note: If no query is specified,
-        if kwargs.get('q', ''):
-            qs = qs.filter(name__icontains=kwargs['q'])
+        if 'query' in kwargs:
+            query = kwargs['query']
+            qs = qs.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+        if 'tags' in kwargs:
+            tags = kwargs['tags']
+            # Filter to posts with tags in the provided set
+            qs = qs.filter(tags__name__in=tags)
 
         return qs
 
