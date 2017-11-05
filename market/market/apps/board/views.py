@@ -64,8 +64,29 @@ class PostListView(ListView):
 
 class PostSearchView(ListView):
     model = Post
-    template_name = 'board/post_list.html'
+    template_name = 'board/post_search.html'
     paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            search_term = self.request.GET['q']
+            search_term = search_term.replace('+', ' ')
+            search_terms = search_term.split()
+        except:
+            search_term = ''
+        if (search_term != ''):
+            object_list_general = []
+            object_list_intersection = self.model.objects.all()
+            for term in search_terms:
+                a = self.model.objects.filter(title__icontains=term)
+                b = self.model.objects.filter(tags=term)
+                object_list_intersection = list(set(object_list_intersection).intersection(set(chain(a, b))))
+                object_list_general = list(set(chain(a, b, object_list_general)))
+        else:
+            object_list_general = self.model.objects.all()
+        context['object_list_general'] = object_list_general
+        return context
 
     def get_queryset(self):
         try:
@@ -81,13 +102,11 @@ class PostSearchView(ListView):
             #object_list_explicit = list(set(chain(a, b)))
 
             # Then look for posts that contain one of the search words
-            object_list_general = []
             object_list_intersection = self.model.objects.all()
             for term in search_terms:
                 a = self.model.objects.filter(title__icontains=term)
                 b = self.model.objects.filter(tags=term)
                 object_list_intersection = list(set(object_list_intersection).intersection(set(chain(a, b))))
-                object_list_general = list(set(chain(a, b, object_list_general)))
         else:
             object_list_intersection = self.model.objects.all()
         return object_list_intersection
