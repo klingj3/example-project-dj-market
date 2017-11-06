@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse
+from django.db.models import Q
 from django.views.generic import (DeleteView,
                                   DetailView,
                                   ListView,
@@ -8,6 +9,9 @@ from django.views.generic import (DeleteView,
 from extra_views import (CreateWithInlinesView,
                          InlineFormSet,
                          UpdateWithInlinesView)
+from functools import reduce
+from itertools import chain
+from operator import and_, or_
 from market.apps.board.forms import (ImageHelper,
                                      PostForm,
                                      PostUpdateForm)
@@ -69,28 +73,62 @@ class PostDetailView(DetailView):
 class PostSearchView(ListView):
     model = Post
     template_name = 'board/post_list.html'
-
     # No pagination for now, breaks searches
     # paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q', '')
+        if query != '':
+            sort_rule = self.request.GET.get('sort')
+            sort_type = 'modified'
+            if sort_rule:
+                if sort_rule == 'date-newest':
+                    sort_type = ('modified')
+                elif sort_rule == 'date-oldest':
+                    sort_type = ('-modified')
+                elif sort_rule == 'price-lowest':
+                    sort_type = ('price')
+                elif sort_rule == 'price-highest':
+                    sort_type = ('-price')
+            search_terms = query.split()
+            list = self.model.objects.filter(reduce(or_, [Q(title__icontains=term) | Q(tags__name=term) \
+                                                         for term in search_terms])).order_by(sort_type, 'title')
+            # If we were using postgres, this could be done by adding distinct to the end of the preceeding line.
+            # In the meantime, here's a slightly longer solution.
+            seen = []
+            seen_add = seen.append
+            list = [obj for obj in list if not (obj in seen or seen_add(obj))]
+            context['broad_qs'] = list
+        else:
+            context['broad_qs'] = []
+        return context
 
     def get_queryset(self):
         # TODO: Pre-process search query for better usability
 
         query = self.request.GET.get('q', '')
-        qs = self.model.objects.search(query=query)
 
         # Sort by specified rule, then title
         sort_rule = self.request.GET.get('sort')
+        sort_type = 'modified'
         if sort_rule:
             if sort_rule == 'date-newest':
-                qs = qs.order_by('modified', 'title')
+                sort_type = ('modified')
             elif sort_rule == 'date-oldest':
-                qs = qs.order_by('-modified', 'title')
+                sort_type = ('-modified')
             elif sort_rule == 'price-lowest':
-                qs = qs.order_by('price', 'title')
+                sort_type = ('price')
             elif sort_rule == 'price-highest':
-                qs = qs.order_by('-price', 'title')
+                sort_type = ('-price')
 
+        if query != '':
+            search_terms = query.split()
+            qs = self.model.objects.order_by(sort_type, 'title')
+            for term in search_terms:
+                qs = qs.filter(Q(title__icontains=term) | Q(tags__name__icontains=term))
+        else:
+            qs = self.model.objects.order_by(sort_type, 'title')
         return qs
 
 

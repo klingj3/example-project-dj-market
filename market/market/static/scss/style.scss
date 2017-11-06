@@ -16,7 +16,6 @@ $theme-colors: (
         dark: #343a40
 );
 
-
 // Make sure the page is at least as tall as the window
 html, body {
   height: 100%;
@@ -39,6 +38,10 @@ html, body {
       display: block;
       width: 100%;
     }
+
+  .card{
+    max-width: 33%;
+  }
 
 }
 @media (min-width:992px) and (max-width: 1199px) {
