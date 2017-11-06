@@ -127,11 +127,6 @@ class PostSearchView(ListView):
             qs = self.model.objects.order_by(sort_type, 'title')
             for term in search_terms:
                 qs = qs.filter(Q(title__icontains=term) | Q(tags__name__icontains=term))
-            # If we were using postgres, this could be done by adding distinct to the end of the preceeding line.
-            # In the meantime, here's a slightly longer solution.
-            seen = []
-            seen_add = seen.append
-            qs = [obj for obj in qs if not (obj in seen or seen_add(obj))]
         else:
             qs = self.model.objects.order_by(sort_type, 'title')
         return qs
