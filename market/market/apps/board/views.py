@@ -86,14 +86,12 @@ class PostSearchView(ListView):
             context['broad_qs'] = broad_qs
         else:
             context['broad_qs'] = []
-
         return context
 
     def get_queryset(self):
         # TODO: Pre-process search query for better usability
 
         query = self.request.GET.get('q', '')
-        print("!" + query)
         qs = super().get_queryset()
 
         # Sort by specified rule, then title
