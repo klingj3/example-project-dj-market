@@ -9,7 +9,8 @@
     <div class="col-12">
       <form class="input-group" action="{% url 'board:list' %}" method="get" accept-charset="utf-8">
         <input class="form-control" name="q" type="text" placeholder="Search for...">
-        <select class="form-control" name="sort" type="text">
+        <select class="col-xs" name="sort" type="text">
+          <option value = "date-newest" disabled selected hidden>Sort by...</option>
           <option value="date-newest">Date (newest first)</option>
           <option value="date-oldest">Date (oldest first)</option>
           <option value="price-lowest">Price (lowest first)</option>
@@ -42,7 +43,25 @@
             <span></span>
           {% endfor %}
         </div>
-      {% else %}
+      {% elif broad_qs %}
+          <h2 class="text-muted text-center my-5">
+                  No posts match this description exactly. <br> Here are some related posts. </h2>
+            <div class="card-deck">
+              {% for post in broad_qs %}
+                {# TODO: Formatting is bad with only one post #}
+                <div class="card mb-4">
+                  <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
+                  <div class="card-body">
+                    <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
+                    <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
+                    <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
+                  </div>
+                </div>
+                {# Span required here for responsive card-deck hack #}
+                <span></span>
+              {% endfor %}
+            </div>
+          {% else %}
         <h2 class="text-muted text-center my-5">
           No posts here :(
           {% if profile.is_seller %}

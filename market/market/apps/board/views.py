@@ -8,6 +8,7 @@ from django.views.generic import (DeleteView,
 from extra_views import (CreateWithInlinesView,
                          InlineFormSet,
                          UpdateWithInlinesView)
+from itertools import chain
 from market.apps.board.forms import (ImageHelper,
                                      PostForm,
                                      PostUpdateForm)
@@ -73,11 +74,27 @@ class PostSearchView(ListView):
     # No pagination for now, breaks searches
     # paginate_by = 8
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q', '')
+        if query != '':
+            search_terms = query.split()
+            broad_qs = []
+            for term in search_terms:
+                broad_qs = list(set(chain(broad_qs, self.model.objects.filter(title__icontains=term) | \
+                                          self.model.objects.filter(tags=term))))
+            context['broad_qs'] = broad_qs
+        else:
+            context['broad_qs'] = []
+
+        return context
+
     def get_queryset(self):
         # TODO: Pre-process search query for better usability
 
         query = self.request.GET.get('q', '')
-        qs = self.model.objects.search(query=query)
+        print("!" + query)
+        qs = super().get_queryset()
 
         # Sort by specified rule, then title
         sort_rule = self.request.GET.get('sort')
@@ -91,6 +108,11 @@ class PostSearchView(ListView):
             elif sort_rule == 'price-highest':
                 qs = qs.order_by('-price', 'title')
 
+        if query != '':
+            search_terms = query.split()
+            for term in search_terms:
+                a = self.model.objects.filter(title__icontains=term) | self.model.objects.filter(tags=term)
+                qs = list(set(qs).intersection(set(a)))
         return qs
 
 
