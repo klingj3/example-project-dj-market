@@ -19,13 +19,16 @@
                 {{ message.sender }}
             {% endif %}
         </h4>
+        {% if message.referenced_post %}
+            <h4>Regarding: <a href="{% url 'board:detail' slug=message.referenced_post.slug %}">{{ message.referenced_post }}</a></h4>
+        {% endif %}
         <h3>{{ message.subject }}</h3>
         <p>{{ message.body }}</p>
         {% if in_inbox %}
-            <a class="btn btn-primary btn-block mt-5" href="{% url 'messaging:new' slug=message.sender.slug %}" role="button">Reply</a>
+            <a class="btn btn-primary" href="{% url 'messaging:new' slug=message.sender.slug %}" role="button">Reply</a>
         {% else %}
-            <a class="btn btn-primary btn-block mt-5" href="{% url 'messaging:new' slug=message.recipient.slug %}" role="button">Message Again</a>
+            <a class="btn btn-primary" href="{% url 'messaging:new' slug=message.recipient.slug %}" role="button">Message Again</a>
         {% endif %}
     </div>
-  
+
 {% endblock content %}

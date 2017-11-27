@@ -63,7 +63,7 @@ class Post(RandomSlugModel, TimeStampedModel):
         return reverse('board:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return (self.title + ": $" + str(self.price))
+        return (self.title + " - $" + str(self.price))
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')

@@ -23,7 +23,6 @@ class MessageCreateView(CreateWithSenderMixin, CreateWithInlinesView):
     def get_form(self, form_class):
         form = super().get_form(MessageForm)
         recipient = UserProfile.objects.filter(slug=self.kwargs['slug'])
-        print(recipient)
         if len(recipient) > 0:
             form.fields['recipient'].queryset = recipient
         else:
