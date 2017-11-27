@@ -45,22 +45,7 @@
       <div class="tab-content" id="sellerTabs">
         <div class="tab-pane fade show active" id="sellerPosts" role="tabpanel">
           {% if posts_list %}
-<<<<<<< 137ee9a0622587aae83c8ad0cc04668170db708a
-              <div class="card-deck">
-                {% for post in posts_list %}
-                  <div class="card">
-                    <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
-                    <div class="card-body">
-                      <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                      <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-                      <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-=======
             {% include 'board/posts_widget.html' with posts_list=posts_list %}
->>>>>>> Post list and user profile improvements
           {% else %}
             <h2 class="text-muted text-center my-5">
               No posts yet!
@@ -71,15 +56,11 @@
           reviews
         </div>
         <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
-<<<<<<< 137ee9a0622587aae83c8ad0cc04668170db708a
-          {{ object.bio }}
-=======
           {% if profile.bio %}
             {{ profile.bio }}
           {% else %}
             <em>This seller likes to keep an air of mystery about them...</em>
           {% endif %}
->>>>>>> Post list and user profile improvements
         </div>
       </div>
     </div>
