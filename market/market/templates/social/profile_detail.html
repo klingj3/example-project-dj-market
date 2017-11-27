@@ -22,6 +22,8 @@
           <i class="fa fa-star-o" aria-hidden="true"></i>
         </span>
         <span class="ml-1">(1234)</span>
+          <br>
+          <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
       </p>
     </div>
   </div>

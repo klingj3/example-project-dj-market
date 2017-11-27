@@ -62,6 +62,8 @@ class Post(RandomSlugModel, TimeStampedModel):
     def get_absolute_url(self):
         return reverse('board:detail', kwargs={'slug': self.slug})
 
+    def __str__(self):
+        return (self.title + " - $" + str(self.price))
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
