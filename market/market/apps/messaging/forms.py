@@ -18,7 +18,6 @@ class MessageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             FormActions(
