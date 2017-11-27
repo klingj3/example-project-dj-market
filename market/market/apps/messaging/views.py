@@ -45,9 +45,14 @@ class MessageDetailView(DetailView):
         if message.recipient == self.request.profile:
             context['in_inbox'] = True
             context['social_slug'] = (SocialProfile.objects.get(owner=message.sender)).slug
+            # Other messages involving this person
+            context['thread'] = Message.objects.filter(sender=message.sender, recipient=message.sender).order_by("-created")
         else:
             context['in_inbox'] = False
             context['social_slug'] = (SocialProfile.objects.get(owner=message.recipient)).slug
+            # Other messages involving this person
+            context['thread'] = Message.objects.filter(sender=message.recipient, recipient=message.recipient).order_by("-created")
+
         return context
 
     

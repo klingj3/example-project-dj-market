@@ -31,4 +31,19 @@
         {% endif %}
     </div>
 
+    <br>
+    {% if thread|length > 1 %}
+        <h4 class="text-muted">Other messages involving this sender</h4>
+        {% for mess in thread %}
+            {% if mess != message %}
+                <a href="{% url 'messaging:detail' slug=mess.slug %}" class="list-group-item">
+                            <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px;
+                                display: inline-block;">{{ mess.sender }}</span>
+                            <span class="">{{ mess.subject }}</span>
+                            <span class="text-muted" style="font-size: 11px;">- {{ mess.body|truncatechars:20 }}</span>
+                            <span class="badge">{{ mess.created }}</span> <span class="pull-right"></span></a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
 {% endblock content %}
