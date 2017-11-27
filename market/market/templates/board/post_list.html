@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load humanize %}
 {% load staticfiles %}
 
 {% block title %}All Listings{% endblock title %}
@@ -28,44 +27,8 @@
   <div class="row">
     <div class="col-12">
       {% if object_list %}
-        <div class="card-deck">
-          {% for post in object_list %}
-            {# TODO: Formatting is bad with only one post #}
-            <div class="card mb-4">
-              {% if post.images.all %}
-                <img class="card-img-top" src="{{ post.images.first.image.url }}">
-              {% else %}
-                No image here!
-              {% endif %}
-              <div class="card-body">
-                <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-                <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
-              </div>
-            </div>
-            {# Span required here for responsive card-deck hack #}
-            <span></span>
-          {% endfor %}
-        </div>
-      {% elif broad_qs %}
-          <h2 class="text-muted text-center my-5">
-                  No posts match this description exactly. <br> Here are some related posts. </h2>
-            <div class="card-deck">
-              {% for post in broad_qs %}
-                {# TODO: Formatting is bad with only one post #}
-                <div class="card mb-4">
-                  <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
-                  <div class="card-body">
-                    <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                    <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-                    <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
-                  </div>
-                </div>
-                {# Span required here for responsive card-deck hack #}
-                <span></span>
-              {% endfor %}
-            </div>
-          {% else %}
+        {% include 'board/posts_widget.html' with posts_list=object_list %}
+      {% else %}
         <h2 class="text-muted text-center my-5">
           No posts here :(
           {% if profile.is_seller %}
