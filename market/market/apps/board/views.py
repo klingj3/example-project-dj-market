@@ -99,9 +99,9 @@ class PostSearchView(ListView):
             seen = []
             seen_add = seen.append
             list = [obj for obj in list if not (obj in seen or seen_add(obj))]
-            context['broad_qs'] = list
+            context['post_list'] = list
         else:
-            context['broad_qs'] = []
+            context['post_list'] = []
         return context
 
     def get_queryset(self):

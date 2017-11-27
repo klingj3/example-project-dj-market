@@ -30,6 +30,7 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
 
 class SocialProfileDetailView(DetailView):
     model = SocialProfile
+    context_object_name = 'profile'
     template_name = 'social/profile_detail.html'
 
     def get_context_data(self, **kwargs):

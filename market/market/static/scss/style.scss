@@ -41,40 +41,27 @@ hr { margin-top: 5px;margin-bottom: 10px; }
   min-height: 100%;
 }
 
-
-/* Responsive card deck hack.
-   TODO: Use SCSS variables, avoid this hack...
- */
-.card-deck span {
-      display: none;
-}
-
-@media (min-width:1200px){
-    .card-deck span:nth-of-type(5n) {
-      display: block;
-      width: 100%;
-    }
-
-}
-@media (min-width:992px) and (max-width: 1199px) {
-   .card-deck span:nth-of-type(4n) {
-      display: block;
-      width: 100%;
-    }
-
-}
-@media (min-width:768px) and (max-width: 991px) {
-    .card-deck span:nth-of-type(3n) {
-      display: block;
-      width: 100%;
-    }
-}
-@media (min-width: 576px) and (max-width: 767px) {
-    .card-deck span:nth-of-type(2n) {
-      display: block;
-      width: 100%;
-    }
-}
-
 /* Include unchanged Bootstrap source */
 @import "bootstrap4_2/bootstrap";
+
+/* HACK: Max-widths to go with card-deck hack and avoid oversized hanging cards */
+@include media-breakpoint-only(sm) {
+  .card-deck .card {
+    max-width: calc(50% - #{$grid-gutter-width}); // 1/2 - gutter
+  }
+}
+@include media-breakpoint-only(md) {
+  .card-deck .card {
+    max-width: calc(33.333333% - #{$grid-gutter-width}); // 1/3 - gutter
+  }
+}
+@include media-breakpoint-only(lg) {
+  .card-deck .card {
+    max-width: calc(25% - #{$grid-gutter-width}); // 1/4 - gutter
+  }
+}
+@include media-breakpoint-only(xl) {
+  .card-deck .card {
+    max-width: calc(20% - #{$grid-gutter-width}); // 1/5 - gutter
+  }
+}

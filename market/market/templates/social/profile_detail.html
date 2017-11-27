@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}{{ object.owner }}{% endblock title %}
+{% block title %}{{ profile.owner }}{% endblock title %}
 
 {% block content %}
   <div class="row">
     <div class="col-12 col-sm-3 mb-4">
       <img class="rounded w-100" src="{% static 'img/placeholder.svg' %}">
     </div>
-    <div class="col-12 col-sm-3 mb-4">
-      <h2>{{ object.owner }}</h2>
-      <p class="text-center"><i>{{ object.tagline }}</i></p>
+    <div class="col-12 col-sm-9 mb-4">
+      <h2>{{ profile.owner }}</h2>
+      {% if profile.tagline %}
+        <p><em>{{ profile.tagline }}</em></p>
+      {% endif %}
       <p class="text-muted">
         <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Location&emsp;|&emsp;Other information
         <br>
@@ -31,7 +33,7 @@
     <div class="col-12">
       <ul class="nav nav-tabs mb-4" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#sellerPosts" role="tab">Posts (123)</a>
+          <a class="nav-link active" data-toggle="tab" href="#sellerPosts" role="tab">Posts ({{ posts_list|length }})</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#sellerReviews" role="tab">Reviews</a>
@@ -42,20 +44,8 @@
       </ul>
       <div class="tab-content" id="sellerTabs">
         <div class="tab-pane fade show active" id="sellerPosts" role="tabpanel">
-          {# TODO: Use grid columns #}
           {% if posts_list %}
-              <div class="card-deck">
-                {% for post in posts_list %}
-                  <div class="card">
-                    <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
-                    <div class="card-body">
-                      <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-                      <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-                      <h5 class="">${{ post.price }} /{{ post.unit }}</h5>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
+            {% include 'board/posts_widget.html' with posts_list=posts_list %}
           {% else %}
             <h2 class="text-muted text-center my-5">
               No posts yet!
@@ -66,7 +56,11 @@
           reviews
         </div>
         <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
-          {{ object.bio }}
+          {% if profile.bio %}
+            {{ profile.bio }}
+          {% else %}
+            <em>This seller likes to keep an air of mystery about them...</em>
+          {% endif %}
         </div>
       </div>
     </div>
