@@ -7,6 +7,7 @@ from django.views.generic import (DetailView,
 
 from extra_views import (CreateWithInlinesView)
 
+from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithSenderMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
@@ -27,6 +28,8 @@ class MessageCreateView(CreateWithSenderMixin, CreateWithInlinesView):
             form.fields['recipient'].queryset = recipient
         else:
             raise Http404("Invalid recipient attempted.")
+        # Only objects owned by one of the two messengers can be discussed.
+        form.fields['referenced_post'].queryset = Post.objects.filter(owner=recipient or self.request.profile).order_by('-modified')
         return form
 
     def get_success_url(self):
