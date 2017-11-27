@@ -1,5 +1,7 @@
 from django import forms
 
+from crispy_forms import bootstrap
+from crispy_forms import layout
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (Field,
@@ -20,7 +22,14 @@ class MessageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            FormActions(
+            layout.Fieldset(
+                '',
+                layout.Field('recipient', readonly=True),
+                'subject',
+                'body',
+                'referenced_post',
+            ),
+            bootstrap.FormActions(
                 Submit('submit', 'Send Message', css_class='btn btn-success'),
             )
         )

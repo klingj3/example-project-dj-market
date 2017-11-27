@@ -10,14 +10,20 @@
         <h4>
         {% if in_inbox %}
             From:
-        {% else %}
-            Sent to:
-        {% endif %}
             {% if message.sender.type == '1' %}
                 <a href="{% url 'social:detail' social_slug %}">{{ message.sender }}</a>
             {% elif  message.sender.type == '0' %}
                 {{ message.sender }}
             {% endif %}
+        {% else %}
+            Sent to:
+            {% if message.recipient.type == '1' %}
+                <a href="{% url 'social:detail' social_slug %}">{{ message.recipient }}</a>
+            {% elif  message.recipient.type == '0' %}
+                {{ message.recipient }}
+            {% endif %}
+        {% endif %}
+            
         </h4>
         {% if message.referenced_post %}
             <h4>Regarding: <a href="{% url 'board:detail' slug=message.referenced_post.slug %}">{{ message.referenced_post }}</a></h4>
