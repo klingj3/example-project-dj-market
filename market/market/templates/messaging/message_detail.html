@@ -5,5 +5,27 @@
 {% block title %}Message Detail{% endblock title %}
 
 {% block content %}
+
+    <div class="col-sm-9 col-md-10">
+        <h4>
+        {% if in_inbox %}
+            From:
+        {% else %}
+            Sent to:
+        {% endif %}
+            {% if message.sender.type == '1' %}
+                <a href="{% url 'social:detail' social_slug %}">{{ message.sender }}</a>
+            {% elif  message.sender.type == '0' %}
+                {{ message.sender }}
+            {% endif %}
+        </h4>
+        <h3>{{ message.subject }}</h3>
+        <p>{{ message.body }}</p>
+        {% if in_inbox %}
+            <a class="btn btn-primary btn-block mt-5" href="{% url 'messaging:new' slug=message.sender.slug %}" role="button">Reply</a>
+        {% else %}
+            <a class="btn btn-primary btn-block mt-5" href="{% url 'messaging:new' slug=message.recipient.slug %}" role="button">Message Again</a>
+        {% endif %}
+    </div>
   
 {% endblock content %}

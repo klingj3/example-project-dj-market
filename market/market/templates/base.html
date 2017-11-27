@@ -61,6 +61,7 @@
                   <a href="{% url 'social:detail' %}" class="dropdown-item">Your profile</a>
                   <div class="dropdown-divider"></div>
                 {% endif %}
+                <a href="{% url 'messaging:inbox' %}" class="dropdown-item">Messaging</a>
                 <a href="{% url 'social:update' %}" class="dropdown-item">Settings</a>
                 <a href="{% url 'account_logout' %}" class="dropdown-item">Sign out</a>
               </div>
