@@ -1,21 +1,6 @@
-{% load staticfiles %}
-{% load humanize %}
-
 <div class="card-deck">
   {% for post in posts_list %}
-    {# TODO: Formatting is bad with only one post #}
-    <div class="card mb-4">
-      {% if post.images.all %}
-        <img class="card-img-top" src="{{ post.images.first.image.url }}">
-      {% else %}
-        No image here!
-      {% endif %}
-      <div class="card-body">
-        <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
-        <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
-        <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
-      </div>
-    </div>
+    {% include 'board/post_card_widget.html' with post=post %}
     {# HACK: Grid splits hack for responsive card-deck #}
     {# Each split is only visible at one break point #}
     {% if forloop.counter|divisibleby:2 %}
