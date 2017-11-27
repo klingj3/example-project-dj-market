@@ -90,14 +90,7 @@
       <h5>Similar Posts</h5>
       <div class="card-deck">
         {% for p in similar_posts %}
-          <div class="card">
-            <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
-            <div class="card-body">
-              <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ p.title|truncatechars:60 }}</a></h5>
-              <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=p.owner.social.slug %}" class="text-muted">{{ p.owner }}</a></small></h6>
-              <h5 class="">${{ p.price }} /{{ p.unit }}</h5>
-            </div>
-          </div>
+          {% include 'board/post_card_widget.html' with post=p %}
         {% endfor %}
       </div>
     </div>
