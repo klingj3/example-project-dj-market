@@ -1,8 +1,9 @@
 from django import forms
 
-from crispy_forms import bootstrap
-from crispy_forms import layout
+from crispy_forms import (bootstrap,
+                          layout)
 from crispy_forms.helper import FormHelper
+from leaflet.forms.widgets import LeafletWidget
 
 from market.apps.core.models import UserProfile
 from market.apps.social.models import SocialProfile
@@ -25,6 +26,7 @@ class SocialProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = SocialProfile
         fields = ['avatar', 'tagline', 'bio', 'location']
+        widgets = {'location': LeafletWidget()}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

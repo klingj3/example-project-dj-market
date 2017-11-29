@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
+{% load geojson_tags %}
+{% load leaflet_tags %}
 {% load staticfiles %}
 
 {% block title %}All Listings{% endblock title %}
 
 {% block content %}
+  <div class="row mb-4">
+    <div class="col-12">
+      <script type="text/javascript">
+        var collection = {{ object_list|geojsonfeature:':location'|safe }};
+        function map_init(map, options) {
+            L.geoJson(collection).addTo(map);
+        }
+      </script>
+      {% leaflet_map "main" callback="window.map_init" %}
+    </div>
+  </div>
   <div class="row mb-4">
     <div class="col-12">
       <form class="input-group" action="{% url 'board:list' %}" method="get" accept-charset="utf-8">

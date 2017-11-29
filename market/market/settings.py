@@ -259,6 +259,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 # User display value is name from the associated profile
 ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
 
+
 # PASSWORD STORAGE SETTINGS
 # ---
 # See https://docs.djangoproject.com/en/1.11/topics/auth/passwords/#using-argon2-with-django
@@ -336,7 +337,17 @@ ADMIN_URL = r'^admin/'
 
 # GEOPOSITION CONFIGURATION
 # ---
-INSTALLED_APPS += ['geoposition']
-GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
+# INSTALLED_APPS += ['geoposition']
+# GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
-
+# GEOJSON, LEAFLET CONFIGURATION
+# ---
+INSTALLED_APPS += ['djgeojson', 'leaflet']
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (42.7287845, -73.6845236),
+    'DEFAULT_ZOOM': 14,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'RESET_VIEW': False,
+    'SCALE': None
+}

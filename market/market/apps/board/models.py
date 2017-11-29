@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from django_extensions.db.models import (ActivatorModel,
                                          TimeStampedModel)
-from geoposition.fields import GeopositionField
+from djgeojson.fields import PointField
 from tagulous.models import TagField
 
 from market.apps.core.models import (RandomSlugModel,
@@ -57,13 +57,14 @@ class Post(RandomSlugModel, TimeStampedModel):
     unit = models.CharField(max_length=80, choices=UNIT_CHOICES, default='each')
 
     # location = models.CharField(max_length=5)
-    location = GeopositionField()
+    location = PointField()
 
     def get_absolute_url(self):
         return reverse('board:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return (self.title + " - $" + str(self.price))
+        return self.title + " - $" + str(self.price)
+
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
