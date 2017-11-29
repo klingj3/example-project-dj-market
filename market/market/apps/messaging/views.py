@@ -58,14 +58,37 @@ class MessageDetailView(DetailView):
 
         return context
 
-    
-class MessageListView(LoginRequiredMixin, ListView):
-    model = Message
-    template_name = 'messaging/message_list.html'
+# Returns a list of reviews for a specified user
+class ReviewListView(ListView):
+    model = Review
+    template_name = 'messaging/review_list.html'
     paginate_by = 16
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['outbox'] = Message.objects.filter(sender=self.request.profile).order_by('-created')
-        context['inbox'] = Message.objects.filter(recipient=self.request.profile).order_by('-created')
-        return context
+    def get_queryset(self, *args, **kwargs):
+        user_profile = UserProfile.obects.get(slug=kwargs['slug'])
+        if reviewee:
+            return Review.objects.filter(reviewee=user_profile)
+        else:
+            raise Http404("Invalid Reviwee Searched.")
+        
+class ReviewCreateView(CreateWithSenderMixin, CreateWithInlinesView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'messaging/message_form.html'
+
+    def get_form(self, form_class):
+        form = super().get_form(MessageForm)
+        reviewee = UserProfile.objects.filter(slug=self.kwargs['slug'])
+        if len(recipient) > 0:
+            form.fields['reviewee'].queryset = reviewee
+        else:
+            raise Http404("Invalid Reviewee attempted.")
+        return form
+
+    def get_success_url(self):
+        messages.success(self.request, 'Message sent!', extra_tags='fa fa-check')
+        return reverse('messaging:inbox')
+
+class ReviewDetailView(DetailView):
+    model = Review
+    template_name = 'messaging/review_detail.html'
