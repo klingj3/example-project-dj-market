@@ -10,7 +10,8 @@ from crispy_forms.layout import (Field,
                                  Layout,
                                  Submit)
 
-from market.apps.messaging.models import Message
+from market.apps.messaging.models import (Message,
+                                          Review,)
 
 
 class MessageForm(forms.ModelForm):
@@ -31,6 +32,28 @@ class MessageForm(forms.ModelForm):
             ),
             bootstrap.FormActions(
                 Submit('submit', 'Send Message', css_class='btn btn-success'),
+            )
+        )
+        self.helper.form_tag = False
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['reviewee', 'score', 'title', 'body']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            layout.Fieldset(
+                '',
+                layout.Field('reviewee', readonly=True),
+                'score',
+                'title',
+                'body',
+            ),
+            bootstrap.FormActions(
+                Submit('submit', 'Post Review', css_class='btn btn-success'),
             )
         )
         self.helper.form_tag = False
