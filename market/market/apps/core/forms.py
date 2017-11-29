@@ -2,16 +2,9 @@ from django import forms
 
 from allauth.account.forms import (SignupForm,
                                    LoginForm)
-# from crispy_forms.bootstrap import FormActions
-from crispy_forms import bootstrap
+from crispy_forms import (bootstrap,
+                          layout)
 from crispy_forms.helper import FormHelper
-from crispy_forms import layout
-# from crispy_forms.layout import (Div,
-#                                  Field,
-#                                  Fieldset,
-#                                  Layout,
-#                                  MultiField,
-#                                  Submit)
 
 from market.apps.core.models import UserProfile
 
@@ -25,7 +18,7 @@ class MarketLoginForm(LoginForm):
             layout.Fieldset(
                 '',
                 'login',
-                layout.Field('password', help_text='blarg')
+                'password'
             ),
             bootstrap.FormActions(
                 layout.Submit('submit', 'Log in', css_class='btn btn-success'),
