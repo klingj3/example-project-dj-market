@@ -86,7 +86,10 @@ class SocialProfileDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['posts_list'] = Post.objects.filter(owner=self.request.profile).order_by("-modified")
         context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile).order_by("-modified")
-        average = context['reviews_list'].aggregate(Avg('score'))['score__avg']
+        if len(context['reviews_list']) > 0:
+            average = context['reviews_list'].aggregate(Avg('score'))['score__avg']
+        else:
+            average = 0
         average_str = []
         val = 0.00
         while val < 5:
