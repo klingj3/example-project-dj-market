@@ -18,7 +18,7 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
+        self.helper.layout = layout.Layout(
             layout.Fieldset(
                 '',
                 layout.Field('reviewee', readonly=True),
@@ -27,7 +27,7 @@ class ReviewForm(forms.ModelForm):
                 'body',
             ),
             bootstrap.FormActions(
-                Submit('submit', 'Post Review', css_class='btn btn-success'),
+                layout.Submit('submit', 'Post Review', css_class='btn btn-success'),
             )
         )
         self.helper.form_tag = False

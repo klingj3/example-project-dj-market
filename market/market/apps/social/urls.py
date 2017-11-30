@@ -2,7 +2,6 @@ from django.conf.urls import url
 
 from market.apps.social.views import (ReviewCreateView,
                                       ReviewDetailView,
-                                      ReviewListView,
                                       SocialProfileDetailView,
                                       SocialProfileSelfDetailView,
                                       # SocialProfileListView,
@@ -20,6 +19,5 @@ urlpatterns = [
 
     # Review urls
     url(r'^reviews/new/(?P<slug>[-\w]+)/$', ReviewCreateView.as_view(), name='new_review'),
-    url(r'^reviews/(?P<slug>[-\w]+)/$', ReviewDetailView.as_view(), name='detail_review'),
-    url(r'profile/(?P<slug>[-\w]+)/reviews^$', ReviewListView.as_view(), name='reviews_for_user'),
+    url(r'^reviews/(?P<slug>[-\w]+)/$', ReviewDetailView.as_view(), name='review_detail'),
 ]

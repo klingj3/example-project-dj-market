@@ -11,6 +11,7 @@ from django.views.generic import (DetailView,
 from extra_views import (CreateWithInlinesView)
 from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithOwnerMixin,
+                                     CreateWithReviewerMixin,
                                      CreateWithSenderMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
@@ -20,25 +21,10 @@ from market.apps.social.forms import (ReviewForm,
 from market.apps.social.models import (Review,
                                        SocialProfile,)
 
-
-# Returns a list of reviews for a specified user
-class ReviewListView(ListView):
-    model = Review
-    template_name = 'messaging/review_list.html'
-    paginate_by = 16
-
-    def get_queryset(self, *args, **kwargs):
-        user_profile = UserProfile.obects.get(slug=kwargs['slug'])
-        if user_profile:
-            return Review.objects.filter(reviewee=user_profile)
-        else:
-            raise Http404("Invalid Reviwee Searched.")
-
-
-class ReviewCreateView(CreateWithSenderMixin, CreateWithInlinesView):
+class ReviewCreateView(CreateWithReviewerMixin, CreateWithInlinesView):
     model = Review
     form_class = ReviewForm
-    template_name = 'messaging/message_form.html'
+    template_name = 'social/review_form.html'
 
     def get_form(self, form_class):
         form = super().get_form(ReviewForm)
@@ -57,7 +43,7 @@ class ReviewCreateView(CreateWithSenderMixin, CreateWithInlinesView):
 
 class ReviewDetailView(DetailView):
     model = Review
-    template_name = 'messaging/review_detail.html'
+    template_name = 'social/review_detail.html'
 
 class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
     model = SocialProfile
@@ -69,6 +55,7 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['posts_list'] = Post.objects.filter(owner=self.request.profile)
+        context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile)
         return context
 
 
@@ -80,14 +67,8 @@ class SocialProfileDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['posts_list'] = Post.objects.filter(owner=self.object.owner)
+        context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile)
         return context
-
-
-# class SocialProfileListView(ListView):
-#     model = SocialProfile
-#     template_name = 'social/browse.html'
-#     paginate_by = 8
-
 
 class SocialProfileUpdateView(SellerRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = SocialProfile

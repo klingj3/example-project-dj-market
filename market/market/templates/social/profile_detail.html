@@ -26,6 +26,8 @@
         <span class="ml-1">(1234)</span>
           <br>
           <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
+          <br>
+          <a href="{% url 'social:new_review' slug=object.owner.slug%}">Write a review!</a>
       </p>
     </div>
   </div>
@@ -53,7 +55,7 @@
           {% endif %}
         </div>
         <div class="tab-pane fade" id="sellerReviews" role="tabpanel">
-          reviews
+          {% include 'social/review_list_widget.html' with review_list=review_list %}
         </div>
         <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
           {% if profile.bio %}

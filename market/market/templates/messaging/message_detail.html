@@ -23,7 +23,7 @@
                 {{ message.recipient }}
             {% endif %}
         {% endif %}
-            
+
         </h4>
         {% if message.referenced_post %}
             <h4>Regarding: <a href="{% url 'board:detail' slug=message.referenced_post.slug %}">{{ message.referenced_post }}</a></h4>
