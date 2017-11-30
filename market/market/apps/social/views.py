@@ -74,6 +74,7 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
             val += 1
         context['average_str'] = average_str
         context['average'] = average
+        print("EVIEWSSJFDSJFLK!\n " + str(context['reviews_list']))
         return context
 
 
@@ -84,8 +85,9 @@ class SocialProfileDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts_list'] = Post.objects.filter(owner=self.request.profile).order_by("-modified")
-        context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile).order_by("-modified")
+        user = SocialProfile.objects.get(slug=self.kwargs['slug']).owner
+        context['posts_list'] = Post.objects.filter(owner=user).order_by("-modified")
+        context['reviews_list'] = Review.objects.filter(reviewee=user).order_by("-modified")
         if len(context['reviews_list']) > 0:
             average = context['reviews_list'].aggregate(Avg('score'))['score__avg']
         else:
