@@ -1,6 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
 from django.urls import reverse
 from django.views.generic import (DetailView,
                                   ListView,)
@@ -9,6 +7,7 @@ from extra_views import (CreateWithInlinesView)
 
 from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithSenderMixin,
+                                     LoginRequiredMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
 from market.apps.core.models import UserProfile
@@ -58,7 +57,6 @@ class MessageDetailView(DetailView):
 
         return context
 
-    
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'messaging/message_list.html'

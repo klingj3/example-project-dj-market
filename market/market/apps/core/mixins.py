@@ -3,17 +3,6 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
 
 from market.apps.core.models import UserProfile
 
-class CreateWithSenderMixin(LoginRequiredMixin):
-    """
-    Injects the currently logged in user to the 'sender' field
-     of the form in this view.
-    """
-    # TODO: Determine best implementation of this
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-
-        form.instance.sender = UserProfile.objects.get(user=self.request.user)
-        return form
 
 class CreateWithOwnerMixin(LoginRequiredMixin):
     """
@@ -37,6 +26,29 @@ class CreateWithOwnerMixin(LoginRequiredMixin):
     # def form_valid(self, form):
     #     form.instance.owner = UserProfile.objects.get(user=self.request.user)
     #     return super().form_valid(form)
+
+class CreateWithReviewerMixin(LoginRequiredMixin):
+    """
+    Injects the currently logged in user to the 'reviewer' field
+     of the form in this view.
+    """
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.instance.reviewer = UserProfile.objects.get(user=self.request.user)
+        return form
+
+
+class CreateWithSenderMixin(LoginRequiredMixin):
+    """
+    Injects the currently logged in user to the 'sender' field
+     of the form in this view.
+    """
+    # TODO: Determine best implementation of this
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+
+        form.instance.sender = UserProfile.objects.get(user=self.request.user)
+        return form
 
 
 class OwnerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):

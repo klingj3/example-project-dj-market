@@ -1,0 +1,51 @@
+{% if reviews_list %}
+    <div class="card-deck">
+      {% for review in reviews_list %}
+        <div class="card w3-hover-shadow" style="min-width: 50%; margin:10px; float:none;">
+          <div class="card-body">
+            <h5 class="card-title">{{ review.title }}</h5>
+              <span class="text-warning">
+                  <!- numeric loops are a huge pain in django, please forgive this weak solution>
+                  {% if review.score == 5 %}
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                  {% elif review.score == 4%}
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% elif review.score == 3%}
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% elif review.score == 2%}
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% elif review.score == 1%}
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                  {% endif %}
+                </span>
+            <h6 class="text-muted mb-3"><small>by <a class="text-muted">{{ review.reviewer.name }}</a></small></h6>
+            <p class="">{{ review.body|truncatechars:300 }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+{% else %}
+    <h2 class="text-muted text-center my-5">
+            No Reviews
+    </h2>
+{% endif %}

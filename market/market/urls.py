@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # Messaging app
-    url(r'^messaging/', include('market.apps.messaging.urls')),
-    
+    url(r'messaging/', include('market.apps.messaging.urls')),
+
     # Remove logout confirmation
     # Note: Needs to be changed to redirect to ACCOUNT_LOGOUT_REDIRECT_URL
     # url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
@@ -25,7 +25,7 @@ urlpatterns = [
 
     # Board app
     url(r'^', include('market.apps.board.urls')),
-    
+
 ]
 
 # URL for media files

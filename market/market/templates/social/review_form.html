@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}Post Review{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h3>Post Review!</h3>
+      <form method="post">
+        {% crispy form %}
+      </form>
+    </div>
+  </div>
+{% endblock content %}
