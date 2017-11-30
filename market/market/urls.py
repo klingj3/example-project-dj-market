@@ -22,10 +22,9 @@ urlpatterns = [
 
     # Board app
     url(r'^', include('market.apps.board.urls')),
- 
-    
+
     # Messaging app
-    url(r'^', include('market.apps.messaging.urls')),
+    url(r'messaging/^', include('market.apps.messaging.urls')),
        
 ]
 
