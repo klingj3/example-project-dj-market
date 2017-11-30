@@ -1,9 +1,9 @@
 {% if reviews_list %}
     <div class="card-deck">
       {% for review in reviews_list %}
-        <div class="card" style="min-width: 50%;">
+        <div class="card w3-hover-shadow" style="min-width: 50%; margin:10px; float:none;">
           <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'social:review_detail' slug=review.slug %}">{{ review.title }}</a></h5>
+            <h5 class="card-title">{{ review.title }}</h5>
               <span class="text-warning">
                   <!- numeric loops are a huge pain in django, please forgive this weak solution>
                   {% if review.score == 5 %}
