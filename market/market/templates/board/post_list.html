@@ -41,6 +41,10 @@
     <div class="col-12">
       {% if object_list %}
         {% include 'board/posts_widget.html' with posts_list=object_list %}
+      {% elif post_list %}
+        <h2 class="text-muted text-center my-5">
+          Exact match not found, here are some related results!<br> <br>
+        {% include 'board/posts_widget.html' with posts_list=post_list %}
       {% else %}
         <h2 class="text-muted text-center my-5">
           No posts here :(

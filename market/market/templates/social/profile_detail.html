@@ -27,11 +27,20 @@
                 {% endif %}
             {% endfor %}
         </span>
-        <span class="ml-1">{{ average }} Avg.</span>
+        <span class="ml-1">
+            {% if average > 0 %}
+                {{ average }} Avg.</span>
+            {% else %}
+                No reviews.
+            {% endif %}
           <br>
-          <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
-          <br>
-          <a href="{% url 'social:new_review' slug=object.owner.slug%}">Write a review!</a>
+          {% if profile %}
+              {% if profile != object.owner %}
+                  <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
+                  <br>
+                  <a href="{% url 'social:new_review' slug=object.owner.slug%}">Write a review!</a>
+              {% endif %}
+        {% endif %}
       </p>
     </div>
   </div>
