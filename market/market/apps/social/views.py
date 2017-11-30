@@ -74,7 +74,6 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
             val += 1
         context['average_str'] = average_str
         context['average'] = average
-        print("EVIEWSSJFDSJFLK!\n " + str(context['reviews_list']))
         return context
 
 
