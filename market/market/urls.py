@@ -25,6 +25,7 @@ urlpatterns = [
 
     # Board app
     url(r'^', include('market.apps.board.urls')),
+
 ]
 
 # URL for media files
