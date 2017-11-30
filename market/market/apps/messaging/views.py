@@ -7,6 +7,7 @@ from extra_views import (CreateWithInlinesView)
 
 from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithSenderMixin,
+                                     LoginRequiredMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
 from market.apps.core.models import UserProfile
@@ -54,4 +55,15 @@ class MessageDetailView(DetailView):
             # Other messages involving this person
             context['thread'] = Message.objects.filter(sender=message.recipient, recipient=message.recipient).order_by("-created")
 
+        return context
+
+class MessageListView(LoginRequiredMixin, ListView):
+    model = Message
+    template_name = 'messaging/message_list.html'
+    paginate_by = 16
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['outbox'] = Message.objects.filter(sender=self.request.profile).order_by('-created')
+        context['inbox'] = Message.objects.filter(recipient=self.request.profile).order_by('-created')
         return context
