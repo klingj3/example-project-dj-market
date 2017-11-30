@@ -1,6 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
 from django.urls import reverse
 from django.views.generic import (DetailView,
                                   ListView,)
@@ -57,38 +55,3 @@ class MessageDetailView(DetailView):
             context['thread'] = Message.objects.filter(sender=message.recipient, recipient=message.recipient).order_by("-created")
 
         return context
-
-# Returns a list of reviews for a specified user
-class ReviewListView(ListView):
-    model = Review
-    template_name = 'messaging/review_list.html'
-    paginate_by = 16
-
-    def get_queryset(self, *args, **kwargs):
-        user_profile = UserProfile.obects.get(slug=kwargs['slug'])
-        if reviewee:
-            return Review.objects.filter(reviewee=user_profile)
-        else:
-            raise Http404("Invalid Reviwee Searched.")
-        
-class ReviewCreateView(CreateWithSenderMixin, CreateWithInlinesView):
-    model = Review
-    form_class = ReviewForm
-    template_name = 'messaging/message_form.html'
-
-    def get_form(self, form_class):
-        form = super().get_form(MessageForm)
-        reviewee = UserProfile.objects.filter(slug=self.kwargs['slug'])
-        if len(recipient) > 0:
-            form.fields['reviewee'].queryset = reviewee
-        else:
-            raise Http404("Invalid Reviewee attempted.")
-        return form
-
-    def get_success_url(self):
-        messages.success(self.request, 'Message sent!', extra_tags='fa fa-check')
-        return reverse('messaging:inbox')
-
-class ReviewDetailView(DetailView):
-    model = Review
-    template_name = 'messaging/review_detail.html'
