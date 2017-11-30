@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}{{ profile.owner }}{% endblock title %}
+{% block title %}{{ social_profile.owner }}{% endblock title %}
 
 {% block content %}
   <div class="row">
@@ -9,21 +9,25 @@
       <img class="rounded w-100" src="{% static 'img/placeholder.svg' %}">
     </div>
     <div class="col-12 col-sm-9 mb-4">
-      <h2>{{ profile.owner }}</h2>
-      {% if profile.tagline %}
-        <p><em>{{ profile.tagline }}</em></p>
+      <h2>{{ social_profile.owner }}</h2>
+      {% if social_profile.tagline %}
+        <p><em>{{ social_profile.tagline }}</em></p>
       {% endif %}
       <p class="text-muted">
         <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Location&emsp;|&emsp;Other information
         <br>
         <span class="text-warning">
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star-half-o" aria-hidden="true"></i>
-          <i class="fa fa-star-o" aria-hidden="true"></i>
+            {% for c in average_str %}
+                {% if c == 'f' %}
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                {% elif c == 'h' %}
+                  <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                {% else %}
+                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endif %}
+            {% endfor %}
         </span>
-        <span class="ml-1">(1234)</span>
+        <span class="ml-1">{{ average }} Avg.</span>
           <br>
           <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
           <br>
@@ -58,8 +62,8 @@
           {% include 'social/review_list_widget.html' with review_list=review_list %}
         </div>
         <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
-          {% if profile.bio %}
-            {{ profile.bio }}
+          {% if social_profile.bio %}
+            {{ social_profile.bio }}
           {% else %}
             <em>This seller likes to keep an air of mystery about them...</em>
           {% endif %}

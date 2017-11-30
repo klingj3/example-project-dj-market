@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -47,6 +48,7 @@ class ReviewDetailView(DetailView):
 
 class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
     model = SocialProfile
+    context_object_name = 'social_profile'
     template_name = 'social/profile_detail.html'
 
     def get_object(self, *args, **kwargs):
@@ -56,18 +58,44 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['posts_list'] = Post.objects.filter(owner=self.request.profile)
         context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile)
+        average = context['reviews_list'].aggregate(Avg('score'))['score__avg']
+        average_str = []
+        val = 0.00
+        while val < 5:
+            if val + 1 <= average:
+                average_str.append('f')
+            elif val + 0.5 <= average:
+                average_str.append('h')
+            else:
+                average_str.append('e')
+            val += 1
+        context['average_str'] = average_str
+        context['average'] = average
         return context
 
 
 class SocialProfileDetailView(DetailView):
     model = SocialProfile
-    context_object_name = 'profile'
+    context_object_name = 'social_profile'
     template_name = 'social/profile_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts_list'] = Post.objects.filter(owner=self.object.owner)
+        context['posts_list'] = Post.objects.filter(owner=self.request.profile)
         context['reviews_list'] = Review.objects.filter(reviewee=self.request.profile)
+        average = context['reviews_list'].aggregate(Avg('score'))['score__avg']
+        average_str = []
+        val = 0.00
+        while val < 5:
+            if val + 1 <= average:
+                average_str.append('f')
+            elif val + 0.5 <= average:
+                average_str.append('h')
+            else:
+                average_str.append('e')
+            val += 1
+        context['average_str'] = average_str
+        context['average'] = average
         return context
 
 class SocialProfileUpdateView(SellerRequiredMixin, OwnerRequiredMixin, UpdateView):
