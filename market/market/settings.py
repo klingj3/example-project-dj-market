@@ -23,10 +23,7 @@ SECRET_KEY = config('SECRET_KEY')
 SITE_ID = 1
 
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['ssd-farmers-live-klingj3.c9users.io',
-                 'localhost',
-                 '127.0.0.1',
-                 '[::1]']
+ALLOWED_HOSTS = ['*']
 
 
 # APP CONFIGURATION
