@@ -15,6 +15,8 @@ from market.apps.messaging.forms import (MessageForm)
 from market.apps.messaging.models import (Message)
 from market.apps.social.models import SocialProfile
 
+
+# Create a new message
 class MessageCreateView(CreateWithSenderMixin, CreateWithInlinesView):
     model = Message
     form_class = MessageForm
@@ -35,6 +37,7 @@ class MessageCreateView(CreateWithSenderMixin, CreateWithInlinesView):
         messages.success(self.request, 'Message sent!', extra_tags='fa fa-check')
         return reverse('messaging:inbox')
 
+# View a single message.
 class MessageDetailView(DetailView):
     model = Message
     template_name = 'messaging/message_detail.html'
@@ -57,6 +60,7 @@ class MessageDetailView(DetailView):
 
         return context
 
+# View multiple messages
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'messaging/message_list.html'

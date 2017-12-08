@@ -31,7 +31,7 @@ class PostManager(models.Manager):
         return qs
 
 
-# TODO: ActivatorModel
+# Posts submitted by users on the site.
 class Post(RandomSlugModel, TimeStampedModel):
     UNIT_CHOICES = (
         ('pound', 'POUND'),
@@ -44,7 +44,6 @@ class Post(RandomSlugModel, TimeStampedModel):
 
     owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
-    # todo: published field
     # todo: Remove activatormodel?
 
     title = models.CharField(max_length=300)

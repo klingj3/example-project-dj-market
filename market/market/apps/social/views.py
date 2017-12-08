@@ -22,6 +22,8 @@ from market.apps.social.forms import (ReviewForm,
 from market.apps.social.models import (Review,
                                        SocialProfile,)
 
+
+# Create a new Review
 class ReviewCreateView(CreateWithReviewerMixin, CreateWithInlinesView):
     model = Review
     form_class = ReviewForm
@@ -42,10 +44,13 @@ class ReviewCreateView(CreateWithReviewerMixin, CreateWithInlinesView):
 
 #TODO: ReviewUpdateView
 
+# View a single review. Currently, this isn't part of the site, but may be used later
+# if, for example, review subjects can respond to a review.
 class ReviewDetailView(DetailView):
     model = Review
     template_name = 'social/review_detail.html'
 
+# Viewing a seller's own profile
 class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
     model = SocialProfile
     context_object_name = 'social_profile'
@@ -64,6 +69,10 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
             average = 0
         average_str = []
         val = 0.00
+        ''' Django HTML has a hard time looping through numerical values, so to display the score
+        we convert it to a string, (5 stars is 'fffff', 0 is 'eeeee') and then iterate through the
+        string to display stars on a seller's page. Hacky to be sure, but I wasn't able to find a
+        more elegant alternative'''
         while val < 5:
             if val + 1 <= average:
                 average_str.append('f')
@@ -76,7 +85,7 @@ class SocialProfileSelfDetailView(SellerRequiredMixin, DetailView):
         context['average'] = average
         return context
 
-
+# Same as the above, but for viewing another seller.
 class SocialProfileDetailView(DetailView):
     model = SocialProfile
     context_object_name = 'social_profile'
@@ -105,6 +114,7 @@ class SocialProfileDetailView(DetailView):
         context['average'] = average
         return context
 
+# Update a profile.
 class SocialProfileUpdateView(SellerRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = SocialProfile
     form_class = SocialProfileUpdateForm

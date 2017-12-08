@@ -8,6 +8,7 @@ from market.apps.core.models import (RandomSlugModel,
 from market.apps.board.models import Post
 
 
+# The class for messages sent from user to user
 class Message(RandomSlugModel, TimeStampedModel):
     sender = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='sender')
     recipient = models.ForeignKey(UserProfile, default=1, on_delete=models.CASCADE, related_name='recipient')
