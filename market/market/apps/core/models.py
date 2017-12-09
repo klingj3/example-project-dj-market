@@ -3,7 +3,7 @@ from django.conf import settings
 
 from django_extensions.db.fields import RandomCharField
 
-
+# Used to generate the random URLs for profiles, posts, and other.
 class RandomSlugModel(models.Model):
     slug = RandomCharField(length=8, lowercase=True, unique=True)
 

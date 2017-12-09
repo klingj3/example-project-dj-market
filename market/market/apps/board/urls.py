@@ -10,9 +10,7 @@ from market.apps.board.views import (PostCreateView,
 
 app_name = 'board'
 urlpatterns = [
-    # url(r'^$', PostListView.as_view(), name='list'),
     url(r'^$', PostSearchView.as_view(), name='list'),
-    # url(r'search/$', PostSearchView.as_view(), name='search'),
     url(r'^new/$', PostCreateView.as_view(), name='create'),
     url(r'^posts/$', PostSearchView.as_view(), name='list'),
     url(r'^posts/new/$', PostCreateView.as_view(), name='create'),

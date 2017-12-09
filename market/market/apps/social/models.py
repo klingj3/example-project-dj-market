@@ -8,6 +8,8 @@ from djgeojson.fields import PointField
 from market.apps.core.models import (RandomSlugModel,
                                      UserProfile)
 
+
+# Model for user-to-user reviews.
 class Review(RandomSlugModel, TimeStampedModel):
     reviewer = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='reviewer')
     reviewee = models.ForeignKey(UserProfile, default=1, on_delete=models.CASCADE, related_name='reviewee')
@@ -24,6 +26,9 @@ class Review(RandomSlugModel, TimeStampedModel):
     def get_absolute_url(self):
         return reverse('messaging:review_deteail', kwargs={'slug': self.slug})
 
+
+# The SocialProfile is a model used by Sellers through which they detail themselves
+# and/or provide additional information on their services.
 class SocialProfile(RandomSlugModel):
     owner = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='social')
 

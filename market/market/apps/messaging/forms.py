@@ -11,7 +11,7 @@ from crispy_forms.layout import (Field,
 
 from market.apps.messaging.models import Message
 
-
+# Form through which messages can be sent.
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message

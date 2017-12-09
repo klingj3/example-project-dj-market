@@ -69,13 +69,14 @@ class PostDetailView(DetailView):
         context['similar_posts'] = self.model.objects.search(tags=self.object.tags.get_tag_list()).exclude(id=self.object.id)[:4]
         return context
 
-
+# View for displaying searches
 class PostSearchView(ListView):
     model = Post
     template_name = 'board/post_list.html'
     # No pagination for now, breaks searches
     # paginate_by = 8
 
+    # Get the more specific results
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q', '')
@@ -104,6 +105,7 @@ class PostSearchView(ListView):
             context['post_list'] = []
         return context
 
+    # Get the more general results.
     def get_queryset(self):
         # TODO: Pre-process search query for better usability
 
