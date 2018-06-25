@@ -1,4 +1,4 @@
-# Latest release django
+# Django 1.11.5
 django==1.11.5
 
 # Handle user authentication and registration
