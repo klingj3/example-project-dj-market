@@ -1,0 +1,3 @@
+# Dependencies for local testing
+-r base.txt
+

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}Edit Post{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h3>Edit Post: {{ object.title }}</h3>
+      <form method="post" enctype="multipart/form-data">
+        {% for image in inlines %}
+          {% crispy image image_helper %}
+        {% endfor %}
+        {% crispy form %}
+      </form>
+    </div>
+  </div>
+{% endblock content %}

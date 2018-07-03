@@ -1,0 +1,35 @@
+# Django 1.11.5
+django==1.11.5
+
+# Handle user authentication and registration
+django-allauth==0.33.0
+
+# For configuration handling
+python-decouple==3.1
+
+# For processing JS and CSS
+django-compressor==2.2
+django-libsass==0.7
+
+# For nicer forms
+django-crispy-forms==1.7.0
+
+django-extensions==1.9.1
+django-extra-views==0.9.0
+
+# For prices
+django-prices==0.7.1
+
+# For image handling
+Pillow==4.3.0
+
+# Tagulous only supports Django 1.11 on this branch
+git+git://github.com/radiac/django-tagulous.git@feature/django-1_11#egg=django-tagulous
+
+# Location and map
+# Note that [field] is an 'extra dependency' which provides fields with map widgets via django-leaflet
+django-geojson[field]==2.10.0
+# django-geoposition==0.3.0
+
+# For searching and sorting
+

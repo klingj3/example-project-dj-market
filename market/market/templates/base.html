@@ -1,0 +1,120 @@
+{% load compress %}
+{% load leaflet_tags %}
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>  {{ cust.title }} &mdash; {% block title %}Title here{% endblock title %}</title>
+
+  {% comment %} Meta tags {% endcomment %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Description goes here TODO">
+  {% block meta %}{% endblock %}
+
+  {% comment %}
+    TODO: Favicons
+  {% endcomment %}
+
+  {% comment %} Customized Bootstrap build {% endcomment %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static 'scss/style.scss' %}" type="text/x-scss">
+    {% leaflet_css plugins='forms' %}
+  {% endcompress %}
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+
+  {% comment %} Scripts {% endcomment %}
+  <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  {% leaflet_js plugins='forms' %}
+  {% block extra_scripts %}{% endblock extra_scripts %}
+
+  {% block extra_head %}{% endblock extra_head %}
+</head>
+
+<body>
+
+{% comment %} Top navigation bar {% endcomment %}
+<header class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <div class="container">
+    <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navItems">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a href="{% url 'board:list' %}" class="navbar-brand mr-auto">
+        {% if c_logo %}
+            <img src="{% static c_logo_path %}" height="30">
+        {% else %}
+            {{ c_title }}
+        {% endif %}
+    </a>
+    <div class="collapse navbar-collapse flex-sm-row-reverse" id="navItems">
+      <div class="navbar-nav">
+        {# url_name is the named url e.g., 'social:update' #}
+        {% with url_name=request.resolver_match.view_name %}
+          {% if profile %}
+            {% if profile.is_seller %}
+              <a href="{% url 'board:create' %}" class="btn btn-outline-light mr-4"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create post</a>
+            {% endif %}
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle active" role="button" data-toggle="dropdown">
+                <i class="fa fa-user-circle mr-1" aria-hidden="true"></i>{{ profile }}
+              </a>
+              <div class="dropdown-menu dropdown-menu-right">
+                {% if profile.is_seller %}
+                  <h5 class="dropdown-header">{{ profile }}</h5>
+                  <a href="{% url 'social:detail' %}" class="dropdown-item">Your profile</a>
+                  <div class="dropdown-divider"></div>
+                {% endif %}
+                <a href="{% url 'messaging:inbox' %}" class="dropdown-item">Messaging</a>
+                <a href="{% url 'social:update' %}" class="dropdown-item">Settings</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Sign out</a>
+              </div>
+            </div>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="nav-item nav-link{% if url_name == 'account_login' %} active{% endif %}">Login</a>
+            <a href="{% url 'account_signup' %}" class="nav-item nav-link{% if url_name == 'account_signup' %} active{% endif %}">Register</a>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+</header>
+
+{% comment %} Banner messages {% endcomment %}
+{% for message in messages %}
+  <div class="alert alert-{{ message.level_tag }} rounded-0 mb-0 alert-dismissible fade show" role="alert">
+    <div class="container">
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      {% if message.extra_tags %}
+        {# extra_tags are used for an optional icon #}
+        <i class="{{ message.extra_tags }} mr-1" aria-hidden="true"></i>
+      {% endif %}
+      <span>{{ message }}</span>
+    </div>
+  </div>
+{% endfor %}
+
+{% comment %} Page body {% endcomment %}
+<div class="container mt-4" id="container">
+  {% block content %}
+  {% endblock content %}
+</div>
+
+{% comment %} Page footer {% endcomment %}
+<footer class="navbar navbar-light bg-light mt-4">
+  <div class="container">
+    <span class="navbar-text">
+      <small>Footer goes here</small>
+    </span>
+  </div>
+</footer>
+
+</body>
+
+</html>

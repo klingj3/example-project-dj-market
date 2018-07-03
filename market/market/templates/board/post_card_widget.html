@@ -1,0 +1,15 @@
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="card mb-4">
+  {% if post.images.all %}
+    <img class="card-img-top" src="{{ post.images.first.image.url }}">
+  {% else %}
+    <img class="card-img-top" src="{% static 'img/placeholder.svg' %}">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title mb-1"><a href="{% url 'board:detail' slug=post.slug %}">{{ post.title|truncatechars:60 }}</a></h5>
+    <h6 class="text-muted mb-3"><small>by <a href="{% url 'social:detail' slug=post.owner.social.slug %}" class="text-muted">{{ post.owner }}</a></small></h6>
+    <h5 class="">${{ post.price|intcomma }} /{{ post.unit }}</h5>
+  </div>
+</div>

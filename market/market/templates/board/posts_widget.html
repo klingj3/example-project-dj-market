@@ -1,0 +1,24 @@
+<div class="card-deck">
+  {% for post in posts_list %}
+    {% include 'board/post_card_widget.html' with post=post %}
+    {# HACK: Grid splits hack for responsive card-deck #}
+    {# Each split is only visible at one break point #}
+    {% if forloop.counter|divisibleby:2 %}
+      {# wrap every 2 on sm #}
+      <div class="w-100 d-none d-sm-block d-md-none"></div>
+    {% endif %}
+    {% if forloop.counter|divisibleby:3 %}
+      {# wrap every 3 on md #}
+      <div class="w-100 d-none d-md-block d-lg-none"></div>
+    {% endif %}
+    {% if forloop.counter|divisibleby:4 %}
+      {# wrap every 4 on lg #}
+      <div class="w-100 d-none d-lg-block d-xl-none"></div>
+    {% endif %}
+    {% if forloop.counter|divisibleby:5 %}
+      {# wrap every 5 on xl #}
+      <div class="w-100 d-none d-xl-block"></div>
+    {% endif %}
+    {# End hack #}
+  {% endfor %}
+</div>

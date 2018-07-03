@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ social_profile.owner }}{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12 col-sm-3 mb-4">
+      <img class="rounded w-100" src="{% static 'img/placeholder.svg' %}">
+    </div>
+    <div class="col-12 col-sm-9 mb-4">
+      <h2>{{ social_profile.owner }}</h2>
+      {% if social_profile.tagline %}
+        <p><em>{{ social_profile.tagline }}</em></p>
+      {% endif %}
+      <p class="text-muted">
+        <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Location&emsp;|&emsp;Other information
+        <br>
+        <span class="text-warning">
+            <a href="{% url 'social:new_review' slug=object.owner.slug%}">
+            {% for c in average_str %}
+                {% if c == 'f' %}
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                {% elif c == 'h' %}
+                  <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                {% else %}
+                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endif %}
+            {% endfor %}
+            </a>
+        </span>
+        <span class="ml-1">
+            {% if average > 0 %}
+                {{ average }} Avg.</span>
+            {% else %}
+                No reviews.
+            {% endif %}
+          <br>
+          {% if profile %}
+              {% if profile != object.owner %}
+                  <a href="{% url 'messaging:new' slug=object.owner.slug%}">Message me!</a>
+                  <br>
+                  <a href="{% url 'social:new_review' slug=object.owner.slug%}">Write a review!</a>
+              {% endif %}
+        {% endif %}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#sellerPosts" role="tab">Posts ({{ posts_list|length }})</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#sellerReviews" role="tab">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#sellerAbout" role="tab">About</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="sellerTabs">
+        <div class="tab-pane fade show active" id="sellerPosts" role="tabpanel">
+          {% if posts_list %}
+            {% include 'board/posts_widget.html' with posts_list=posts_list %}
+          {% else %}
+            <h2 class="text-muted text-center my-5">
+              No posts yet!
+            </h2>
+          {% endif %}
+        </div>
+        <div class="tab-pane fade" id="sellerReviews" role="tabpanel">
+          {% include 'social/review_list_widget.html' with review_list=review_list %}
+        </div>
+        <div class="tab-pane fade" id="sellerAbout" role="tabpanel">
+          {% if social_profile.bio %}
+            {{ social_profile.bio }}
+          {% else %}
+            <em>This seller likes to keep an air of mystery about them...</em>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12">
+    </div>
+  </div>
+{% endblock content %}

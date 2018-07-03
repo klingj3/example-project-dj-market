@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load geojson_tags %}
+{% load leaflet_tags %}
+{% load staticfiles %}
+
+{% block title %}All Listings{% endblock title %}
+
+{% block content %}
+  <div class="row mb-4">
+    <div class="col-12">
+      <script type="text/javascript">
+        var collection = {{ object_list|geojsonfeature:':location'|safe }};
+        function map_init(map, options) {
+            L.geoJson(collection).addTo(map);
+        }
+      </script>
+      {% leaflet_map "main" callback="window.map_init" %}
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <form class="input-group" action="{% url 'board:list' %}" method="get" accept-charset="utf-8">
+        <input class="form-control" name="q" type="text" placeholder="Search for...">
+        <select class="col-xs" name="sort" type="text">
+          <option value = "date-newest" disabled selected hidden>Sort by...</option>
+          <option value="date-newest">Date (newest first)</option>
+          <option value="date-oldest">Date (oldest first)</option>
+          <option value="price-lowest">Price (lowest first)</option>
+          <option value="price-highest">Price (highest first)</option>
+        </select>
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </span>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      {% if object_list %}
+        {% include 'board/posts_widget.html' with posts_list=object_list %}
+      {% elif post_list %}
+        <h2 class="text-muted text-center my-5">
+          Exact match not found, here are some related results!<br> <br>
+        {% include 'board/posts_widget.html' with posts_list=post_list %}
+      {% else %}
+        <h2 class="text-muted text-center my-5">
+          No posts here :(
+          {% if profile.is_seller %}
+            <br>Why not <a href="{% url 'board:create' %}">make one?</a>
+          {% endif %}
+        </h2>
+      {% endif %}
+    </div>
+  </div>
+
+  {% comment %} Pagination navigation {% endcomment %}
+  {% if is_paginated %}
+    <div class="row">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+              {% if i == page_obj.number %}
+                <li class="page-item active">
+                  <span class="page-link">{{ i }}</span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Next</span>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+{% endblock content %}

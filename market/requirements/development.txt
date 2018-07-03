@@ -1,0 +1,6 @@
+# Dependencies for local development
+-r base.txt
+
+# Code style enforcement
+flake8==3.4.1
+flake8-import-order==0.13

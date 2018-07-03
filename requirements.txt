@@ -1,0 +1,4 @@
+# This file is here to point to the real requirements.
+# These are for development, not deployment.
+
+-r market/requirements/production.txt

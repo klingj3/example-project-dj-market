@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Settings{% endblock title %}
+
+{% block content %}
+  {% comment %}Side bar containing all settings{% endcomment %}
+  <div class="row">
+    <div class="col-12 col-sm-3">
+      <div class="card mb-3">
+        <div class="card-header">Seller Settings</div>
+        <div class="list-group list-group-flush">
+          {% with url_name=request.resolver_match.view_name %}
+            <a href="{% url 'social:update' %}" class="list-group-item list-group-item-action{% if url_name == 'social:update' %} active{% endif %}">Profile</a>
+          {% endwith %}
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">Account Settings</div>
+        <div class="list-group list-group-flush">
+          {% with url_name=request.resolver_match.view_name %}
+            <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Emails</a>
+            <a href="{% url 'account_change_password' %}" class="list-group-item list-group-item-action{% if url_name == '' %} active{% endif %}">Password</a>
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-9">
+      <h3>{% block page_title %}{% endblock page_title %}</h3>
+      <hr>
+      {% block page_content %}
+      {% endblock page_content %}
+    </div>
+  </div>
+{% endblock content %}

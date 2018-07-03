@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <h3>Do you really want to delete this post?</h3>
+      {{ form }}
+      <form role="form" action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-danger">Delete post</button>
+        <a class="btn btn-outline-secondary" href="{% url 'board:detail' slug=object.slug %}">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Messages{% endblock title %}
+
+{% block content %}
+    <div class="col-sm-9 col-md-10">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#inbox" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
+                </span>Inbox</a></li>
+                <li><a href="#outbox" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>
+                    Outbox</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="inbox">
+                    <div class="list-group">
+                        {% for message in inbox %}
+                        <a href="{% url 'messaging:detail' slug=message.slug %}" class="list-group-item">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                            </div>
+                            <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px;
+                                display: inline-block;">{{ message.sender }}</span>
+                            <span class="">{{ message.subject }}</span>
+                            <span class="text-muted" style="font-size: 11px;">- {{ message.body|truncatechars:20 }}</span>
+                            <span class="badge">{{ message.created }}</span> <span class="pull-right"></span></a>
+                            {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade in active" id="outbox">
+                        <div class="list-group">
+                            {% for message in outbox %}
+                            <a href="{% url 'messaging:detail' slug=message.slug %}" class="list-group-item">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px;
+                                    display: inline-block;">{{ message.recipient }}</span>
+                                <span class="">{{ message.subject }}</span>
+                                <span class="text-muted" style="font-size: 11px;">- {{ message.body|truncatechars:20 }}</span>
+                                <span class="badge">{{ message.created }}</span> <span class="pull-right"></span></a>
+                                {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="profile">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <span class="text-center">This tab is empty.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'settings/settings_base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}Seller Profile{% endblock title %}
+
+{% block page_title %}Seller Profile{% endblock page_title %}
+
+{% block page_content %}
+  <p class="lead"> Add information to help sellers learn about you. </p>
+  {% crispy form %}
+{% endblock page_content %}

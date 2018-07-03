@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load staticfiles %}
+
+{% block title %}Message Detail{% endblock title %}
+
+{% block content %}
+
+    <div class="col-sm-9 col-md-10">
+        <h4>
+        {% if in_inbox %}
+            From:
+            {% if message.sender.type == '1' %}
+                <a href="{% url 'social:detail' social_slug %}">{{ message.sender }}</a>
+            {% elif  message.sender.type == '0' %}
+                {{ message.sender }}
+            {% endif %}
+        {% else %}
+            Sent to:
+            {% if message.recipient.type == '1' %}
+                <a href="{% url 'social:detail' social_slug %}">{{ message.recipient }}</a>
+            {% elif  message.recipient.type == '0' %}
+                {{ message.recipient }}
+            {% endif %}
+        {% endif %}
+
+        </h4>
+        {% if message.referenced_post %}
+            <h4>Regarding: <a href="{% url 'board:detail' slug=message.referenced_post.slug %}">{{ message.referenced_post }}</a></h4>
+        {% endif %}
+        <h3>{{ message.subject }}</h3>
+        <p>{{ message.body }}</p>
+        {% if in_inbox %}
+            <a class="btn btn-primary" href="{% url 'messaging:new' slug=message.sender.slug %}" role="button">Reply</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'messaging:new' slug=message.recipient.slug %}" role="button">Message Again</a>
+        {% endif %}
+    </div>
+
+    <br>
+    {% if thread|length > 1 %}
+        <h4 class="text-muted">Other messages involving this sender</h4>
+        {% for mess in thread %}
+            {% if mess != message %}
+                <a href="{% url 'messaging:detail' slug=mess.slug %}" class="list-group-item">
+                            <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px;
+                                display: inline-block;">{{ mess.sender }}</span>
+                            <span class="">{{ mess.subject }}</span>
+                            <span class="text-muted" style="font-size: 11px;">- {{ mess.body|truncatechars:20 }}</span>
+                            <span class="badge">{{ mess.created }}</span> <span class="pull-right"></span></a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}
