@@ -81,14 +81,6 @@ MIDDLEWARE = [
 DEBUG = True
 
 
-# FIXTURE CONFIGURATION
-# ---
-# See: https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-FIXTURE_DIRS
-#FIXTURE_DIRS = (
-#    os.path.join(BASE_DIR, 'fixtures'),
-#)
-
-
 # DATABASE CONFIGURATION
 # ---
 # See: https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -144,6 +136,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
 
                 # Custom context processors
+                'market.apps.core.context_processors.customization',
                 'market.apps.core.context_processors.user_profile',
 
             ],
@@ -158,18 +151,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # DJANGO-TAGULOUS CONFIGURATION
 # ---
 INSTALLED_APPS += ['tagulous']
-# TODO: use django-compressor to optimize these,
-# TAGULOUS_AUTOCOMPLETE_JS = (
-#     'tagulous/lib/jquery.js',
-#     'tagulous/lib/select2-3/select2.min.js',
-#     'tagulous/tagulous.js',
-#     'tagulous/adaptor/select2.js',
-# )
-
-# TODO: load CSS with support for Bootstrap 4
-# TAGULOUS_AUTOCOMPLETE_CSS = {
-#     'all': ['tagulous/lib/select2-3/select2.css']
-# }
 
 
 # DJANGO-PRICES CONFIGURATION
@@ -221,15 +202,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# Some really nice defaults
-#ACCOUNT_AUTHENTICATION_METHOD = 'username'
-#ACCOUNT_EMAIL_REQUIRED = True
-#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
-#ACCOUNT_ALLOW_REGISTRATION = True
-#ACCOUNT_ADAPTER = 'market.users.adapters.AccountAdapter'
-#SOCIALACCOUNT_ADAPTER = 'market.users.adapters.SocialAccountAdapter'
-
 # Logged in users redirected here if they view login/signup pages
 LOGIN_REDIRECT_URL = 'board:list'
 
@@ -255,19 +227,6 @@ ACCOUNT_SIGNUP_FORM_CLASS = 'market.apps.social.forms.UserProfileForm'
 ACCOUNT_LOGOUT_ON_GET = True
 # User display value is name from the associated profile
 ACCOUNT_USER_DISPLAY = lambda user: user.profile.name
-
-
-# PASSWORD STORAGE SETTINGS
-# ---
-# See https://docs.djangoproject.com/en/1.11/topics/auth/passwords/#using-argon2-with-django
-#PASSWORD_HASHERS = [
-#    'django.contrib.auth.hashers.Argon2PasswordHasher',
-#    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-#    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-#    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-#    'django.contrib.auth.hashers.BCryptPasswordHasher',
-#]
-
 
 # PASSWORD VALIDATION
 # ---
@@ -295,17 +254,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # ---
 # For development, send all emails to the console instead of sending them
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-########## CELERY
-#INSTALLED_APPS += ['market.taskapp.celery.CeleryConfig']
-#CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-#if CELERY_BROKER_URL == 'django://':
-#    CELERY_RESULT_BACKEND = 'redis://'
-#else:
-#    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-########## END CELERY
-
 
 # DJANGO-COMPRESSOR CONFIGURATION
 # ---

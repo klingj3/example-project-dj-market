@@ -17,6 +17,7 @@
         <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>Location&emsp;|&emsp;Other information
         <br>
         <span class="text-warning">
+            <a href="{% url 'social:new_review' slug=object.owner.slug%}">
             {% for c in average_str %}
                 {% if c == 'f' %}
                   <i class="fa fa-star" aria-hidden="true"></i>
@@ -26,6 +27,7 @@
                   <i class="fa fa-star-o" aria-hidden="true"></i>
                 {% endif %}
             {% endfor %}
+            </a>
         </span>
         <span class="ml-1">
             {% if average > 0 %}
