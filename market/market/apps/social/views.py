@@ -12,7 +12,6 @@ from django.views.generic import (DetailView,
 from extra_views import (CreateWithInlinesView)
 from market.apps.board.models import Post
 from market.apps.core.mixins import (CreateWithOwnerMixin,
-                                     CreateWithReviewerMixin,
                                      CreateWithSenderMixin,
                                      OwnerRequiredMixin,
                                      SellerRequiredMixin)
@@ -24,7 +23,7 @@ from market.apps.social.models import (Review,
 
 
 # Create a new Review
-class ReviewCreateView(CreateWithReviewerMixin, CreateWithInlinesView):
+class ReviewCreateView(CreateWithOwnerMixin, CreateWithInlinesView):
     model = Review
     form_class = ReviewForm
     template_name = 'social/review_form.html'
@@ -40,7 +39,8 @@ class ReviewCreateView(CreateWithReviewerMixin, CreateWithInlinesView):
 
     def get_success_url(self):
         messages.success(self.request, 'Review posted!', extra_tags='fa fa-check')
-        return reverse('board:list')
+        target_profile = SocialProfile.objects.filter(owner=self.object.reviewee).get()
+        return reverse('social:detail', args={target_profile.slug})
 
 #TODO: ReviewUpdateView
 

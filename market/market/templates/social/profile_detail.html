@@ -76,7 +76,11 @@
           {% if social_profile.bio %}
             {{ social_profile.bio }}
           {% else %}
-            <em>This seller likes to keep an air of mystery about them...</em>
+              {% if profile == object.owner %}
+                  <em> We don't know anything about you yet! <a> Update your profile! </a></em>
+              {% else %}
+                  <em>This seller likes to keep an air of mystery about them...</em>
+              {% endif %}
           {% endif %}
         </div>
       </div>

@@ -10,9 +10,8 @@ class UserProfileMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-
         # Add the current UserProfile to the request
-        if request.user.is_anonymous() or request.user.is_superuser:
+        if request.user.is_anonymous or request.user.is_superuser:
             request.profile = None
         else:
             request.profile = request.user.profile
