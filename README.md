@@ -5,9 +5,7 @@
 
 Originally, this project was intended just to be a site to posts farmers markets and farm stands (as shown in the 
 example above) though the project was deliberately designed in an purpose agnostic way so that others could easily
-extend the project. Currently, there is an ongoing process to isolate many features of customization in a single
-file so that even those without Django knowledge can launch marketplaces for themselves, store-fronts, or communities, 
-though these open customization features are still in the earliest of days.
+extend the project. 
 
 ## Getting Started
 Requirements:
